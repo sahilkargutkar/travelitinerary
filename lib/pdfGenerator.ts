@@ -29,7 +29,7 @@ export async function generateItineraryPDF(destination: Destination): Promise<vo
   doc.text("WANDER", 14, 18);
 
   doc.setTextColor(...GOLD);
-  doc.text("LUX", 14 + doc.getTextWidth("WANDER") + 1, 18);
+  doc.text("souls", 14 + doc.getTextWidth("WANDER") + 1, 18);
 
   doc.setTextColor(...WHITE);
   doc.setFontSize(8);

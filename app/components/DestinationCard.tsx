@@ -15,96 +15,96 @@ export default function DestinationCard({ destination: dest, index = 0, featured
     return (
       <Link href={`/destinations/${dest.slug}`} style={{ textDecoration: "none", display: "block" }}>
         <article
-          className="dest-card"
+          className="dest-card luxury-card"
           style={{
             position: "relative",
-            borderRadius: "26px",
+            borderRadius: "20px",
             overflow: "hidden",
             cursor: "pointer",
             height: "480px",
-            border: "1px solid rgba(26,43,60,0.08)",
-            transition: "all 0.5s cubic-bezier(0.23,1,0.32,1)",
-            boxShadow: "0 8px 40px rgba(0,0,0,0.4)",
+            border: "1px solid var(--border-subtle)",
+            transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = "translateY(-8px)";
-            e.currentTarget.style.boxShadow = "0 24px 60px rgba(0,0,0,0.6), 0 0 60px rgba(197,160,89,0.2)";
-            e.currentTarget.style.borderColor = "rgba(197,160,89,0.4)";
+            e.currentTarget.style.borderColor = "rgba(0, 184, 169, 0.3)";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = "translateY(0)";
-            e.currentTarget.style.boxShadow = "0 8px 40px rgba(0,0,0,0.4)";
-            e.currentTarget.style.borderColor = "rgba(26,43,60,0.08)";
+            e.currentTarget.style.borderColor = "var(--border-subtle)";
           }}
         >
           {/* Image */}
           <img
             src={dest.heroImage}
             alt={dest.name}
-            className="dest-card-img"
             style={{
               position: "absolute", inset: 0,
               width: "100%", height: "100%", objectFit: "cover",
+              transition: "transform 0.8s ease",
             }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.06)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
           />
 
-          {/* Gradient Overlays */}
+          {/* Premium Dark Gradient Overlay (No White Layer Wash) */}
           <div style={{
             position: "absolute", inset: 0,
-            background: "rgba(240,243,244,0.3)",
-          }} />
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "transparent",
+            background: "linear-gradient(to bottom, rgba(10, 37, 64, 0.15) 30%, rgba(10, 37, 64, 0.85) 100%)",
+            zIndex: 1,
           }} />
 
           {/* Top Badges */}
           <div style={{
-            position: "absolute", top: "16px", left: "16px", right: "16px",
+            position: "absolute", top: "20px", left: "20px", right: "20px",
             display: "flex", justifyContent: "space-between", alignItems: "flex-start",
+            zIndex: 2,
           }}>
             <div style={{
-              display: "flex", alignItems: "center", gap: "7px",
-              background: "rgba(240,243,244,0.7)", backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255,255,255,0.12)",
+              display: "flex", alignItems: "center", gap: "8px",
+              background: "rgba(255, 255, 255, 0.2)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              border: "1px solid rgba(255, 255, 255, 0.3)",
               borderRadius: "50px", padding: "6px 14px",
             }}>
-              <span style={{ fontSize: "15px" }}>{dest.flag}</span>
+              <span style={{ fontSize: "16px" }}>{dest.flag}</span>
               <span style={{
-                fontFamily: "var(--font-playfair), serif", fontSize: "0.75rem",
-                fontWeight: "700", color: "rgba(255,255,255,0.9)",
+                fontFamily: "var(--font-montserrat)", fontSize: "0.75rem",
+                fontWeight: "700", color: "#FFFFFF",
               }}>{dest.country}</span>
             </div>
+            
             <div style={{
-              background: "var(--accent-emerald)",
+              background: "var(--success)",
               borderRadius: "12px", padding: "8px 14px", textAlign: "right",
-              boxShadow: "0 4px 16px rgba(197,160,89,0.35)",
+              boxShadow: "0 4px 14px rgba(22, 163, 74, 0.25)",
             }}>
-              <div style={{ fontFamily: "'Inter'", fontSize: "0.6rem", color: "rgba(255,255,255,0.8)" }}>from</div>
-              <div style={{ fontFamily: "'Outfit'", fontWeight: "800", fontSize: "1.1rem", color: "var(--text-primary)" }}>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.6rem", fontWeight: "600", color: "rgba(255,255,255,0.85)", textTransform: "uppercase" }}>from</div>
+              <div style={{ fontFamily: "var(--font-montserrat)", fontWeight: "800", fontSize: "1.1rem", color: "#FFFFFF" }}>
                 ₹{dest.basePrice.toLocaleString("en-IN")}
               </div>
             </div>
           </div>
 
           {/* Bottom Content */}
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "24px" }}>
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "28px", zIndex: 2 }}>
             <div style={{ marginBottom: "14px" }}>
               <h3 style={{
-                fontFamily: "'Outfit'", fontWeight: "900",
-                fontSize: "2.2rem", color: "var(--text-primary)", lineHeight: "1",
-                marginBottom: "6px", letterSpacing: "-0.02em",
+                fontFamily: "var(--font-playfair)", fontWeight: "800",
+                fontSize: "2.2rem", color: "#FFFFFF", lineHeight: "1.1",
+                marginBottom: "6px", letterSpacing: "-0.01em",
               }}>{dest.name}</h3>
               <p style={{
-                fontFamily: "'Outfit'", fontStyle: "italic",
-                fontSize: "0.9rem", color: "#E5C158", fontWeight: "500",
+                fontFamily: "var(--font-montserrat)", fontStyle: "italic",
+                fontSize: "0.9rem", color: "var(--accent)", fontWeight: "600",
               }}>{dest.tagline}</p>
             </div>
 
             <p style={{
-              fontFamily: "'Inter'", fontSize: "0.82rem",
-              color: "rgba(240,240,255,0.7)", lineHeight: "1.6",
-              marginBottom: "16px",
+              fontFamily: "var(--font-montserrat)", fontSize: "0.85rem",
+              color: "rgba(250, 250, 247, 0.8)", lineHeight: "1.65",
+              marginBottom: "20px",
               display: "-webkit-box",
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
@@ -112,35 +112,36 @@ export default function DestinationCard({ destination: dest, index = 0, featured
             }}>{dest.description}</p>
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <div style={{ display: "flex", gap: "16px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                  <Clock size={12} color="var(--accent-gold)" />
-                  <span style={{ fontFamily: "'Outfit'", fontSize: "0.75rem", color: "rgba(26,43,60,0.7)", fontWeight: "600" }}>
+              <div style={{ display: "flex", gap: "20px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <Clock size={14} color="var(--accent)" />
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: "rgba(250, 250, 247, 0.9)", fontWeight: "600" }}>
                     {dest.duration}
                   </span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                  <Star size={12} color="#E5C158" fill="#E5C158" />
-                  <span style={{ fontFamily: "'Outfit'", fontSize: "0.75rem", color: "rgba(26,43,60,0.7)", fontWeight: "600" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <Star size={14} color="var(--accent)" fill="var(--accent)" />
+                  <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", color: "rgba(250, 250, 247, 0.9)", fontWeight: "600" }}>
                     {dest.rating} ({dest.reviewCount.toLocaleString()})
                   </span>
                 </div>
               </div>
               <div style={{
-                display: "flex", alignItems: "center", gap: "5px",
-                color: "var(--accent-gold)", fontFamily: "'Outfit'", fontWeight: "700", fontSize: "0.82rem",
+                display: "flex", alignItems: "center", gap: "6px",
+                color: "var(--accent)", fontFamily: "var(--font-montserrat)", fontWeight: "700", fontSize: "0.85rem",
               }}>
                 View Itinerary <ArrowRight size={14} />
               </div>
             </div>
 
             {/* Tags */}
-            <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginTop: "14px" }}>
+            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "18px" }}>
               {dest.tags.slice(0, 3).map((t) => (
                 <span key={t} style={{
-                  background: "rgba(26,43,60,0.08)", border: "1px solid rgba(255,255,255,0.12)",
-                  borderRadius: "6px", padding: "3px 9px",
-                  fontFamily: "'Outfit'", fontSize: "0.68rem", color: "rgba(26,43,60,0.65)",
+                  background: "rgba(255, 255, 255, 0.12)", border: "1px solid rgba(255, 255, 255, 0.15)",
+                  borderRadius: "6px", padding: "4px 10px",
+                  fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", color: "#FAFAF7",
+                  fontWeight: "600"
                 }}>{t}</span>
               ))}
             </div>
@@ -154,98 +155,119 @@ export default function DestinationCard({ destination: dest, index = 0, featured
   return (
     <Link href={`/destinations/${dest.slug}`} style={{ textDecoration: "none", display: "block", height: "100%" }}>
       <article
-        className="dest-card"
+        className="dest-card luxury-card"
         style={{
-          position: "relative", borderRadius: "22px", overflow: "hidden",
-          cursor: "pointer", height: "100%", minHeight: "380px",
-          border: "1px solid rgba(26,43,60,0.07)",
+          position: "relative", borderRadius: "20px", overflow: "hidden",
+          cursor: "pointer", height: "100%", minHeight: "410px",
+          border: "1px solid var(--border-subtle)",
           background: "var(--bg-card)",
-          transition: "all 0.45s cubic-bezier(0.23,1,0.32,1)",
-          boxShadow: "0 4px 24px rgba(0,0,0,0.35)",
+          transition: "all 0.45s cubic-bezier(0.16, 1, 0.3, 1)",
           display: "flex", flexDirection: "column",
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = "translateY(-6px)";
-          e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,0,0,0.5), 0 0 40px rgba(197,160,89,0.15)";
-          e.currentTarget.style.borderColor = "rgba(197,160,89,0.3)";
+          e.currentTarget.style.borderColor = "rgba(0, 184, 169, 0.3)";
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = "translateY(0)";
-          e.currentTarget.style.boxShadow = "0 4px 24px rgba(0,0,0,0.35)";
-          e.currentTarget.style.borderColor = "rgba(26,43,60,0.07)";
+          e.currentTarget.style.borderColor = "var(--border-subtle)";
         }}
       >
         {/* Image Container */}
-        <div style={{ position: "relative", height: "210px", overflow: "hidden", flexShrink: 0 }}>
+        <div style={{ position: "relative", height: "220px", overflow: "hidden", flexShrink: 0 }}>
           <img
             src={dest.heroImage}
             alt={dest.name}
-            className="dest-card-img"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.05)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
           />
-          <div style={{
-            position: "absolute", left: 0, right: 0, bottom: 0, height: "120px",
-            background: "rgba(240,243,244,0.4)",
-          }} />
+
+          {/* Dark gradient overlay for text readability on image */}
           <div style={{
             position: "absolute", inset: 0,
-            background: "transparent",
+            background: "linear-gradient(to bottom, rgba(10, 37, 64, 0.1) 50%, rgba(10, 37, 64, 0.6) 100%)",
+            zIndex: 1
           }} />
 
           {/* Country Badge */}
-          <div style={{ position: "absolute", top: "12px", left: "12px",
+          <div style={{ position: "absolute", top: "14px", left: "14px",
             display: "flex", alignItems: "center", gap: "6px",
-            background: "rgba(240,243,244,0.75)", backdropFilter: "blur(10px)",
-            border: "1px solid rgba(26,43,60,0.1)", borderRadius: "50px", padding: "5px 12px",
+            background: "rgba(255, 255, 255, 0.75)", backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            border: "1px solid rgba(255,255,255,0.4)", borderRadius: "50px", padding: "5px 12px",
+            zIndex: 2,
           }}>
             <span style={{ fontSize: "14px" }}>{dest.flag}</span>
-            <span style={{ fontFamily: "'Outfit'", fontSize: "0.7rem", fontWeight: "700", color: "rgba(255,255,255,0.9)" }}>
+            <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: "700", color: "var(--primary)" }}>
               {dest.country}
             </span>
           </div>
 
           {/* Best Time */}
-          <div style={{ position: "absolute", top: "12px", right: "12px" }}>
-            <span className="badge badge-accent" style={{ fontSize: "0.64rem" }}>{dest.bestTime}</span>
+          <div style={{ position: "absolute", top: "14px", right: "14px", zIndex: 2 }}>
+            <span style={{
+              background: "rgba(10, 37, 64, 0.65)",
+              backdropFilter: "blur(6px)",
+              color: "#FFFFFF",
+              borderRadius: "6px",
+              padding: "4px 8px",
+              fontFamily: "var(--font-montserrat)",
+              fontSize: "0.65rem",
+              fontWeight: "700",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
+              border: "1px solid rgba(255, 255, 255, 0.15)"
+            }}>{dest.bestTime}</span>
           </div>
 
           {/* Price */}
           <div style={{
             position: "absolute", bottom: "14px", right: "14px",
-            background: "var(--accent-emerald)",
+            background: "var(--success)",
             borderRadius: "10px", padding: "6px 12px",
-            boxShadow: "0 4px 14px rgba(197,160,89,0.4)",
+            boxShadow: "0 4px 12px rgba(22, 163, 74, 0.2)",
+            zIndex: 2,
           }}>
-            <div style={{ fontFamily: "'Inter'", fontSize: "0.58rem", color: "rgba(255,255,255,0.75)" }}>from</div>
-            <div style={{ fontFamily: "'Outfit'", fontWeight: "800", fontSize: "0.95rem", color: "var(--text-primary)" }}>
+            <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: "600", color: "rgba(255,255,255,0.85)", textTransform: "uppercase" }}>from</div>
+            <div style={{ fontFamily: "var(--font-montserrat)", fontWeight: "800", fontSize: "0.95rem", color: "#FFFFFF" }}>
               ₹{dest.basePrice.toLocaleString("en-IN")}
             </div>
           </div>
 
           {/* Dest name on image */}
-          <div style={{ position: "absolute", bottom: "14px", left: "14px" }}>
+          <div style={{ 
+            position: "absolute", bottom: "14px", left: "14px", 
+            background: "rgba(255, 255, 255, 0.15)", 
+            backdropFilter: "blur(12px)", 
+            WebkitBackdropFilter: "blur(12px)",
+            padding: "10px 14px", borderRadius: "12px", 
+            border: "1px solid rgba(255, 255, 255, 0.25)",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
+            zIndex: 2,
+          }}>
             <h3 style={{
-              fontFamily: "'Outfit'", fontWeight: "900", fontSize: "1.5rem",
-              color: "var(--text-primary)", lineHeight: "1", letterSpacing: "-0.02em",
+              fontFamily: "var(--font-playfair), serif", fontWeight: "800", fontSize: "1.2rem",
+              color: "#FFFFFF", lineHeight: "1.1", letterSpacing: "-0.01em", marginBottom: "2px"
             }}>{dest.name}</h3>
-            <p style={{ fontFamily: "'Outfit'", fontStyle: "italic", fontSize: "0.72rem", color: "#E5C158" }}>
+            <p style={{ fontFamily: "var(--font-montserrat), sans-serif", fontWeight: "600", fontSize: "0.68rem", color: "var(--accent)" }}>
               {dest.tagline}
             </p>
           </div>
         </div>
 
         {/* Body */}
-        <div style={{ padding: "16px 18px", flex: 1, display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div style={{ padding: "20px", flex: 1, display: "flex", flexDirection: "column", gap: "14px" }}>
           {/* Stats */}
-          <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
             {[
-              { icon: Clock, val: dest.duration, color: "var(--accent-gold)" },
-              { icon: Users, val: dest.groupSize, color: "#9098B8" },
-              { icon: Star, val: `${dest.rating} (${dest.reviewCount.toLocaleString()})`, color: "#E5C158" },
+              { icon: Clock, val: dest.duration, color: "var(--accent)" },
+              { icon: Users, val: dest.groupSize, color: "var(--secondary)" },
+              { icon: Star, val: `${dest.rating} (${dest.reviewCount.toLocaleString()})`, color: "var(--accent)" },
             ].map(({ icon: Icon, val, color }) => (
               <div key={val} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                <Icon size={12} color={color} fill={color === "#E5C158" ? "#E5C158" : "none"} />
-                <span style={{ fontFamily: "'Inter'", fontSize: "0.75rem", color: "var(--text-secondary)", fontWeight: "500" }}>
+                <Icon size={13} color={color} fill={color === "var(--accent)" && val.includes("(") ? "var(--accent)" : "none"} />
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", color: "var(--text-secondary)", fontWeight: "600" }}>
                   {val}
                 </span>
               </div>
@@ -254,26 +276,26 @@ export default function DestinationCard({ destination: dest, index = 0, featured
 
           {/* Description */}
           <p style={{
-            fontFamily: "'Inter'", fontSize: "0.8rem", color: "var(--text-secondary)",
-            lineHeight: "1.65", flex: 1,
+            fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "var(--text-secondary)",
+            lineHeight: "1.6", flex: 1,
             display: "-webkit-box", WebkitLineClamp: 3,
             WebkitBoxOrient: "vertical", overflow: "hidden",
           }}>{dest.description}</p>
 
           {/* Highlights Strip */}
           <div style={{
-            background: "rgba(197,160,89,0.06)", border: "1px solid rgba(197,160,89,0.12)",
-            borderRadius: "10px", padding: "10px 12px",
+            background: "rgba(0, 184, 169, 0.05)", border: "1px solid rgba(0, 184, 169, 0.12)",
+            borderRadius: "12px", padding: "10px 14px",
           }}>
             <div style={{
-              fontFamily: "'Outfit'", fontSize: "0.65rem", fontWeight: "700",
-              color: "var(--accent-gold)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "6px",
+              fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", fontWeight: "700",
+              color: "var(--secondary)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "6px",
             }}>Top Highlights</div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
               {dest.highlights.slice(0, 2).map((h) => (
                 <div key={h} style={{ display: "flex", alignItems: "flex-start", gap: "6px" }}>
-                  <span style={{ color: "var(--accent-gold)", fontSize: "0.65rem", marginTop: "1px", flexShrink: 0 }}>▸</span>
-                  <span style={{ fontFamily: "'Inter'", fontSize: "0.72rem", color: "rgba(240,240,255,0.7)", lineHeight: "1.4" }}>
+                  <span style={{ color: "var(--secondary)", fontSize: "0.7rem", marginTop: "1px", flexShrink: 0 }}>▸</span>
+                  <span style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.72rem", color: "var(--text-primary)", lineHeight: "1.4", fontWeight: "500" }}>
                     {h}
                   </span>
                 </div>
@@ -284,20 +306,22 @@ export default function DestinationCard({ destination: dest, index = 0, featured
           {/* Tags + CTA */}
           <div style={{
             display: "flex", alignItems: "center", justifyContent: "space-between",
-            paddingTop: "10px", borderTop: "1px solid rgba(26,43,60,0.05)",
+            paddingTop: "12px", borderTop: "1px solid var(--border-subtle)",
+            marginTop: "auto"
           }}>
-            <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
               {dest.tags.slice(0, 2).map((t) => (
                 <span key={t} style={{
-                  background: "rgba(26,43,60,0.05)", border: "1px solid rgba(255,255,255,0.09)",
-                  borderRadius: "5px", padding: "2px 8px",
-                  fontFamily: "'Outfit'", fontSize: "0.65rem", color: "rgba(26,43,60,0.55)",
+                  background: "var(--bg-elevated)", border: "1px solid var(--border-subtle)",
+                  borderRadius: "6px", padding: "3px 8px",
+                  fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", color: "var(--text-secondary)",
+                  fontWeight: "600"
                 }}>{t}</span>
               ))}
             </div>
             <div style={{
               display: "flex", alignItems: "center", gap: "4px",
-              fontFamily: "'Outfit'", fontWeight: "700", fontSize: "0.78rem", color: "var(--accent-gold)",
+              fontFamily: "var(--font-montserrat)", fontWeight: "700", fontSize: "0.78rem", color: "var(--accent)",
             }}>View <ArrowRight size={13} /></div>
           </div>
         </div>

@@ -9,7 +9,7 @@ interface Props {
 
 export default function RelatedDestinations({ destinations }: Props) {
   return (
-    <div style={{
+    <div className="related-grid" style={{
       display: "grid",
       gridTemplateColumns: "repeat(3, 1fr)",
       gap: "20px",

@@ -1,129 +1,81 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, MapPin, Clock, Star, TrendingUp } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { MapPin, Calendar, Users, Compass, Star } from "lucide-react";
 
-const DESTINATIONS = [
-  {
-    slug: "kerala",
-    name: "Kerala",
-    subtitle: "God's Own Country",
-    country: "India",
-    flag: "🇮🇳",
-    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1920&q=90",
-    color: "var(--accent-gold)",
-    price: "₹24,999",
-    duration: "7D/6N",
-    rating: "4.8",
-    mood: "Serene & Spiritual",
-  },
-  {
-    slug: "thailand",
-    name: "Thailand",
-    subtitle: "Land of Smiles",
-    country: "Thailand",
-    flag: "🇹🇭",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90",
-    color: "#D4AF37",
-    price: "₹39,999",
-    duration: "8D/7N",
-    rating: "4.9",
-    mood: "Vibrant & Exotic",
-  },
-  {
-    slug: "philippines",
-    name: "Philippines",
-    subtitle: "More Than the Expected",
-    country: "Philippines",
-    flag: "🇵🇭",
-    image: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=1920&q=90",
-    color: "#1A2B3C",
-    price: "₹44,999",
-    duration: "8D/7N",
-    rating: "4.7",
-    mood: "Tropical & Wild",
-  },
-  {
-    slug: "singapore",
-    name: "Singapore",
-    subtitle: "The Lion City",
-    country: "Singapore",
-    flag: "🇸🇬",
-    image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1920&q=90",
-    color: "var(--accent-navy)",
-    price: "₹54,999",
-    duration: "5D/4N",
-    rating: "4.8",
-    mood: "Ultra-Modern",
-  },
-  {
-    slug: "south-africa",
-    name: "South Africa",
-    subtitle: "A World in One Country",
-    country: "South Africa",
-    flag: "🇿🇦",
-    image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1920&q=90",
-    color: "#8B5A2B",
-    price: "₹89,999",
-    duration: "10D/9N",
-    rating: "4.9",
-    mood: "Wild & Dramatic",
-  },
-  {
-    slug: "south-korea",
-    name: "South Korea",
-    subtitle: "Ancient Meets Ultra-Modern",
-    country: "South Korea",
-    flag: "🇰🇷",
-    image: "https://images.unsplash.com/photo-1617541086271-4d8e21a9d439?w=1920&q=90",
-    color: "#C5A059",
-    price: "₹49,999",
-    duration: "7D/6N",
-    rating: "4.8",
-    mood: "Trendy & Cultural",
-  },
+const DESTINATIONS_LIST = [
+  { slug: "kerala", name: "Kerala, India", flag: "🇮🇳", image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1920&q=90" },
+  { slug: "thailand", name: "Phuket, Thailand", flag: "🇹🇭", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90" },
+  { slug: "philippines", name: "Palawan, Philippines", flag: "🇵🇭", image: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=1920&q=90" },
+  { slug: "singapore", name: "Singapore City", flag: "🇸🇬", image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1920&q=90" },
+  { slug: "south-africa", name: "Kruger, South Africa", flag: "🇿🇦", image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1920&q=90" },
+  { slug: "south-korea", name: "Seoul, South Korea", flag: "🇰🇷", image: "https://images.unsplash.com/photo-1617541086271-4d8e21a9d439?w=1920&q=90" }
 ];
 
 export default function HeroSection() {
-  const [active, setActive] = useState(0);
-  const [prev, setPrev] = useState(-1);
+  const router = useRouter();
+  const [activeSlide, setActiveSlide] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const goTo = (idx: number) => {
-    if (idx === active || transitioning) return;
-    setTransitioning(true);
-    setPrev(active);
-    setActive(idx);
-    setTimeout(() => {
-      setPrev(-1);
-      setTransitioning(false);
-    }, 700);
+  // Search Module states
+  const [selectedDest, setSelectedDest] = useState("");
+  const [destDropdownOpen, setDestDropdownOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedGuests, setSelectedGuests] = useState("2 Travelers");
+  const [guestsDropdownOpen, setGuestsDropdownOpen] = useState(false);
+
+  const destRef = useRef<HTMLDivElement>(null);
+  const guestsRef = useRef<HTMLDivElement>(null);
+
+  // Auto slide rotation
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTransitioning(true);
+      setTimeout(() => {
+        setActiveSlide((prev) => (prev + 1) % DESTINATIONS_LIST.length);
+        setTransitioning(false);
+      }, 500);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Close dropdowns on outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (destRef.current && !destRef.current.contains(event.target as Node)) {
+        setDestDropdownOpen(false);
+      }
+      if (guestsRef.current && !guestsRef.current.contains(event.target as Node)) {
+        setGuestsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSearch = () => {
+    if (selectedDest) {
+      router.push(`/destinations/${selectedDest}`);
+    } else {
+      // Default fallback
+      router.push("/#destinations");
+    }
   };
 
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      goTo((active + 1) % DESTINATIONS.length);
-    }, 6000);
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, transitioning]);
-
-  const dest = DESTINATIONS[active];
-
   return (
-    <section
-      style={{
-        position: "relative",
-        height: "100vh",
-        minHeight: "700px",
-        overflow: "hidden",
-        background: "#F0F3F4",
-      }}
-    >
-      {/* ── BG IMAGES ── */}
-      {DESTINATIONS.map((d, i) => (
+    <section style={{
+      position: "relative",
+      height: "100vh",
+      minHeight: "750px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      overflow: "hidden",
+      background: "var(--primary)",
+    }}>
+      {/* ── BACKGROUND IMAGE SLIDER ── */}
+      {DESTINATIONS_LIST.map((d, idx) => (
         <div
           key={d.slug}
           style={{
@@ -132,249 +84,316 @@ export default function HeroSection() {
             backgroundImage: `url(${d.image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            opacity: i === active ? 1 : i === prev ? 0 : 0,
-            transition: "opacity 0.8s ease",
+            opacity: idx === activeSlide ? 1 : 0,
+            transform: idx === activeSlide ? "scale(1.05)" : "scale(1)",
+            transition: "opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 6s ease-in-out",
             zIndex: 0,
           }}
         />
       ))}
 
-      {/* ── MULTI-LAYER GRADIENT ── */}
-      <div style={{ position: "absolute", inset: 0, zIndex: 1,
-        background: "rgba(240,243,244,0.3)" }} />
-      <div style={{ position: "absolute", inset: 0, zIndex: 1,
-        background: "rgba(240,243,244,0.3)" }} />
-
-      {/* ── ACCENT GLOW ── */}
+      {/* ── DEEP OCEAN BLUE GRADIENT OVERLAY ── */}
       <div style={{
-        position: "absolute", left: "-10%", top: "20%",
-        width: "500px", height: "500px", borderRadius: "50%",
-        display: "none",
+        position: "absolute",
+        inset: 0,
+        background: "linear-gradient(to bottom, rgba(10, 37, 64, 0.4) 0%, rgba(10, 37, 64, 0.75) 100%)",
+        zIndex: 1,
       }} />
 
-      <div className="container" style={{ position: "relative", zIndex: 2, height: "100%", display: "flex", alignItems: "center" }}>
-        <div className="hero-grid" style={{
-          display: "grid", gridTemplateColumns: "1fr 340px", gap: "60px",
-          width: "100%", alignItems: "center",
+      {/* ── HERO CONTENT ── */}
+      <div className="container" style={{
+        position: "relative",
+        zIndex: 2,
+        textAlign: "center",
+        color: "#FFFFFF",
+        paddingTop: "80px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}>
+        
+        {/* Trust Rating Indicator */}
+        <div className="animate-fade-up" style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "8px",
+          background: "rgba(255, 255, 255, 0.15)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          border: "1px solid rgba(255, 255, 255, 0.25)",
+          borderRadius: "50px",
+          padding: "8px 18px",
+          marginBottom: "24px",
+          boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
         }}>
-          {/* LEFT — MAIN TEXT */}
-          <div style={{ maxWidth: "720px", marginTop: "-60px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "24px" }}>
+          <div style={{ display: "flex", gap: "2px" }}>
+            {[1, 2, 3, 4, 5].map((s) => (
+              <Star key={s} size={13} fill="var(--accent)" color="var(--accent)" />
+            ))}
+          </div>
+          <span style={{
+            fontFamily: "var(--font-montserrat), sans-serif",
+            fontSize: "0.78rem",
+            fontWeight: "600",
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+            color: "#FAFAF7",
+          }}>
+            Rated 4.9/5 by 12,000+ Luxury Travelers
+          </span>
+        </div>
+
+        {/* Headline */}
+        <h1 className="animate-fade-up" style={{
+          fontFamily: "var(--font-playfair), serif",
+          fontSize: "clamp(2.5rem, 6.5vw, 4.8rem)",
+          fontWeight: "800",
+          color: "#FAFAF7",
+          lineHeight: "1.1",
+          maxWidth: "1000px",
+          margin: "0 auto 20px",
+          letterSpacing: "-0.02em",
+          textShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+        }}>
+          Discover Extraordinary Journeys <br />
+          <span style={{
+            background: "linear-gradient(135deg, var(--secondary) 0%, #FAFAF7 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            color: "transparent",
+            display: "inline-block"
+          }}>Around the World</span>
+        </h1>
+
+        {/* Description */}
+        <p className="animate-fade-up" style={{
+          fontFamily: "var(--font-montserrat), sans-serif",
+          fontSize: "clamp(0.95rem, 2vw, 1.25rem)",
+          color: "rgba(250, 250, 247, 0.85)",
+          maxWidth: "680px",
+          margin: "0 auto 48px",
+          lineHeight: "1.6",
+          fontWeight: "500",
+          textShadow: "0 2px 10px rgba(0, 0, 0, 0.15)",
+        }}>
+          Bespoke, day-by-day luxury itineraries comparison-tested for absolute value. Crafted by travel specialists with over two decades of design excellence.
+        </p>
+
+        {/* ── FLOATING GLASSMORPHISM SEARCH MODULE ── */}
+        <div className="animate-fade-up hero-search-grid" style={{
+          width: "100%",
+          maxWidth: "960px",
+          background: "rgba(255, 255, 255, 0.12)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
+          borderRadius: "24px",
+          padding: "16px 24px",
+          boxShadow: "0 24px 64px rgba(10, 37, 64, 0.35)",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr auto",
+          gap: "16px",
+          alignItems: "center",
+          textAlign: "left",
+          marginBottom: "60px",
+        }}>
+          
+          {/* 1. Destination Dropdown */}
+          <div ref={destRef} style={{ position: "relative", cursor: "pointer" }} onClick={() => setDestDropdownOpen(!destDropdownOpen)}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px" }}>
+              <div style={{ color: "var(--secondary)" }}><MapPin size={20} /></div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <span style={{ display: "block", fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: "700", textTransform: "uppercase", color: "rgba(250, 250, 247, 0.65)", letterSpacing: "0.08em" }}>Where to?</span>
+                <span style={{ display: "block", fontFamily: "var(--font-playfair)", fontSize: "0.95rem", fontWeight: "700", color: "#FAFAF7", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginTop: "2px" }}>
+                  {selectedDest ? DESTINATIONS_LIST.find(d => d.slug === selectedDest)?.name : "Explore destinations"}
+                </span>
+              </div>
+            </div>
+            
+            {destDropdownOpen && (
               <div style={{
-                background: "var(--bg-card)",
-                padding: "8px 16px", borderRadius: "50px",
-                display: "inline-flex", alignItems: "center", gap: "10px",
-                fontFamily: "var(--font-playfair), serif", fontSize: "0.85rem", fontWeight: "700",
-                color: "var(--text-primary)",
-                border: "1px solid rgba(26,43,60,0.1)",
+                position: "absolute", top: "calc(100% + 14px)", left: 0, right: 0,
+                background: "#FFFFFF", borderRadius: "16px", padding: "10px",
+                boxShadow: "0 10px 30px rgba(10, 37, 64, 0.2)",
+                zIndex: 100, display: "flex", flexDirection: "column", gap: "4px"
               }}>
-                <MapPin size={14} color={dest.color} />
-                {dest.country}
+                {DESTINATIONS_LIST.map((dest) => (
+                  <button
+                    key={dest.slug}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedDest(dest.slug);
+                      setDestDropdownOpen(false);
+                    }}
+                    style={{
+                      display: "flex", alignItems: "center", gap: "10px",
+                      width: "100%", padding: "10px 12px", border: "none",
+                      background: selectedDest === dest.slug ? "rgba(0, 184, 169, 0.08)" : "transparent",
+                      borderRadius: "10px", textAlign: "left", cursor: "pointer",
+                      fontFamily: "var(--font-montserrat)", fontSize: "0.85rem",
+                      fontWeight: "600", color: "var(--primary)",
+                      transition: "background 0.2s ease"
+                    }}
+                    onMouseEnter={(e) => { if (selectedDest !== dest.slug) e.currentTarget.style.background = "rgba(10, 37, 64, 0.03)"; }}
+                    onMouseLeave={(e) => { if (selectedDest !== dest.slug) e.currentTarget.style.background = "transparent"; }}
+                  >
+                    <span style={{ fontSize: "16px" }}>{dest.flag}</span>
+                    <span>{dest.name}</span>
+                  </button>
+                ))}
               </div>
-              <p style={{
-                fontFamily: "var(--font-playfair), serif", fontWeight: "600", fontSize: "1rem",
-                color: "rgba(26,43,60,0.9)", letterSpacing: "0.05em",
-                textTransform: "uppercase",
-              }}>
-                &ldquo;{dest.subtitle}&rdquo;
-              </p>
-            </div>
-
-            {/* Tagline */}
-            <p style={{
-              fontFamily: "var(--font-montserrat), sans-serif",
-              fontSize: "1.05rem",
-              color: "rgba(240,240,255,0.75)",
-              maxWidth: "500px",
-              lineHeight: "1.75",
-              marginBottom: "40px",
-            }}>
-              Curated day-by-day itineraries, luxury stays, and unbeatable prices — for the world&apos;s most captivating destinations.
-            </p>
-
-            {/* Pills Row */}
-            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginBottom: "40px" }}>
-              {[
-                { icon: Clock, label: dest.duration, color: "var(--accent-gold)" },
-                { icon: Star, label: `${dest.rating} Rating`, color: "#E5C158" },
-                { icon: TrendingUp, label: "Best Value", color: "#FF6F59" },
-              ].map(({ icon: Icon, label, color }) => (
-                <div key={label} style={{
-                  display: "flex", alignItems: "center", gap: "7px",
-                  background: "rgba(26,43,60,0.06)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  backdropFilter: "blur(12px)",
-                  borderRadius: "50px",
-                  padding: "8px 16px",
-                }}>
-                  <Icon size={14} color={color} />
-                  <span style={{
-                    fontFamily: "var(--font-playfair), serif", fontSize: "0.8rem",
-                    fontWeight: "600", color: "rgba(255,255,255,0.9)",
-                  }}>{label}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* CTAs */}
-            <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
-              <Link href={`/destinations/${dest.slug}`} className="btn-primary"
-                style={{ fontSize: "0.95rem", padding: "14px 32px" }}>
-                Explore {dest.name} <ArrowRight size={17} />
-              </Link>
-              <Link href="/#destinations" className="btn-secondary"
-                style={{ fontSize: "0.95rem", padding: "14px 28px" }}>
-                All Destinations
-              </Link>
-            </div>
+            )}
           </div>
 
-          {/* RIGHT — DESTINATION SWITCHER */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            {DESTINATIONS.map((d, i) => (
-              <button
-                key={d.slug}
-                onClick={() => { if (intervalRef.current) clearInterval(intervalRef.current); goTo(i); }}
-                style={{
-                  display: "flex", alignItems: "center", gap: "12px",
-                  padding: "14px 18px",
-                  background: i === active
-                    ? "rgba(26,43,60,0.1)"
-                    : "rgba(26,43,60,0.03)",
-                  border: i === active
-                    ? `1px solid ${d.color}50`
-                    : "1px solid rgba(26,43,60,0.06)",
-                  borderRadius: "14px",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  backdropFilter: "blur(12px)",
-                  textAlign: "left",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-                onMouseEnter={(e) => {
-                  if (i !== active) {
-                    e.currentTarget.style.background = "rgba(26,43,60,0.07)";
-                    e.currentTarget.style.borderColor = `${d.color}40`;
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (i !== active) {
-                    e.currentTarget.style.background = "rgba(26,43,60,0.03)";
-                    e.currentTarget.style.borderColor = "rgba(26,43,60,0.06)";
-                  }
-                }}
-              >
-                {/* Active indicator */}
-                {i === active && (
-                  <div style={{
-                    position: "absolute", left: 0, top: 0, bottom: 0, width: "3px",
-                    background: d.color, borderRadius: "0 2px 2px 0",
-                  }} />
-                )}
+          {/* Vertical divider line */}
+          <div style={{ width: "1px", height: "40px", background: "rgba(255, 255, 255, 0.15)", display: "none" }} />
 
-                {/* Thumb */}
-                <div style={{
-                  width: "44px", height: "44px", borderRadius: "10px",
-                  overflow: "hidden", flexShrink: 0,
-                  border: `2px solid ${i === active ? d.color + "60" : "transparent"}`,
-                  transition: "border-color 0.3s ease",
-                }}>
-                  <img src={d.image} alt={d.name}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                </div>
-
-                {/* Text */}
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    <span style={{ fontSize: "14px" }}>{d.flag}</span>
-                    <span style={{
-                      fontFamily: "var(--font-playfair), serif", fontWeight: "700",
-                      fontSize: "0.88rem", color: i === active ? "white" : "rgba(26,43,60,0.65)",
-                      transition: "color 0.3s ease",
-                    }}>{d.name}</span>
-                  </div>
-                  <div style={{
-                    fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.72rem",
-                    color: i === active ? d.color : "rgba(26,43,60,0.35)",
-                    transition: "color 0.3s ease",
+          {/* 2. Date Input Selector */}
+          <div style={{ cursor: "pointer", position: "relative" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px" }}>
+              <div style={{ color: "var(--secondary)" }}><Calendar size={20} /></div>
+              <div style={{ flex: 1, minWidth: 0, position: "relative" }}>
+                <span style={{ display: "block", fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: "700", textTransform: "uppercase", color: "rgba(250, 250, 247, 0.65)", letterSpacing: "0.08em" }}>When?</span>
+                <input
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  style={{
+                    background: "transparent", border: "none", outline: "none",
+                    fontFamily: "var(--font-playfair)", fontSize: "0.95rem", fontWeight: "700",
+                    color: "#FAFAF7", width: "100%", cursor: "pointer",
                     marginTop: "2px",
-                  }}>{d.price} · {d.duration}</div>
-                </div>
-
-                {/* Arrow */}
-                {i === active && (
-                  <ArrowRight size={14} color={d.color} style={{ flexShrink: 0 }} />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ── BOTTOM STATS BAR ── */}
-      <div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 2,
-        background: "rgba(240,243,244,0.3)",
-        padding: "24px 0 32px",
-      }}>
-        <div className="container">
-          <div style={{ display: "flex", gap: "0", alignItems: "center", flexWrap: "wrap" }}>
-            {[
-              { value: "6", label: "Curated Destinations", suffix: "+" },
-              { value: "12,000", label: "Happy Travellers", suffix: "+" },
-              { value: "4.8", label: "Average Rating", suffix: "★" },
-              { value: "100", label: "Price Match Guarantee", suffix: "%" },
-            ].map((stat, i) => (
-              <div key={stat.label} style={{
-                flex: 1, minWidth: "150px",
-                padding: "0 28px",
-                borderRight: i < 3 ? "1px solid rgba(26,43,60,0.08)" : "none",
-                textAlign: "center",
-              }}>
-                <div style={{
-                  fontFamily: "var(--font-playfair), serif", fontWeight: "900",
-                  fontSize: "1.8rem", lineHeight: "1",
-                  color: "var(--accent-navy)",
-                  display: "flex", alignItems: "baseline", justifyContent: "center",
-                  whiteSpace: "nowrap"
-                }}>
-                  {stat.value}{stat.suffix}
-                </div>
-                <div style={{
-                  fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.75rem",
-                  color: "rgba(26,43,60,0.45)", marginTop: "4px",
-                }}>{stat.label}</div>
+                  }}
+                />
               </div>
+            </div>
+          </div>
+
+          {/* Vertical divider line */}
+          <div style={{ width: "1px", height: "40px", background: "rgba(255, 255, 255, 0.15)", display: "none" }} />
+
+          {/* 3. Guests Selector */}
+          <div ref={guestsRef} style={{ position: "relative", cursor: "pointer" }} onClick={() => setGuestsDropdownOpen(!guestsDropdownOpen)}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px" }}>
+              <div style={{ color: "var(--secondary)" }}><Users size={20} /></div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <span style={{ display: "block", fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: "700", textTransform: "uppercase", color: "rgba(250, 250, 247, 0.65)", letterSpacing: "0.08em" }}>Travelers</span>
+                <span style={{ display: "block", fontFamily: "var(--font-playfair)", fontSize: "0.95rem", fontWeight: "700", color: "#FAFAF7", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginTop: "2px" }}>
+                  {selectedGuests}
+                </span>
+              </div>
+            </div>
+
+            {guestsDropdownOpen && (
+              <div style={{
+                position: "absolute", top: "calc(100% + 14px)", left: 0, right: 0,
+                background: "#FFFFFF", borderRadius: "16px", padding: "10px",
+                boxShadow: "0 10px 30px rgba(10, 37, 64, 0.2)",
+                zIndex: 100, display: "flex", flexDirection: "column", gap: "4px"
+              }}>
+                {["1 Traveler", "2 Travelers", "3-4 Travelers", "5+ Luxury Group"].map((g) => (
+                  <button
+                    key={g}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedGuests(g);
+                      setGuestsDropdownOpen(false);
+                    }}
+                    style={{
+                      width: "100%", padding: "10px 12px", border: "none",
+                      background: selectedGuests === g ? "rgba(0, 184, 169, 0.08)" : "transparent",
+                      borderRadius: "10px", textAlign: "left", cursor: "pointer",
+                      fontFamily: "var(--font-montserrat)", fontSize: "0.85rem",
+                      fontWeight: "600", color: "var(--primary)",
+                      transition: "background 0.2s ease"
+                    }}
+                    onMouseEnter={(e) => { if (selectedGuests !== g) e.currentTarget.style.background = "rgba(10, 37, 64, 0.03)"; }}
+                    onMouseLeave={(e) => { if (selectedGuests !== g) e.currentTarget.style.background = "transparent"; }}
+                  >
+                    {g}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* 4. Search CTA Button */}
+          <button
+            onClick={handleSearch}
+            className="btn-primary"
+            style={{
+              padding: "16px 28px",
+              height: "100%",
+              minHeight: "56px",
+              borderRadius: "16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              background: "var(--accent)",
+              border: "none",
+              color: "#FFFFFF",
+              fontSize: "0.95rem",
+              fontWeight: "700",
+              cursor: "pointer",
+              boxShadow: "0 4px 16px rgba(255, 122, 89, 0.3)",
+              transition: "all 0.3s ease",
+            }}
+          >
+            <Compass size={18} />
+            Search
+          </button>
+        </div>
+
+        {/* ── TRUSTED BY BRAND LOGOS ── */}
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "14px",
+          width: "100%",
+        }}>
+          <p style={{
+            fontFamily: "var(--font-montserrat), sans-serif",
+            fontSize: "0.68rem",
+            fontWeight: "700",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "rgba(250, 250, 247, 0.5)",
+          }}>
+            Trusted Partner of Leading Luxury Publications & Guides
+          </p>
+          <div style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "40px",
+            flexWrap: "wrap",
+            opacity: 0.65,
+          }}>
+            {["CONDE NAST", "VIRTUOSO", "AMAN RESORTS", "FORBES TRAVEL GUIDE", "LEISURE & TRAVEL"].map((brand) => (
+              <span key={brand} style={{
+                fontFamily: "var(--font-playfair), serif",
+                fontSize: "0.9rem",
+                fontWeight: "800",
+                color: "#FAFAF7",
+                letterSpacing: "0.06em",
+              }}>{brand}</span>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* ── PROGRESS BAR ── */}
-      <div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0, height: "3px",
-        background: "rgba(26,43,60,0.05)", zIndex: 3,
-      }}>
-        <div
-          key={active}
-          style={{
-            height: "100%", width: "100%",
-            background: "var(--accent-emerald)",
-            transform: "scaleX(0)", transformOrigin: "left",
-            animation: "progressBar 6s linear forwards",
-          }}
-        />
       </div>
 
       <style>{`
-        @keyframes progressBar {
-          from { transform: scaleX(0); }
-          to   { transform: scaleX(1); }
-        }
-        @media (max-width: 1000px) {
-          .hero-grid { grid-template-columns: 1fr !important; }
-          .hero-switcher { display: none !important; }
+        @media (max-width: 800px) {
+          .hero-search-grid {
+            grid-template-columns: 1fr !important;
+            padding: 20px !important;
+            border-radius: 20px !important;
+            gap: 12px !important;
+          }
         }
       `}</style>
     </section>

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { destinations } from "../../lib/destinations";
 import PriceCompareTable from "../components/PriceCompareTable";
-import { BarChart2, TrendingDown, CheckCircle, ArrowRight } from "lucide-react";
+import { BarChart2, ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
 
 export default function ComparePage() {
@@ -44,7 +44,7 @@ export default function ComparePage() {
       <section style={{
         padding: "160px 0 80px",
         background: "var(--bg-card)",
-        borderBottom: "1px solid rgba(26,43,60,0.05)",
+        borderBottom: "1px solid var(--border-subtle)",
         position: "relative", overflow: "hidden",
       }}>
         {/* Decorative Grid & Glows */}
@@ -53,19 +53,25 @@ export default function ComparePage() {
           background: "var(--bg-elevated)",
           backgroundSize: "40px 40px", opacity: 0.5, pointerEvents: "none",
         }} />
-        <div style={{
-          position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)",
-          width: "600px", height: "600px", borderRadius: "50%",
-          display: "none",
-        }} />
+
         <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
-          <span className="section-label" style={{ justifyContent: "center" }}>Transparency First</span>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: "6px",
+            background: "rgba(0, 184, 169, 0.1)", color: "var(--secondary)",
+            padding: "6px 14px", borderRadius: "50px",
+            fontFamily: "var(--font-montserrat)", fontSize: "0.75rem",
+            fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.08em",
+            marginBottom: "16px", justifyContent: "center"
+          }}>
+            Transparency First
+          </div>
           <h1 className="section-title" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", marginBottom: "24px" }}>
             Compare & <span className="gradient-text">Save Thousands</span>
           </h1>
           <p style={{
             fontFamily: "var(--font-montserrat), sans-serif", fontSize: "1.1rem",
-            color: "var(--text-secondary)", maxWidth: "600px", margin: "0 auto", lineHeight: "1.6"
+            color: "var(--text-secondary)", maxWidth: "600px", margin: "0 auto", lineHeight: "1.7",
+            fontWeight: "500"
           }}>
             See exactly how WanderLux stacks up against other premium travel providers. We believe in transparent pricing, superior luxury, and unmatched value.
           </p>
@@ -75,14 +81,14 @@ export default function ComparePage() {
       {/* ── MAIN CONTENT ── */}
       <div className="container" style={{
         padding: "80px 24px",
-        display: "grid", gridTemplateColumns: "250px 1fr", gap: "60px",
+        display: "grid", gridTemplateColumns: "260px 1fr", gap: "60px",
         alignItems: "flex-start",
-      }}>
+      }} >
         {/* SIDEBAR NAVIGATION (Scroll Spy) */}
         <aside style={{ position: "sticky", top: "120px" }}>
           <h4 style={{
-            fontFamily: "'Outfit'", fontWeight: "800", fontSize: "1.2rem",
-            color: "var(--text-primary)", marginBottom: "24px", letterSpacing: "-0.01em"
+            fontFamily: "var(--font-playfair)", fontWeight: "800", fontSize: "1.25rem",
+            color: "var(--primary)", marginBottom: "24px", letterSpacing: "-0.01em"
           }}>Destinations</h4>
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             {destinations.map((dest) => (
@@ -91,13 +97,14 @@ export default function ComparePage() {
                 onClick={() => scrollTo(dest.slug)}
                 style={{
                   display: "flex", alignItems: "center", gap: "12px",
-                  padding: "12px 16px", borderRadius: "12px", border: "none",
-                  background: activeSection === dest.slug ? "var(--accent-navy)" : "transparent",
+                  padding: "12px 18px", borderRadius: "14px", border: "none",
+                  background: activeSection === dest.slug ? "var(--secondary)" : "transparent",
                   cursor: "pointer", transition: "all 0.3s ease",
                   textAlign: "left",
+                  width: "100%"
                 }}
                 onMouseEnter={(e) => {
-                  if (activeSection !== dest.slug) e.currentTarget.style.background = "rgba(26,43,60,0.05)";
+                  if (activeSection !== dest.slug) e.currentTarget.style.background = "rgba(10, 37, 64, 0.04)";
                 }}
                 onMouseLeave={(e) => {
                   if (activeSection !== dest.slug) e.currentTarget.style.background = "transparent";
@@ -107,8 +114,8 @@ export default function ComparePage() {
                   {dest.flag}
                 </span>
                 <span style={{
-                  fontFamily: "'Outfit'", fontSize: "0.9rem", fontWeight: activeSection === dest.slug ? "700" : "500",
-                  color: activeSection === dest.slug ? "white" : "var(--text-secondary)",
+                  fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", fontWeight: "700",
+                  color: activeSection === dest.slug ? "#FFFFFF" : "var(--text-secondary)",
                   transition: "all 0.3s ease",
                 }}>
                   {dest.name}
@@ -125,29 +132,29 @@ export default function ComparePage() {
               {/* Destination Header */}
               <div style={{
                 display: "flex", alignItems: "flex-end", justifyContent: "space-between",
-                marginBottom: "32px", paddingBottom: "24px", borderBottom: "1px solid rgba(26,43,60,0.05)",
+                marginBottom: "32px", paddingBottom: "24px", borderBottom: "1px solid var(--border-subtle)",
                 flexWrap: "wrap", gap: "20px",
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
                   <img src={dest.heroImage} alt={dest.name} style={{
                     width: "80px", height: "80px", borderRadius: "16px", objectFit: "cover",
-                    border: "1px solid rgba(26,43,60,0.1)",
+                    border: "1px solid var(--border-subtle)",
                   }} />
                   <div>
                     <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
                       <span style={{ fontSize: "18px" }}>{dest.flag}</span>
                       <h2 style={{
-                        fontFamily: "'Outfit'", fontWeight: "800", fontSize: "2rem",
-                        color: "var(--text-primary)", lineHeight: "1", letterSpacing: "-0.02em",
+                        fontFamily: "var(--font-playfair)", fontWeight: "800", fontSize: "1.8rem",
+                        color: "var(--primary)", lineHeight: "1.1", letterSpacing: "-0.01em",
                       }}>{dest.name}</h2>
                     </div>
-                    <div style={{ fontFamily: "'Inter'", fontSize: "0.85rem", color: "var(--text-secondary)" }}>
+                    <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.82rem", color: "var(--text-secondary)", fontWeight: "500" }}>
                       {dest.duration} · {dest.tagline}
                     </div>
                   </div>
                 </div>
 
-                <Link href={`/destinations/${dest.slug}`} className="btn-secondary" style={{ padding: "10px 20px", fontSize: "0.85rem" }}>
+                <Link href={`/destinations/${dest.slug}`} className="btn-secondary" style={{ padding: "10px 20px", fontSize: "0.82rem" }}>
                   View Full Itinerary <ArrowRight size={14} />
                 </Link>
               </div>
@@ -161,7 +168,7 @@ export default function ComparePage() {
 
       <style>{`
         @media (max-width: 1024px) {
-          .container { grid-template-columns: 1fr !important; }
+          .compare-main-grid { grid-template-columns: 1fr !important; }
           aside { display: none !important; }
         }
       `}</style>

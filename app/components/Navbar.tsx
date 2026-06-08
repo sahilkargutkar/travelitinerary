@@ -38,12 +38,12 @@ export default function Navbar() {
     <>
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
-        transition: "all 0.4s ease",
-        background: scrolled ? "rgba(240,243,244,0.95)" : "transparent",
-        backdropFilter: scrolled ? "blur(24px)" : "blur(0px)",
-        borderBottom: scrolled ? "1px solid rgba(26,43,60,0.06)" : "1px solid transparent",
-        boxShadow: scrolled ? "0 4px 32px rgba(0,0,0,0.4)" : "none",
-        padding: scrolled ? "12px 0" : "20px 0",
+        transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        background: scrolled ? "rgba(250, 250, 247, 0.85)" : "transparent",
+        backdropFilter: scrolled ? "blur(20px)" : "none",
+        borderBottom: scrolled ? "1px solid rgba(10, 37, 64, 0.06)" : "1px solid transparent",
+        boxShadow: scrolled ? "0 4px 30px rgba(10, 37, 64, 0.03)" : "none",
+        padding: scrolled ? "14px 0" : "24px 0",
       }}>
         <div className="container" style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -52,60 +52,66 @@ export default function Navbar() {
           <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "10px" }}>
             <div style={{
               width: "36px", height: "36px", borderRadius: "10px",
-              background: "var(--accent-navy)",
+              background: scrolled ? "var(--primary)" : "#FFFFFF",
               display: "flex", alignItems: "center", justifyContent: "center",
               fontFamily: "var(--font-playfair), serif", fontWeight: "900",
-              fontSize: "1rem", color: "#F0F3F4",
-              boxShadow: "0 4px 16px rgba(197,160,89,0.4)",
+              fontSize: "1.1rem", color: scrolled ? "#FFFFFF" : "var(--primary)",
+              boxShadow: scrolled ? "0 4px 12px rgba(10, 37, 64, 0.15)" : "0 4px 12px rgba(255,255,255,0.1)",
+              transition: "all 0.3s ease",
             }}>W</div>
-            <span style={{ fontFamily: "var(--font-playfair), serif", fontSize: "1.35rem", fontWeight: "900" }}>
-              <span style={{ color: "#F0F0FF" }}>Wander</span>
-              <span style={{ color: "#E5C158" }}>Lux</span>
+            <span style={{
+              fontFamily: "var(--font-playfair), serif",
+              fontSize: "1.45rem",
+              fontWeight: "900",
+              letterSpacing: "-0.02em"
+            }}>
+              <span style={{ color: scrolled ? "var(--primary)" : "#FFFFFF", transition: "color 0.3s ease" }}>Wander</span>
+              <span style={{ color: "var(--accent)" }}>souls</span>
             </span>
           </Link>
 
           {/* DESKTOP NAV */}
-          <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+          <div className="nav-desktop-links" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
             {NAV_LINKS.map((link) =>
               link.sub ? (
                 <div key={link.label} style={{ position: "relative" }}>
                   <button
                     style={{
                       display: "flex", alignItems: "center", gap: "6px",
-                      padding: "8px 14px", background: "transparent", border: "none",
-                      cursor: "pointer", color: "rgba(255,255,255,0.8)",
-                      fontFamily: "var(--font-playfair), serif", fontSize: "0.88rem", fontWeight: "600",
-                      borderRadius: "10px", transition: "all 0.2s ease",
+                      padding: "8px 16px", background: "transparent", border: "none",
+                      cursor: "pointer",
+                      color: scrolled ? "var(--text-primary)" : "rgba(255,255,255,0.9)",
+                      fontFamily: "var(--font-montserrat), sans-serif",
+                      fontSize: "0.85rem",
+                      fontWeight: "600",
+                      borderRadius: "50px",
+                      transition: "all 0.2s ease",
                     }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = "var(--accent-gold)";
-                      e.currentTarget.style.background = "rgba(197,160,89,0.08)";
-                      setDestDropOpen(true);
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "rgba(255,255,255,0.8)";
-                      e.currentTarget.style.background = "transparent";
-                    }}
+                    onMouseEnter={() => setDestDropOpen(true)}
+                    onMouseLeave={() => setDestDropOpen(false)}
                     onClick={() => setDestDropOpen(!destDropOpen)}
                   >
-                    <link.icon size={14} />
                     {link.label}
-                    <ChevronDown size={13} style={{ transition: "transform 0.2s ease", transform: destDropOpen ? "rotate(180deg)" : "none" }} />
+                    <ChevronDown size={13} style={{
+                      transition: "transform 0.3s ease",
+                      transform: destDropOpen ? "rotate(180deg)" : "none"
+                    }} />
                   </button>
 
                   {/* MEGA DROPDOWN */}
                   {destDropOpen && (
                     <div
                       style={{
-                        position: "absolute", top: "calc(100% + 8px)", left: "-20px",
-                        background: "rgba(12,12,24,0.97)", backdropFilter: "blur(30px)",
-                        border: "1px solid rgba(255,255,255,0.09)",
-                        borderRadius: "18px", padding: "16px",
-                        minWidth: "360px",
-                        boxShadow: "0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(197,160,89,0.06)",
-                        display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px",
+                        position: "absolute", top: "calc(100% + 8px)", left: "50%",
+                        transform: "translateX(-50%)",
+                        background: "#FFFFFF",
+                        border: "1px solid rgba(10, 37, 64, 0.08)",
+                        borderRadius: "16px", padding: "16px",
+                        minWidth: "380px",
+                        boxShadow: "0 20px 50px rgba(10, 37, 64, 0.1)",
+                        display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px",
                         zIndex: 1001,
-                        animation: "fadeInUp 0.2s ease",
+                        animation: "fadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
                       }}
                       onMouseEnter={() => setDestDropOpen(true)}
                       onMouseLeave={() => setDestDropOpen(false)}
@@ -116,28 +122,38 @@ export default function Navbar() {
                           href={sub.href}
                           onClick={() => setDestDropOpen(false)}
                           style={{
-                            display: "flex", alignItems: "center", gap: "10px",
-                            padding: "10px 12px", borderRadius: "12px",
+                            display: "flex", alignItems: "center", gap: "12px",
+                            padding: "10px 14px", borderRadius: "10px",
                             textDecoration: "none",
-                            background: "rgba(26,43,60,0.03)",
+                            background: "rgba(10, 37, 64, 0.02)",
                             border: "1px solid transparent",
                             transition: "all 0.2s ease",
                           }}
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.background = "rgba(197,160,89,0.1)";
-                            e.currentTarget.style.borderColor = "rgba(197,160,89,0.2)";
+                            e.currentTarget.style.background = "rgba(0, 184, 169, 0.06)";
+                            e.currentTarget.style.borderColor = "rgba(0, 184, 169, 0.15)";
                           }}
                           onMouseLeave={(e) => {
-                            e.currentTarget.style.background = "rgba(26,43,60,0.03)";
+                            e.currentTarget.style.background = "rgba(10, 37, 64, 0.02)";
                             e.currentTarget.style.borderColor = "transparent";
                           }}
                         >
-                          <span style={{ fontSize: "18px", flexShrink: 0 }}>{sub.flag}</span>
+                          <span style={{ fontSize: "20px", flexShrink: 0 }}>{sub.flag}</span>
                           <div>
-                            <div style={{ fontFamily: "var(--font-playfair), serif", fontWeight: "700", fontSize: "0.85rem", color: "var(--text-primary)" }}>
+                            <div style={{
+                              fontFamily: "var(--font-playfair), serif",
+                              fontWeight: "700",
+                              fontSize: "0.85rem",
+                              color: "var(--primary)"
+                            }}>
                               {sub.label}
                             </div>
-                            <div style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.7rem", color: "var(--accent-gold)" }}>
+                            <div style={{
+                              fontFamily: "var(--font-montserrat), sans-serif",
+                              fontSize: "0.72rem",
+                              color: "var(--accent)",
+                              fontWeight: "500"
+                            }}>
                               from {sub.from}
                             </div>
                           </div>
@@ -152,18 +168,21 @@ export default function Navbar() {
                   href={link.href}
                   style={{
                     display: "flex", alignItems: "center", gap: "6px",
-                    padding: "8px 14px",
-                    color: "rgba(255,255,255,0.8)",
-                    fontFamily: "var(--font-playfair), serif", fontSize: "0.88rem", fontWeight: "600",
-                    borderRadius: "10px", textDecoration: "none",
+                    padding: "8px 16px",
+                    color: scrolled ? "var(--text-primary)" : "rgba(255,255,255,0.9)",
+                    fontFamily: "var(--font-montserrat), sans-serif",
+                    fontSize: "0.85rem",
+                    fontWeight: "600",
+                    borderRadius: "50px",
+                    textDecoration: "none",
                     transition: "all 0.2s ease",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "var(--accent-gold)";
-                    e.currentTarget.style.background = "rgba(197,160,89,0.08)";
+                    e.currentTarget.style.color = "var(--secondary)";
+                    e.currentTarget.style.background = scrolled ? "rgba(10, 37, 64, 0.03)" : "rgba(255, 255, 255, 0.08)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = "rgba(255,255,255,0.8)";
+                    e.currentTarget.style.color = scrolled ? "var(--text-primary)" : "rgba(255,255,255,0.9)";
                     e.currentTarget.style.background = "transparent";
                   }}
                 >
@@ -174,18 +193,30 @@ export default function Navbar() {
           </div>
 
           {/* RIGHT CTA */}
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <Link href="/compare" style={{
-              fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.8rem", fontWeight: "600",
-              color: "rgba(26,43,60,0.55)", textDecoration: "none",
+          <div className="nav-desktop-cta" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+            <a href="tel:+919876543210" style={{
+              fontFamily: "var(--font-montserrat), sans-serif",
+              fontSize: "0.85rem",
+              fontWeight: "600",
+              color: scrolled ? "var(--text-secondary)" : "rgba(255,255,255,0.85)",
+              textDecoration: "none",
               transition: "color 0.2s ease",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.9)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(26,43,60,0.55)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "var(--secondary)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = scrolled ? "var(--text-secondary)" : "rgba(255,255,255,0.85)"; }}
             >
-              ☎ +91 98765 43210
-            </Link>
-            <Link href="/#destinations" className="btn-primary" style={{ padding: "9px 20px", fontSize: "0.85rem" }}>
+              <Phone size={13} />
+              +91 98765 43210
+            </a>
+            <Link href="/#destinations" className="btn-primary" style={{
+              padding: "10px 22px",
+              fontSize: "0.82rem",
+              borderRadius: "50px",
+              boxShadow: scrolled ? "0 4px 14px rgba(255, 122, 89, 0.2)" : "0 4px 14px rgba(0,0,0,0.15)",
+            }}>
               Book Now <ArrowRight size={14} />
             </Link>
           </div>
@@ -193,16 +224,18 @@ export default function Navbar() {
           {/* MOBILE BURGER */}
           <button
             style={{
-              display: "none", background: "rgba(26,43,60,0.06)",
-              border: "1px solid rgba(26,43,60,0.1)",
-              borderRadius: "10px", padding: "8px", cursor: "pointer",
-              color: "var(--text-primary)",
+              display: "none",
+              background: scrolled ? "rgba(10, 37, 64, 0.04)" : "rgba(255, 255, 255, 0.12)",
+              border: scrolled ? "1px solid rgba(10, 37, 64, 0.08)" : "1px solid rgba(255,255,255,0.15)",
+              borderRadius: "50px", padding: "8px", cursor: "pointer",
+              color: scrolled ? "var(--primary)" : "#FFFFFF",
+              transition: "all 0.3s ease",
             }}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
             id="mobile-menu-btn"
           >
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </nav>
@@ -210,35 +243,40 @@ export default function Navbar() {
       {/* MOBILE MENU */}
       {menuOpen && (
         <div style={{
-          position: "fixed", top: "64px", left: 0, right: 0, bottom: 0, zIndex: 999,
-          background: "rgba(240,243,244,0.98)", backdropFilter: "blur(30px)",
+          position: "fixed", top: "72px", left: 0, right: 0, bottom: 0, zIndex: 999,
+          background: "rgba(250, 250, 247, 0.98)",
+          backdropFilter: "blur(30px)",
           padding: "32px 24px",
           overflowY: "auto",
-          animation: "fadeInUp 0.2s ease",
+          animation: "fadeUp 0.3s ease",
         }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             {NAV_LINKS.map((link) => (
               <div key={link.label}>
                 <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
                   style={{
-                    display: "flex", alignItems: "center", gap: "12px",
-                    padding: "14px 16px", borderRadius: "14px",
-                    fontFamily: "var(--font-playfair), serif", fontWeight: "700",
-                    fontSize: "1.05rem", color: "var(--text-primary)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    padding: "14px 20px",
+                    borderRadius: "16px",
+                    fontFamily: "var(--font-playfair), serif",
+                    fontWeight: "700",
+                    fontSize: "1.1rem",
+                    color: "var(--primary)",
                     textDecoration: "none",
-                    background: "rgba(26,43,60,0.04)",
-                    border: "1px solid rgba(26,43,60,0.07)",
+                    background: "rgba(10, 37, 64, 0.03)",
+                    border: "1px solid rgba(10, 37, 64, 0.05)",
                     marginBottom: "6px",
                     transition: "all 0.2s ease",
                   }}
                 >
-                  <link.icon size={18} color="var(--accent-gold)" />
                   {link.label}
                 </Link>
                 {link.sub && (
-                  <div style={{ paddingLeft: "20px", marginBottom: "8px" }}>
+                  <div style={{ paddingLeft: "16px", marginBottom: "12px", display: "flex", flexDirection: "column", gap: "6px" }}>
                     {link.sub.map((sub) => (
                       <Link
                         key={sub.label}
@@ -246,19 +284,29 @@ export default function Navbar() {
                         onClick={() => setMenuOpen(false)}
                         style={{
                           display: "flex", alignItems: "center", gap: "10px",
-                          padding: "10px 14px", borderRadius: "10px",
+                          padding: "10px 16px", borderRadius: "12px",
                           textDecoration: "none",
-                          transition: "background 0.2s ease",
-                          marginBottom: "4px",
+                          background: "rgba(10, 37, 64, 0.01)",
+                          border: "1px solid transparent",
+                          transition: "all 0.2s ease",
                         }}
-                        onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(26,43,60,0.04)"; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
                       >
                         <span style={{ fontSize: "16px" }}>{sub.flag}</span>
-                        <span style={{ fontFamily: "var(--font-playfair), serif", fontSize: "0.9rem", color: "rgba(255,255,255,0.8)" }}>
+                        <span style={{
+                          fontFamily: "var(--font-playfair), serif",
+                          fontSize: "0.95rem",
+                          color: "var(--text-secondary)",
+                          fontWeight: "600"
+                        }}>
                           {sub.label}
                         </span>
-                        <span style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.72rem", color: "var(--accent-gold)", marginLeft: "auto" }}>
+                        <span style={{
+                          fontFamily: "var(--font-montserrat), sans-serif",
+                          fontSize: "0.75rem",
+                          color: "var(--accent)",
+                          marginLeft: "auto",
+                          fontWeight: "600"
+                        }}>
                           {sub.from}
                         </span>
                       </Link>
@@ -268,17 +316,16 @@ export default function Navbar() {
               </div>
             ))}
             <Link href="/#destinations" className="btn-primary" onClick={() => setMenuOpen(false)}
-              style={{ justifyContent: "center", marginTop: "16px", fontSize: "1rem", padding: "14px" }}>
+              style={{ justifyContent: "center", marginTop: "16px", fontSize: "0.95rem", padding: "14px" }}>
               Book Now <ArrowRight size={16} />
             </Link>
           </div>
         </div>
       )}
-
       <style>{`
         @media (max-width: 1024px) {
-          nav > div > div:nth-child(2) { display: none !important; }
-          nav > div > div:nth-child(3) { display: none !important; }
+          .nav-desktop-links { display: none !important; }
+          .nav-desktop-cta { display: none !important; }
           #mobile-menu-btn { display: flex !important; }
         }
       `}</style>
