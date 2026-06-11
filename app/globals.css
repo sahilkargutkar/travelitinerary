@@ -655,3 +655,116 @@ h1, h2, h3, h4, h5, h6 {
   padding: 6px 16px;
   border-radius: 20px;
 }
+
+/* --- MOBILE RESPONSIVENESS PATCHES --- */
+
+/* Destinations section header responsive layout */
+.destinations-header {
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+@media (max-width: 767px) {
+  .destinations-header {
+    text-align: center;
+    align-items: center;
+  }
+}
+@media (min-width: 768px) {
+  .destinations-header {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+/* Interactive World Map Mobile quick selector */
+.mobile-destination-selector {
+  display: none;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 8px 4px 16px;
+  margin-bottom: 20px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Hide scrollbar Firefox */
+}
+.mobile-destination-selector::-webkit-scrollbar {
+  display: none; /* Hide scrollbar Chrome/Safari/Edge */
+}
+@media (max-width: 767px) {
+  .mobile-destination-selector {
+    display: flex !important;
+  }
+}
+
+/* Interactive Map info card responsive behavior */
+.map-info-card {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  width: 320px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .map-info-card {
+    position: static !important;
+    width: 100% !important;
+    margin-top: 24px;
+    box-sizing: border-box;
+  }
+}
+
+/* ── PREMIUM ANIMATIONS & REVEAL UTILITIES ── */
+.reveal-base {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-fade-up {
+  transform: translateY(30px);
+}
+
+.reveal-fade-down {
+  transform: translateY(-30px);
+}
+
+.reveal-fade-left {
+  transform: translateX(30px);
+}
+
+.reveal-fade-right {
+  transform: translateX(-30px);
+}
+
+.reveal-zoom-in {
+  transform: scale(0.95);
+}
+
+.reveal-active {
+  opacity: 1;
+  transform: translate(0) scale(1) !important;
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+.typing-cursor {
+  border-right: 2px solid var(--secondary);
+  animation: blink 0.75s step-end infinite;
+}
+
+/* Progressive width animation helper */
+.bar-fill-animate {
+  width: 0% !important;
+  transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.bar-fill-animate.active {
+  width: var(--target-width) !important;
+}
+

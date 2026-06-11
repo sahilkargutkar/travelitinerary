@@ -3,6 +3,7 @@ import { Playfair_Display, Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import JourneyStats from "./components/JourneyStats";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -17,7 +18,7 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: {
     default: "WanderSouls – Premium Travel Itineraries",
-    template: "%s | WanderLux",
+    template: "%s | WanderSouls",
   },
   description:
     "Discover curated, day-by-day travel itineraries for Kerala, Thailand, Philippines, Singapore, South Africa, South Korea and more. Compare packages vs Veena World & MakeMyTrip. Download PDF itineraries instantly.",
@@ -30,13 +31,13 @@ export const metadata: Metadata = {
     "South Africa safari",
     "South Korea travel",
     "travel comparison",
-    "WanderLux",
+    "WanderSouls",
   ],
   openGraph: {
     title: "WanderSouls – Premium Travel Itineraries",
     description: "Curated travel itineraries with PDF download & price comparison vs Veena World, MakeMyTrip",
     type: "website",
-    siteName: "WanderLux",
+    siteName: "WanderSouls",
   },
 };
 
@@ -55,6 +56,7 @@ export default function RootLayout({
       <body className={`${playfair.variable} ${montserrat.variable} antialiased`}>
         <Navbar />
         <main>{children}</main>
+        <JourneyStats />
         <Footer />
       </body>
     </html>

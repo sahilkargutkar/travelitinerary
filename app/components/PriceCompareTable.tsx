@@ -9,7 +9,7 @@ interface Props {
 }
 
 const PROVIDER_META: Record<string, { color: string; bg: string; logo: string; desc: string; tag: string }> = {
-  WanderLux: {
+  WanderSouls: {
     color: "var(--accent)", bg: "rgba(0, 184, 169, 0.08)",
     logo: "W", desc: "Premium curated itineraries with 24/7 support",
     tag: "Best Value",
@@ -27,7 +27,7 @@ const PROVIDER_META: Record<string, { color: string; bg: string; logo: string; d
 };
 
 export default function PriceCompareTable({ packages, destinationName }: Props) {
-  const wanderPkg = packages.find((p) => p.provider === "WanderLux");
+  const wanderPkg = packages.find((p) => p.provider === "WanderSouls");
   const maxPrice = Math.max(...packages.map((p) => p.price));
 
   return (
@@ -96,7 +96,7 @@ export default function PriceCompareTable({ packages, destinationName }: Props) 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", marginBottom: "24px" }} className="compare-grid-cards">
         {packages.map((pkg, i) => {
           const meta = PROVIDER_META[pkg.provider] || PROVIDER_META["Veena World"];
-          const isWander = pkg.provider === "WanderLux";
+          const isWander = pkg.provider === "WanderSouls";
           const savings = pkg.price - (wanderPkg?.price || 0);
 
           return (
@@ -310,8 +310,8 @@ export default function PriceCompareTable({ packages, destinationName }: Props) 
           { label: "Flights included", render: (pkg: PackagePrice) => pkg.inclusions.some(i => i.toLowerCase().includes("flight") || i.toLowerCase().includes("air")) },
           { label: "Meals included", render: (pkg: PackagePrice) => pkg.inclusions.some(i => i.toLowerCase().includes("meal") || i.toLowerCase().includes("breakfast")) },
           { label: "Guide included", render: (pkg: PackagePrice) => pkg.inclusions.some(i => i.toLowerCase().includes("guide")) },
-          { label: "24/7 Support Desk", render: (pkg: PackagePrice) => pkg.provider === "WanderLux" },
-          { label: "Free PDF Itinerary", render: (pkg: PackagePrice) => pkg.provider === "WanderLux" },
+          { label: "24/7 Support Desk", render: (pkg: PackagePrice) => pkg.provider === "WanderSouls" },
+          { label: "Free PDF Itinerary", render: (pkg: PackagePrice) => pkg.provider === "WanderSouls" },
         ].map((row, ri) => (
           <div key={row.label} style={{
             display: "grid", gridTemplateColumns: "1fr repeat(3, 1fr)",
@@ -327,7 +327,7 @@ export default function PriceCompareTable({ packages, destinationName }: Props) 
             }}>{row.label}</div>
             {packages.map((pkg) => {
               const val = row.render(pkg);
-              const isWander = pkg.provider === "WanderLux";
+              const isWander = pkg.provider === "WanderSouls";
               return (
                 <div key={pkg.provider} style={{
                   padding: "14px 20px", textAlign: "center",

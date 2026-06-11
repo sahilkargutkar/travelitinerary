@@ -77,7 +77,7 @@ export default function AiPlanner() {
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+  }, []);
 
   const handleSend = (text: string, queryKey?: string) => {
     if (!text.trim()) return;

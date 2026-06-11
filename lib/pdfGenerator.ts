@@ -326,5 +326,5 @@ export async function generateItineraryPDF(destination: Destination): Promise<vo
     doc.text(`Page ${p} of ${totalPages}`, pageWidth - 14, pageHeight - 5, { align: "right" });
   }
 
-  doc.save(`WanderLux_${destination.name}_Itinerary.pdf`);
+  doc.save(`WanderSouls_${destination.name}_Itinerary.pdf`);
 }

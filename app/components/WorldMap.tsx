@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { MapPin, Star, ArrowRight, X } from "lucide-react";
 import WorldSvg from "./WorldSvg";
+import { destinations } from "@/lib/destinations";
 
 const MAP_HOTSPOTS = [
   {
@@ -82,6 +83,9 @@ const MAP_HOTSPOTS = [
 
 export default function WorldMap() {
   const [activeSpot, setActiveSpot] = useState<typeof MAP_HOTSPOTS[0] | null>(null);
+  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
+
+  const destDetails = activeSpot ? destinations.find((d) => d.slug === activeSpot.id) : null;
 
   return (
     <section id="world-map" style={{
@@ -151,10 +155,43 @@ export default function WorldMap() {
           padding: "24px",
           boxShadow: "0 20px 50px rgba(0, 0, 0, 0.3)",
         }}>
+          {/* Mobile Destination Quick Selector (only visible on mobile screens) */}
+          <div className="mobile-destination-selector">
+            {MAP_HOTSPOTS.map((spot) => {
+              const isActive = activeSpot?.id === spot.id;
+              return (
+                <button
+                  key={spot.id}
+                  onClick={() => setActiveSpot(spot)}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    background: isActive ? "var(--accent)" : "rgba(255, 255, 255, 0.08)",
+                    border: isActive ? "1px solid var(--accent)" : "1px solid rgba(255, 255, 255, 0.15)",
+                    color: "#FFFFFF",
+                    padding: "8px 16px",
+                    borderRadius: "50px",
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.82rem",
+                    fontWeight: "600",
+                    whiteSpace: "nowrap",
+                    cursor: "pointer",
+                    boxShadow: isActive ? "0 4px 14px rgba(255, 122, 89, 0.25)" : "none",
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  <span style={{ fontSize: "16px" }}>{spot.flag}</span>
+                  {spot.name}
+                </button>
+              );
+            })}
+          </div>
+
           {/* Map SVG Wrapper */}
           <div style={{ position: "relative", width: "100%" }}>
             <WorldSvg
-              activeSlug={activeSpot?.slug || null}
+              activeSlug={activeSpot?.slug || hoveredSlug || null}
               onCountryClick={(slug) => {
                 const spot = MAP_HOTSPOTS.find((s) => s.slug === slug);
                 if (spot) {
@@ -168,6 +205,8 @@ export default function WorldMap() {
               <button
                 key={spot.id}
                 onClick={() => setActiveSpot(spot)}
+                onMouseEnter={() => setHoveredSlug(spot.slug)}
+                onMouseLeave={() => setHoveredSlug(null)}
                 style={{
                   position: "absolute",
                   left: spot.x,
@@ -176,7 +215,7 @@ export default function WorldMap() {
                   background: "transparent",
                   border: "none",
                   cursor: "pointer",
-                  padding: "10px",
+                  padding: "12px",
                   zIndex: 10,
                 }}
                 aria-label={`View ${spot.name}`}
@@ -209,13 +248,9 @@ export default function WorldMap() {
             ))}
           </div>
 
-          {/* ── FLOATING GLASS INFO CARD ── */}
+          {/* ── FLOATING/STACKED GLASS INFO CARD ── */}
           {activeSpot && (
             <div className="map-info-card" style={{
-              position: "absolute",
-              bottom: "40px",
-              left: "40px",
-              width: "320px",
               background: "rgba(10, 37, 64, 0.82)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
@@ -238,27 +273,114 @@ export default function WorldMap() {
                 <X size={16} />
               </button>
 
-              {/* Card Header */}
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-                <span style={{ fontSize: "20px" }}>{activeSpot.flag}</span>
-                <div>
-                  <h3 style={{
-                    fontFamily: "var(--font-playfair)", fontSize: "1.15rem", fontWeight: "800",
-                    color: "#FFFFFF", margin: 0,
-                  }}>{activeSpot.name}</h3>
-                  <span style={{
-                    fontFamily: "var(--font-montserrat)", fontSize: "0.68rem",
-                    color: "rgba(255,255,255,0.6)", fontWeight: "600"
-                  }}>{activeSpot.country}</span>
+              {/* Image Thumbnail Header */}
+              {destDetails && (
+                <div style={{
+                  position: "relative",
+                  width: "100%",
+                  height: "140px",
+                  borderRadius: "14px",
+                  overflow: "hidden",
+                  marginBottom: "16px",
+                  border: "1px solid rgba(255, 255, 255, 0.15)"
+                }}>
+                  <img
+                    src={destDetails.heroImage}
+                    alt={activeSpot.name}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover"
+                    }}
+                  />
+                  <div style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(to bottom, rgba(10, 37, 64, 0.1) 40%, rgba(10, 37, 64, 0.75) 100%)"
+                  }} />
+                  <div style={{
+                    position: "absolute",
+                    bottom: "12px",
+                    left: "12px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    zIndex: 2
+                  }}>
+                    <span style={{ fontSize: "18px" }}>{activeSpot.flag}</span>
+                    <span style={{
+                      fontFamily: "var(--font-montserrat)",
+                      fontSize: "0.75rem",
+                      fontWeight: "700",
+                      color: "#FFFFFF",
+                      textShadow: "0 2px 4px rgba(0,0,0,0.5)"
+                    }}>{activeSpot.country}</span>
+                  </div>
+                  <div style={{
+                    position: "absolute",
+                    top: "12px",
+                    right: "12px",
+                    background: "rgba(10, 37, 64, 0.65)",
+                    backdropFilter: "blur(4px)",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    borderRadius: "6px",
+                    padding: "4px 8px",
+                    color: "#FFFFFF",
+                    fontFamily: "var(--font-montserrat)",
+                    fontSize: "0.65rem",
+                    fontWeight: "700",
+                    zIndex: 2
+                  }}>
+                    {destDetails.duration.split("/")[0].trim()}
+                  </div>
                 </div>
+              )}
+
+              {/* Destination Title & Tagline */}
+              <div style={{ marginBottom: "12px" }}>
+                <h3 style={{
+                  fontFamily: "var(--font-playfair)",
+                  fontSize: "1.3rem",
+                  fontWeight: "800",
+                  color: "#FFFFFF",
+                  margin: "0 0 2px 0",
+                  lineHeight: "1.2"
+                }}>{activeSpot.name}</h3>
+                {destDetails && (
+                  <p style={{
+                    fontFamily: "var(--font-montserrat)",
+                    fontStyle: "italic",
+                    fontSize: "0.78rem",
+                    color: "var(--accent)",
+                    fontWeight: "600",
+                    margin: 0
+                  }}>{destDetails.tagline}</p>
+                )}
               </div>
 
-              {/* Highlights */}
+              {/* Description */}
               <p style={{
                 fontFamily: "var(--font-montserrat)", fontSize: "0.78rem",
                 color: "rgba(250, 250, 247, 0.85)", lineHeight: "1.5",
                 marginBottom: "14px",
               }}>{activeSpot.highlight}</p>
+
+              {/* Quick Highlights list */}
+              {destDetails && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "16px" }}>
+                  {destDetails.highlights.slice(0, 2).map((h) => (
+                    <div key={h} style={{ display: "flex", alignItems: "flex-start", gap: "6px" }}>
+                      <span style={{ color: "var(--secondary)", fontSize: "0.8rem", lineHeight: "1.2" }}>✦</span>
+                      <span style={{
+                        fontFamily: "var(--font-montserrat)",
+                        fontSize: "0.74rem",
+                        color: "rgba(250, 250, 247, 0.85)",
+                        lineHeight: "1.4"
+                      }}>{h}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Price & Rating Row */}
               <div style={{

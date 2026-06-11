@@ -193,7 +193,7 @@ export const destinations: Destination[] = [
     ],
     comparison: [
       {
-        provider: "WanderLux",
+        provider: "WanderSouls",
         price: 24999,
         duration: "7D/6N",
         inclusions: ["6N Deluxe Hotels + Houseboat", "Breakfast & Dinner", "AC Transfers", "Guide", "Entry Fees", "Ayurvedic Session"],
@@ -211,7 +211,7 @@ export const destinations: Destination[] = [
         rating: 4.3,
         reviewCount: 842,
         departureDates: ["Jun 20", "Jul 5", "Aug 10"],
-        url: "https://www.veenaworld.com",
+        url: "https://www.veenaworld.com/india/kerala-tour-packages",
       },
       {
         provider: "MakeMyTrip",
@@ -221,7 +221,7 @@ export const destinations: Destination[] = [
         rating: 4.1,
         reviewCount: 2103,
         departureDates: ["Jun 10", "Jun 25", "Jul 20", "Aug 5"],
-        url: "https://www.makemytrip.com",
+        url: "https://www.makemytrip.com/holidays-india/kerala-travel-packages.html",
       },
     ],
     gallery: [
@@ -384,7 +384,7 @@ export const destinations: Destination[] = [
     ],
     comparison: [
       {
-        provider: "WanderLux",
+        provider: "WanderSouls",
         price: 39999,
         duration: "8D/7N",
         inclusions: ["7N Premium Hotels", "Daily Breakfast", "3 Domestic Flights", "Island Tour", "Elephant Sanctuary", "Cooking Class", "All Transfers"],
@@ -396,23 +396,23 @@ export const destinations: Destination[] = [
       },
       {
         provider: "Veena World",
-        price: 52000,
+        price: 52499,
         duration: "8D/7N",
         inclusions: ["7N Standard Hotels", "Breakfast", "2 Domestic Flights", "Island Tour", "Transfers"],
         rating: 4.4,
         reviewCount: 1203,
         departureDates: ["Jun 18", "Jul 9", "Aug 2"],
-        url: "https://www.veenaworld.com",
+        url: "https://www.veenaworld.com/thailand-tour-packages",
       },
       {
         provider: "MakeMyTrip",
-        price: 45500,
+        price: 47081,
         duration: "8D/7N",
         inclusions: ["7N Hotels", "Breakfast", "2 Domestic Flights", "No Island Tour", "Shared Transfers"],
         rating: 4.2,
         reviewCount: 3412,
         departureDates: ["Jun 5", "Jun 22", "Jul 10", "Aug 15"],
-        url: "https://www.makemytrip.com",
+        url: "https://www.makemytrip.com/holidays-international/7nights-thailand-vacation-tour-package.html",
       },
     ],
     gallery: [
@@ -580,7 +580,7 @@ export const destinations: Destination[] = [
     ],
     comparison: [
       {
-        provider: "WanderLux",
+        provider: "WanderSouls",
         price: 44999,
         duration: "8D/7N",
         inclusions: ["7N Premium Hotels", "Daily Breakfast", "All Domestic Flights & Ferries", "All Island Tours", "Underground River", "Diving/Snorkelling", "Guide"],
@@ -592,23 +592,23 @@ export const destinations: Destination[] = [
       },
       {
         provider: "Veena World",
-        price: 58000,
+        price: 98500,
         duration: "8D/7N",
         inclusions: ["7N Standard Hotels", "Breakfast", "3 Domestic Flights", "2 Island Tours", "No Diving"],
         rating: 4.3,
         reviewCount: 421,
         departureDates: ["Jun 14", "Jul 5", "Aug 12"],
-        url: "https://www.veenaworld.com",
+        url: "https://www.veenaworld.com/philippines-tour-packages",
       },
       {
         provider: "MakeMyTrip",
-        price: 51000,
+        price: 105000,
         duration: "8D/7N",
         inclusions: ["7N Hotels", "Breakfast", "2 Domestic Flights", "1 Island Tour", "Shared Transfers"],
         rating: 4.0,
         reviewCount: 1564,
         departureDates: ["Jun 1", "Jun 20", "Jul 15", "Aug 10"],
-        url: "https://www.makemytrip.com",
+        url: "https://www.makemytrip.com/holidays-international/philippines-tour-packages.html",
       },
     ],
     gallery: [
@@ -728,7 +728,7 @@ export const destinations: Destination[] = [
     ],
     comparison: [
       {
-        provider: "WanderLux",
+        provider: "WanderSouls",
         price: 54999,
         duration: "5D/4N",
         inclusions: ["4N Marina Bay Sands Hotel", "Daily Breakfast", "All Attraction Tickets", "MRT Card", "Food Tour", "Airport Transfers"],
@@ -740,23 +740,23 @@ export const destinations: Destination[] = [
       },
       {
         provider: "Veena World",
-        price: 68000,
+        price: 68499,
         duration: "5D/4N",
         inclusions: ["4N Standard Hotel", "Breakfast", "2 Attraction Tickets", "No Food Tour", "Airport Transfers"],
         rating: 4.5,
         reviewCount: 934,
         departureDates: ["Jun 15", "Jul 1", "Aug 5"],
-        url: "https://www.veenaworld.com",
+        url: "https://www.veenaworld.com/singapore-tour-packages",
       },
       {
         provider: "MakeMyTrip",
-        price: 61500,
+        price: 52999,
         duration: "5D/4N",
         inclusions: ["4N Hotel", "Breakfast", "2 Attraction Tickets", "Shared Transfers"],
         rating: 4.2,
         reviewCount: 2841,
         departureDates: ["Jun 5", "Jun 19", "Jul 12", "Aug 2"],
-        url: "https://www.makemytrip.com",
+        url: "https://www.makemytrip.com/holidays-international/singapore-tour-packages.html",
       },
     ],
     gallery: [
@@ -950,7 +950,7 @@ export const destinations: Destination[] = [
     ],
     comparison: [
       {
-        provider: "WanderLux",
+        provider: "WanderSouls",
         price: 89999,
         duration: "10D/9N",
         inclusions: ["9N Premium Lodges & City Hotels", "Full Board Safari + Breakfast City", "2 Domestic Flights", "All Game Drives", "Peninsula Tour", "Winelands", "Guide"],
@@ -962,23 +962,23 @@ export const destinations: Destination[] = [
       },
       {
         provider: "Veena World",
-        price: 115000,
+        price: 289000,
         duration: "10D/9N",
         inclusions: ["9N Standard Hotels & Lodges", "Breakfast + Safari Meals", "2 Domestic Flights", "Game Drives", "Peninsula Tour"],
         rating: 4.5,
         reviewCount: 283,
         departureDates: ["Jun 25", "Jul 15", "Aug 20"],
-        url: "https://www.veenaworld.com",
+        url: "https://www.veenaworld.com/south-africa-tour-packages",
       },
       {
         provider: "MakeMyTrip",
-        price: 98000,
+        price: 249000,
         duration: "10D/9N",
         inclusions: ["9N Hotels & Lodge", "Breakfast Only", "1 Domestic Flight", "2 Game Drives", "No Winelands"],
         rating: 4.1,
         reviewCount: 892,
         departureDates: ["Jun 10", "Jul 5", "Aug 10"],
-        url: "https://www.makemytrip.com",
+        url: "https://www.makemytrip.com/holidays-international/south-africa-tour-packages.html",
       },
     ],
     gallery: [
@@ -1131,7 +1131,7 @@ export const destinations: Destination[] = [
     ],
     comparison: [
       {
-        provider: "WanderLux",
+        provider: "WanderSouls",
         price: 49999,
         duration: "7D/6N",
         inclusions: ["6N Premium Hotels", "Daily Breakfast", "KTX Train", "Domestic Flight", "DMZ Tour", "Hanbok Experience", "Food Tour", "All Transfers"],
@@ -1143,23 +1143,23 @@ export const destinations: Destination[] = [
       },
       {
         provider: "Veena World",
-        price: 63000,
+        price: 155000,
         duration: "7D/6N",
         inclusions: ["6N Standard Hotels", "Breakfast", "KTX Train", "No Domestic Flight", "DMZ Tour"],
         rating: 4.4,
         reviewCount: 567,
         departureDates: ["Jun 12", "Jul 3", "Aug 7"],
-        url: "https://www.veenaworld.com",
+        url: "https://www.veenaworld.com/south-korea-tour-packages",
       },
       {
         provider: "MakeMyTrip",
-        price: 55500,
+        price: 125000,
         duration: "7D/6N",
         inclusions: ["6N Hotels", "Breakfast", "No Train", "2 Domestic Flights", "No DMZ", "Shared Transfers"],
         rating: 4.1,
         reviewCount: 1892,
         departureDates: ["Jun 1", "Jun 15", "Jul 10", "Aug 5"],
-        url: "https://www.makemytrip.com",
+        url: "https://www.makemytrip.com/holidays-international/south-korea-tour-packages.html",
       },
     ],
     gallery: [

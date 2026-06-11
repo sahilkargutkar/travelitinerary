@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Clock, Users, Star, ArrowRight, MapPin } from "lucide-react";
 import type { Destination } from "../../lib/destinations";
@@ -11,6 +12,21 @@ interface Props {
 }
 
 export default function DestinationCard({ destination: dest, index = 0, featured = false }: Props) {
+  const images = [dest.heroImage, ...(dest.gallery || [])].filter((url, idx, self) => self.indexOf(url) === idx);
+  const [imgIndex, setImgIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const nextImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setImgIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setImgIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
   if (featured) {
     return (
       <Link href={`/destinations/${dest.slug}`} style={{ textDecoration: "none", display: "block" }}>
@@ -25,40 +41,108 @@ export default function DestinationCard({ destination: dest, index = 0, featured
             border: "1px solid var(--border-subtle)",
             transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "translateY(-8px)";
-            e.currentTarget.style.borderColor = "rgba(0, 184, 169, 0.3)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "translateY(0)";
-            e.currentTarget.style.borderColor = "var(--border-subtle)";
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => {
+            setIsHovered(false);
+            setImgIndex(0);
           }}
         >
-          {/* Image */}
-          <img
-            src={dest.heroImage}
-            alt={dest.name}
-            style={{
-              position: "absolute", inset: 0,
-              width: "100%", height: "100%", objectFit: "cover",
-              transition: "transform 0.8s ease",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.06)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-          />
+          {/* Image Gallery */}
+          {images.map((imgUrl, idx) => (
+            <img
+              key={imgUrl}
+              src={imgUrl}
+              alt={`${dest.name} ${idx + 1}`}
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                opacity: idx === imgIndex ? 1 : 0,
+                transform: idx === imgIndex && isHovered ? "scale(1.04)" : "scale(1)",
+                transition: "opacity 0.4s ease, transform 0.5s ease",
+                zIndex: idx === imgIndex ? 1 : 0,
+              }}
+            />
+          ))}
 
-          {/* Premium Dark Gradient Overlay (No White Layer Wash) */}
+          {/* Premium Dark Gradient Overlay */}
           <div style={{
             position: "absolute", inset: 0,
             background: "linear-gradient(to bottom, rgba(10, 37, 64, 0.15) 30%, rgba(10, 37, 64, 0.85) 100%)",
-            zIndex: 1,
+            zIndex: 2,
           }} />
+
+          {/* Gallery Arrow Controls */}
+          {images.length > 1 && isHovered && (
+            <>
+              <button
+                onClick={prevImage}
+                style={{
+                  position: "absolute", left: "16px", top: "50%", transform: "translateY(-50%)",
+                  width: "32px", height: "32px", borderRadius: "50%",
+                  background: "rgba(255, 255, 255, 0.9)", border: "none",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer", zIndex: 4, boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                  color: "var(--primary)", fontWeight: "bold", fontSize: "1.1rem",
+                  transition: "background 0.2s"
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#FFFFFF"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255, 255, 255, 0.9)"; }}
+              >
+                ‹
+              </button>
+              <button
+                onClick={nextImage}
+                style={{
+                  position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)",
+                  width: "32px", height: "32px", borderRadius: "50%",
+                  background: "rgba(255, 255, 255, 0.9)", border: "none",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer", zIndex: 4, boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                  color: "var(--primary)", fontWeight: "bold", fontSize: "1.1rem",
+                  transition: "background 0.2s"
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#FFFFFF"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255, 255, 255, 0.9)"; }}
+              >
+                ›
+              </button>
+            </>
+          )}
+
+          {/* Gallery Indicators / Dots */}
+          {images.length > 1 && isHovered && (
+            <div style={{
+              position: "absolute", bottom: "160px", left: "50%", transform: "translateX(-50%)",
+              display: "flex", gap: "6px", zIndex: 4
+            }}>
+              {images.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setImgIndex(idx);
+                  }}
+                  style={{
+                    width: "8px", height: "8px", borderRadius: "50%",
+                    border: "none", padding: 0, cursor: "pointer",
+                    background: idx === imgIndex ? "var(--secondary)" : "rgba(255, 255, 255, 0.5)",
+                    boxShadow: idx === imgIndex ? "0 0 6px var(--secondary)" : "none",
+                    transition: "all 0.3s ease"
+                  }}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Top Badges */}
           <div style={{
             position: "absolute", top: "20px", left: "20px", right: "20px",
             display: "flex", justifyContent: "space-between", alignItems: "flex-start",
-            zIndex: 2,
+            zIndex: 3,
           }}>
             <div style={{
               display: "flex", alignItems: "center", gap: "8px",
@@ -88,7 +172,7 @@ export default function DestinationCard({ destination: dest, index = 0, featured
           </div>
 
           {/* Bottom Content */}
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "28px", zIndex: 2 }}>
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "28px", zIndex: 3 }}>
             <div style={{ marginBottom: "14px" }}>
               <h3 style={{
                 fontFamily: "var(--font-playfair)", fontWeight: "800",
@@ -174,21 +258,100 @@ export default function DestinationCard({ destination: dest, index = 0, featured
         }}
       >
         {/* Image Container */}
-        <div style={{ position: "relative", height: "220px", overflow: "hidden", flexShrink: 0 }}>
-          <img
-            src={dest.heroImage}
-            alt={dest.name}
-            style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.05)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-          />
+        <div 
+          style={{ position: "relative", height: "220px", overflow: "hidden", flexShrink: 0 }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => {
+            setIsHovered(false);
+            setImgIndex(0);
+          }}
+        >
+          {images.map((imgUrl, idx) => (
+            <img
+              key={imgUrl}
+              src={imgUrl}
+              alt={`${dest.name} ${idx + 1}`}
+              style={{
+                position: "absolute", inset: 0,
+                width: "100%", height: "100%", objectFit: "cover",
+                opacity: idx === imgIndex ? 1 : 0,
+                transform: idx === imgIndex && isHovered ? "scale(1.04)" : "scale(1)",
+                transition: "opacity 0.4s ease, transform 0.5s ease",
+                zIndex: idx === imgIndex ? 1 : 0,
+              }}
+            />
+          ))}
 
           {/* Dark gradient overlay for text readability on image */}
           <div style={{
             position: "absolute", inset: 0,
-            background: "linear-gradient(to bottom, rgba(10, 37, 64, 0.1) 50%, rgba(10, 37, 64, 0.6) 100%)",
-            zIndex: 1
+            background: "linear-gradient(to bottom, rgba(10, 37, 64, 0.05) 50%, rgba(10, 37, 64, 0.55) 100%)",
+            zIndex: 2
           }} />
+
+          {/* Arrow Buttons */}
+          {images.length > 1 && isHovered && (
+            <>
+              <button
+                onClick={prevImage}
+                style={{
+                  position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)",
+                  width: "28px", height: "28px", borderRadius: "50%",
+                  background: "rgba(255, 255, 255, 0.9)", border: "none",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer", zIndex: 4, boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                  color: "var(--primary)", fontWeight: "bold", fontSize: "0.9rem",
+                  transition: "background 0.2s"
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#FFFFFF"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255, 255, 255, 0.9)"; }}
+              >
+                ‹
+              </button>
+              <button
+                onClick={nextImage}
+                style={{
+                  position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)",
+                  width: "28px", height: "28px", borderRadius: "50%",
+                  background: "rgba(255, 255, 255, 0.9)", border: "none",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer", zIndex: 4, boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                  color: "var(--primary)", fontWeight: "bold", fontSize: "0.9rem",
+                  transition: "background 0.2s"
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#FFFFFF"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255, 255, 255, 0.9)"; }}
+              >
+                ›
+              </button>
+            </>
+          )}
+
+          {/* Page Indicators dots */}
+          {images.length > 1 && isHovered && (
+            <div style={{
+              position: "absolute", bottom: "10px", left: "50%", transform: "translateX(-50%)",
+              display: "flex", gap: "6px", zIndex: 4
+            }}>
+              {images.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setImgIndex(idx);
+                  }}
+                  style={{
+                    width: "6px", height: "6px", borderRadius: "50%",
+                    border: "none", padding: 0, cursor: "pointer",
+                    background: idx === imgIndex ? "var(--secondary)" : "rgba(255, 255, 255, 0.6)",
+                    boxShadow: idx === imgIndex ? "0 0 6px var(--secondary)" : "none",
+                    transition: "all 0.3s ease"
+                  }}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Country Badge */}
           <div style={{ position: "absolute", top: "14px", left: "14px",
@@ -196,7 +359,7 @@ export default function DestinationCard({ destination: dest, index = 0, featured
             background: "rgba(255, 255, 255, 0.75)", backdropFilter: "blur(8px)",
             WebkitBackdropFilter: "blur(8px)",
             border: "1px solid rgba(255,255,255,0.4)", borderRadius: "50px", padding: "5px 12px",
-            zIndex: 2,
+            zIndex: 3,
           }}>
             <span style={{ fontSize: "14px" }}>{dest.flag}</span>
             <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: "700", color: "var(--primary)" }}>
@@ -205,7 +368,7 @@ export default function DestinationCard({ destination: dest, index = 0, featured
           </div>
 
           {/* Best Time */}
-          <div style={{ position: "absolute", top: "14px", right: "14px", zIndex: 2 }}>
+          <div style={{ position: "absolute", top: "14px", right: "14px", zIndex: 3 }}>
             <span style={{
               background: "rgba(10, 37, 64, 0.65)",
               backdropFilter: "blur(6px)",
@@ -227,7 +390,7 @@ export default function DestinationCard({ destination: dest, index = 0, featured
             background: "var(--success)",
             borderRadius: "10px", padding: "6px 12px",
             boxShadow: "0 4px 12px rgba(22, 163, 74, 0.2)",
-            zIndex: 2,
+            zIndex: 3,
           }}>
             <div style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.55rem", fontWeight: "600", color: "rgba(255,255,255,0.85)", textTransform: "uppercase" }}>from</div>
             <div style={{ fontFamily: "var(--font-montserrat)", fontWeight: "800", fontSize: "0.95rem", color: "#FFFFFF" }}>
@@ -244,7 +407,7 @@ export default function DestinationCard({ destination: dest, index = 0, featured
             padding: "10px 14px", borderRadius: "12px", 
             border: "1px solid rgba(255, 255, 255, 0.25)",
             boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
-            zIndex: 2,
+            zIndex: 3,
           }}>
             <h3 style={{
               fontFamily: "var(--font-playfair), serif", fontWeight: "800", fontSize: "1.2rem",
@@ -322,7 +485,7 @@ export default function DestinationCard({ destination: dest, index = 0, featured
             <div style={{
               display: "flex", alignItems: "center", gap: "4px",
               fontFamily: "var(--font-montserrat)", fontWeight: "700", fontSize: "0.78rem", color: "var(--accent)",
-            }}>View <ArrowRight size={13} /></div>
+            }}>View Itinerary <ArrowRight size={13} /></div>
           </div>
         </div>
       </article>

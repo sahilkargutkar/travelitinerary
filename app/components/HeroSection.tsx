@@ -13,6 +13,8 @@ const DESTINATIONS_LIST = [
   { slug: "south-korea", name: "Seoul, South Korea", flag: "🇰🇷", image: "https://images.unsplash.com/photo-1617541086271-4d8e21a9d439?w=1920&q=90" }
 ];
 
+const CYCLING_WORDS = ["Around the World", "with Radical Value", "with Radical Transparency", "with Bespoke Luxury"];
+
 export default function HeroSection() {
   const router = useRouter();
   const [activeSlide, setActiveSlide] = useState(0);
@@ -27,6 +29,39 @@ export default function HeroSection() {
 
   const destRef = useRef<HTMLDivElement>(null);
   const guestsRef = useRef<HTMLDivElement>(null);
+
+  // Cycling/typing text logic
+  const [wordIndex, setWordIndex] = useState(0);
+  const [currentText, setCurrentText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    const fullWord = CYCLING_WORDS[wordIndex];
+    
+    const handleTyping = () => {
+      if (!isDeleting) {
+        setCurrentText(fullWord.substring(0, currentText.length + 1));
+        if (currentText === fullWord) {
+          timer = setTimeout(() => setIsDeleting(true), 2200);
+          return;
+        }
+      } else {
+        setCurrentText(fullWord.substring(0, currentText.length - 1));
+        if (currentText === "") {
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % CYCLING_WORDS.length);
+          return;
+        }
+      }
+      
+      const speed = isDeleting ? 25 : 55;
+      timer = setTimeout(handleTyping, speed);
+    };
+
+    timer = setTimeout(handleTyping, 100);
+    return () => clearTimeout(timer);
+  }, [currentText, isDeleting, wordIndex]);
 
   // Auto slide rotation
   useEffect(() => {
@@ -162,8 +197,9 @@ export default function HeroSection() {
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
             color: "transparent",
-            display: "inline-block"
-          }}>Around the World</span>
+            display: "inline-block",
+            paddingRight: "4px"
+          }} className="typing-cursor">{currentText}</span>
         </h1>
 
         {/* Description */}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { CheckCircle, ShieldCheck, Tag, ArrowRight, Plane, Hotel, Navigation, Compass, Utensils } from "lucide-react";
 
@@ -46,8 +47,34 @@ const PACKAGES = [
 ];
 
 export default function FeaturedPackages() {
+  const [animateBars, setAnimateBars] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      setAnimateBars(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setAnimateBars(true);
+          if (sectionRef.current) observer.unobserve(sectionRef.current);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="packages" style={{
+    <section ref={sectionRef} id="packages" style={{
       padding: "64px 0",
       background: "var(--bg)",
     }}>
@@ -210,11 +237,17 @@ export default function FeaturedPackages() {
                         {/* WanderSouls Bar */}
                         <div>
                           <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: "700", marginBottom: "4px" }}>
-                            <span style={{ color: "var(--secondary)" }}>WanderLux</span>
+                            <span style={{ color: "var(--secondary)" }}>WanderSouls</span>
                             <span style={{ color: "var(--primary)" }}>₹{pkg.price.toLocaleString("en-IN")}</span>
                           </div>
                           <div style={{ width: "100%", height: "8px", background: "rgba(10,37,64,0.05)", borderRadius: "4px" }}>
-                            <div style={{ width: `${wanderPct}%`, height: "100%", background: "var(--secondary)", borderRadius: "4px" }} />
+                            <div style={{
+                              width: animateBars ? `${wanderPct}%` : "0%",
+                              height: "100%",
+                              background: "var(--secondary)",
+                              borderRadius: "4px",
+                              transition: "width 1.4s cubic-bezier(0.16, 1, 0.3, 1)"
+                            }} />
                           </div>
                         </div>
 
@@ -225,7 +258,13 @@ export default function FeaturedPackages() {
                             <span>₹{pkg.mmtPrice.toLocaleString("en-IN")}</span>
                           </div>
                           <div style={{ width: "100%", height: "8px", background: "rgba(10,37,64,0.05)", borderRadius: "4px" }}>
-                            <div style={{ width: `${mmtPct}%`, height: "100%", background: "#C5C5CE", borderRadius: "4px" }} />
+                            <div style={{
+                              width: animateBars ? `${mmtPct}%` : "0%",
+                              height: "100%",
+                              background: "#C5C5CE",
+                              borderRadius: "4px",
+                              transition: "width 1.4s cubic-bezier(0.16, 1, 0.3, 1)"
+                            }} />
                           </div>
                         </div>
 
@@ -236,7 +275,13 @@ export default function FeaturedPackages() {
                             <span>₹{pkg.veenaPrice.toLocaleString("en-IN")}</span>
                           </div>
                           <div style={{ width: "100%", height: "8px", background: "rgba(10,37,64,0.05)", borderRadius: "4px" }}>
-                            <div style={{ width: "100%", height: "100%", background: "#E8D8D8", borderRadius: "4px" }} />
+                            <div style={{
+                              width: animateBars ? "100%" : "0%",
+                              height: "100%",
+                              background: "#E8D8D8",
+                              borderRadius: "4px",
+                              transition: "width 1.4s cubic-bezier(0.16, 1, 0.3, 1)"
+                            }} />
                           </div>
                         </div>
                       </div>

@@ -42,7 +42,7 @@ export default function Footer() {
                 color: "#FAFAF7",
                 letterSpacing: "-0.02em"
               }}>
-                WanderLux
+                WanderSouls
               </span>
             </div>
             <p style={{
