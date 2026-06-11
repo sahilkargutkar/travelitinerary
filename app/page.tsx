@@ -41,7 +41,7 @@ const TESTIMONIALS = [
     name: "Priya Sharma",
     location: "Mumbai",
     destination: "Kerala",
-    text: "WanderLux planned every single detail. The houseboat experience on the Alleppey backwaters was beyond magical. The price comparison was fully honest — we saved ₹14,000 compared to MakeMyTrip.",
+    text: "WanderSouls planned every single detail. The houseboat experience on the Alleppey backwaters was beyond magical. The price comparison was fully honest — we saved ₹14,000 compared to MakeMyTrip.",
     rating: 5,
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&q=80",
     color: "var(--accent)",
@@ -135,16 +135,16 @@ export default function HomePage() {
                 color: "var(--text-secondary)", cursor: "pointer",
                 transition: "all 0.2s ease",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(0, 184, 169, 0.08)";
-                e.currentTarget.style.borderColor = "var(--secondary)";
-                e.currentTarget.style.color = "var(--secondary)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(10, 37, 64, 0.03)";
-                e.currentTarget.style.borderColor = "var(--border-subtle)";
-                e.currentTarget.style.color = "var(--text-secondary)";
-              }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(0, 184, 169, 0.08)";
+                  e.currentTarget.style.borderColor = "var(--secondary)";
+                  e.currentTarget.style.color = "var(--secondary)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(10, 37, 64, 0.03)";
+                  e.currentTarget.style.borderColor = "var(--border-subtle)";
+                  e.currentTarget.style.color = "var(--text-secondary)";
+                }}
               >{tag}</span>
             ))}
           </div>
@@ -201,7 +201,7 @@ export default function HomePage() {
                 Not sure which destination fits you?
               </h3>
               <p style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: "1.6" }}>
-                Our side-by-side comparison engine benchmarks WanderLux inclusions against MakeMyTrip and Veena World, updating you with real savings metrics.
+                Our side-by-side comparison engine benchmarks WanderSouls inclusions against MakeMyTrip and Veena World, updating you with real savings metrics.
               </p>
               <div style={{ display: "flex", gap: "16px", marginTop: "20px", flexWrap: "wrap" }}>
                 {["Free comparison reports", "Fully anonymous", "Updated daily"].map((t) => (
@@ -267,7 +267,7 @@ export default function HomePage() {
                 position: "relative", transition: "all 0.4s ease",
                 height: "100%", display: "flex", flexDirection: "column"
               }}
-              className="luxury-card"
+                className="luxury-card"
               >
                 {/* Quote Mark */}
                 <div style={{
@@ -278,7 +278,7 @@ export default function HomePage() {
 
                 {/* Stars */}
                 <div style={{ display: "flex", gap: "3px", marginBottom: "20px" }}>
-                  {[1,2,3,4,5].map((s) => (
+                  {[1, 2, 3, 4, 5].map((s) => (
                     <Star key={s} size={15} color="var(--accent)" fill="var(--accent)" />
                   ))}
                 </div>
@@ -354,7 +354,7 @@ export default function HomePage() {
                   border: "1px solid var(--border-subtle)",
                   borderRadius: "20px",
                   padding: "36px",
-                  display: "flex", 
+                  display: "flex",
                   flexDirection: "column",
                   gap: "20px",
                   transition: "all 0.4s ease",
@@ -408,7 +408,7 @@ export default function HomePage() {
             color: "var(--text-secondary)", maxWidth: "600px", margin: "0 auto 40px", lineHeight: "1.7",
             fontWeight: "500"
           }}>
-            Skip the endless browser tabs and let WanderLux compile your perfect luxury itinerary. Unbeatable comparison values, guaranteed.
+            Skip the endless browser tabs and let WanderSouls compile your perfect luxury itinerary. Unbeatable comparison values, guaranteed.
           </p>
           <Link href="/compare" className="btn-primary" style={{ padding: "16px 36px", fontSize: "1rem" }}>
             Compare & Get Started <ArrowRight size={18} />

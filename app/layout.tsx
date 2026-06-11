@@ -16,7 +16,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: "WanderLux – Premium Travel Itineraries",
+    default: "WanderSouls – Premium Travel Itineraries",
     template: "%s | WanderLux",
   },
   description:
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     "WanderLux",
   ],
   openGraph: {
-    title: "WanderLux – Premium Travel Itineraries",
+    title: "WanderSouls – Premium Travel Itineraries",
     description: "Curated travel itineraries with PDF download & price comparison vs Veena World, MakeMyTrip",
     type: "website",
     siteName: "WanderLux",

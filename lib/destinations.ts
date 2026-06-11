@@ -416,9 +416,12 @@ export const destinations: Destination[] = [
       },
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-      "https://images.unsplash.com/photo-1528181304800-259b08848526?w=800&q=80",
-      "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=800&q=80",
+      "/gallery/thailand/AyutthayaElephant.jpg",
+      "/gallery/thailand/mayabay.jpg",
+      "/gallery/thailand/WatArun.jpg",
+      "/gallery/thailand/reclining-buddha.jpg",
+      "/gallery/thailand/wat-arun-2.jpg",
+      "/gallery/thailand/wat-arun_edited.jpg",
     ],
   },
   {
@@ -757,8 +760,15 @@ export const destinations: Destination[] = [
       },
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&q=80",
-      "https://images.unsplash.com/photo-1565967511849-76a60a516170?w=800&q=80",
+      "/gallery/singapore/singapore.jpg",
+      "/gallery/singapore/SGfood.jpg",
+      "/gallery/singapore/SGfood2.jpg",
+      "/gallery/singapore/birdparkSG.jpg",
+      "/gallery/singapore/universal.jpg",
+      "/gallery/singapore/mike-enerio-7ryPpZK1qV8-unsplash.jpg",
+      "/gallery/singapore/WhatsApp Image 2024-03-24 at 19.08.41.jpeg",
+      "/gallery/singapore/WhatsApp Image 2024-03-24 at 19.08.41 (1).jpeg",
+      "/gallery/singapore/WhatsApp Image 2024-03-24 at 19.08.41 (2).jpeg",
     ],
   },
   {

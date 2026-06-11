@@ -298,7 +298,7 @@ export async function generateItineraryPDF(destination: Destination): Promise<vo
     bodyStyles: { fillColor: WHITE },
     alternateRowStyles: { fillColor: LIGHT_GRAY },
     didDrawCell: (data) => {
-      // Highlight WanderLux row
+      // Highlight WanderSouls row
       if (data.section === "body" && data.row.index === 0) {
         doc.setFillColor(255, 107, 53, 0.08);
       }
@@ -322,7 +322,7 @@ export async function generateItineraryPDF(destination: Destination): Promise<vo
     doc.setTextColor(...TEXT_MED);
     doc.setFontSize(7);
     doc.setFont("helvetica", "normal");
-    doc.text("© 2025 WanderLux Travel Pvt. Ltd. | www.wanderlux.travel | +91 98765 43210", 14, pageHeight - 5);
+    doc.text("© 2025 WanderSouls Travel Pvt. Ltd. | www.wanderlux.travel | +91 98765 43210", 14, pageHeight - 5);
     doc.text(`Page ${p} of ${totalPages}`, pageWidth - 14, pageHeight - 5, { align: "right" });
   }
 

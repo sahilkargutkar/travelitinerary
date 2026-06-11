@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { MapPin, Star, ArrowRight, X } from "lucide-react";
+import WorldSvg from "./WorldSvg";
 
 const MAP_HOTSPOTS = [
   {
@@ -10,8 +11,8 @@ const MAP_HOTSPOTS = [
     name: "Kerala",
     country: "India",
     flag: "🇮🇳",
-    x: "64%",
-    y: "56%",
+    x: "71.5%",
+    y: "39.5%",
     price: "₹24,999",
     rating: "4.8",
     slug: "kerala",
@@ -22,8 +23,8 @@ const MAP_HOTSPOTS = [
     name: "Phuket",
     country: "Thailand",
     flag: "🇹🇭",
-    x: "70%",
-    y: "59%",
+    x: "78.8%",
+    y: "47.8%",
     price: "₹39,999",
     rating: "4.9",
     slug: "thailand",
@@ -34,8 +35,8 @@ const MAP_HOTSPOTS = [
     name: "Palawan",
     country: "Philippines",
     flag: "🇵🇭",
-    x: "75%",
-    y: "59%",
+    x: "85.0%",
+    y: "52.2%",
     price: "₹44,999",
     rating: "4.7",
     slug: "philippines",
@@ -46,8 +47,8 @@ const MAP_HOTSPOTS = [
     name: "Singapore City",
     country: "Singapore",
     flag: "🇸🇬",
-    x: "71%",
-    y: "64%",
+    x: "79.0%",
+    y: "58.2%",
     price: "₹54,999",
     rating: "4.8",
     slug: "singapore",
@@ -58,8 +59,8 @@ const MAP_HOTSPOTS = [
     name: "Kruger Reserve",
     country: "South Africa",
     flag: "🇿🇦",
-    x: "53%",
-    y: "81%",
+    x: "58.0%",
+    y: "75.2%",
     price: "₹89,999",
     rating: "4.9",
     slug: "south-africa",
@@ -70,8 +71,8 @@ const MAP_HOTSPOTS = [
     name: "Seoul",
     country: "South Korea",
     flag: "🇰🇷",
-    x: "79%",
-    y: "40%",
+    x: "82.6%",
+    y: "30.2%",
     price: "₹49,999",
     rating: "4.8",
     slug: "south-korea",
@@ -101,7 +102,7 @@ export default function WorldMap() {
       }} />
 
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
-        
+
         {/* Title */}
         <div style={{ textAlign: "center", marginBottom: "60px" }}>
           <div style={{
@@ -115,7 +116,7 @@ export default function WorldMap() {
             <MapPin size={13} />
             Visual Explorer
           </div>
-          
+
           <h2 className="section-title" style={{ color: "#FAFAF7", marginBottom: "20px" }}>
             Explore Our World <span style={{
               background: "linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)",
@@ -144,87 +145,69 @@ export default function WorldMap() {
           width: "100%",
           maxWidth: "1000px",
           margin: "0 auto",
-          background: "rgba(255, 255, 255, 0.02)",
+          background: "rgba(255, 255, 255, 0.01)",
           border: "1px solid rgba(255, 255, 255, 0.08)",
           borderRadius: "28px",
           padding: "24px",
           boxShadow: "0 20px 50px rgba(0, 0, 0, 0.3)",
         }}>
-          {/* Vector Map SVG Background */}
-          <svg
-            viewBox="0 0 1000 500"
-            fill="none"
-            stroke="rgba(255, 255, 255, 0.15)"
-            strokeWidth="0.8"
-            style={{ width: "100%", height: "auto", display: "block" }}
-          >
-            {/* Very simple, highly stylized vector outline representing continents */}
-            {/* North America */}
-            <path d="M50 100 L150 70 L250 80 L350 150 L380 200 L320 220 L300 300 L250 280 L220 320 L240 350 L180 340 L120 260 L90 280 L70 230 L50 200 Z" fill="rgba(255,255,255,0.015)" />
-            {/* South America */}
-            <path d="M250 320 L300 300 L340 330 L380 380 L350 420 L320 480 L300 480 L260 400 L240 350 Z" fill="rgba(255,255,255,0.015)" />
-            {/* Greenland */}
-            <path d="M280 40 L360 30 L400 60 L320 100 L280 80 Z" fill="rgba(255,255,255,0.015)" />
-            {/* Eurasia / Africa */}
-            <path d="M420 120 L480 80 L600 50 L750 40 L900 60 L950 100 L900 150 L930 220 L840 280 L780 320 L720 340 L700 280 L640 290 L600 240 L530 260 L480 220 L460 170 Z" fill="rgba(255,255,255,0.015)" />
-            {/* Africa */}
-            <path d="M480 230 L540 210 L580 250 L640 280 L660 320 L620 420 L580 440 L500 400 L460 300 L460 250 Z" fill="rgba(255,255,255,0.015)" />
-            {/* Australia */}
-            <path d="M780 380 L880 370 L910 400 L860 450 L780 430 L760 400 Z" fill="rgba(255,255,255,0.015)" />
-            
-            {/* Dotted grid details to look highly premium and technical */}
-            <defs>
-              <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                <circle cx="2" cy="2" r="1" fill="rgba(255, 255, 255, 0.06)" />
-              </pattern>
-            </defs>
-            <rect width="1000" height="500" fill="url(#grid)" />
-          </svg>
-
-          {/* Hotspots mapped on top */}
-          {MAP_HOTSPOTS.map((spot) => (
-            <button
-              key={spot.id}
-              onClick={() => setActiveSpot(spot)}
-              style={{
-                position: "absolute",
-                left: spot.x,
-                top: spot.y,
-                transform: "translate(-50%, -50%)",
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                padding: "10px",
-                zIndex: 10,
+          {/* Map SVG Wrapper */}
+          <div style={{ position: "relative", width: "100%" }}>
+            <WorldSvg
+              activeSlug={activeSpot?.slug || null}
+              onCountryClick={(slug) => {
+                const spot = MAP_HOTSPOTS.find((s) => s.slug === slug);
+                if (spot) {
+                  setActiveSpot(spot);
+                }
               }}
-              aria-label={`View ${spot.name}`}
-            >
-              {/* Outer pulsing ring */}
-              <div style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "28px",
-                height: "28px",
-                borderRadius: "50%",
-                background: "transparent",
-                zIndex: -1,
-              }} className="animate-pulse-ring" />
+            />
 
-              {/* Inner glowing dot */}
-              <div style={{
-                width: "12px",
-                height: "12px",
-                borderRadius: "50%",
-                background: activeSpot?.id === spot.id ? "var(--accent)" : "var(--secondary)",
-                boxShadow: activeSpot?.id === spot.id 
-                  ? "0 0 16px var(--accent)" 
-                  : "0 0 16px var(--secondary)",
-                transition: "all 0.3s ease",
-              }} />
-            </button>
-          ))}
+            {/* Hotspots mapped on top */}
+            {MAP_HOTSPOTS.map((spot) => (
+              <button
+                key={spot.id}
+                onClick={() => setActiveSpot(spot)}
+                style={{
+                  position: "absolute",
+                  left: spot.x,
+                  top: spot.y,
+                  transform: "translate(-50%, -50%)",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "10px",
+                  zIndex: 10,
+                }}
+                aria-label={`View ${spot.name}`}
+              >
+                {/* Outer pulsing ring */}
+                <div style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: "28px",
+                  height: "28px",
+                  borderRadius: "50%",
+                  background: "transparent",
+                  zIndex: -1,
+                }} className="animate-pulse-ring" />
+
+                {/* Inner glowing dot */}
+                <div style={{
+                  width: "12px",
+                  height: "12px",
+                  borderRadius: "50%",
+                  background: activeSpot?.id === spot.id ? "var(--accent)" : "var(--secondary)",
+                  boxShadow: activeSpot?.id === spot.id 
+                    ? "0 0 16px var(--accent)" 
+                    : "0 0 16px var(--secondary)",
+                  transition: "all 0.3s ease",
+                }} />
+              </button>
+            ))}
+          </div>
 
           {/* ── FLOATING GLASS INFO CARD ── */}
           {activeSpot && (
@@ -233,7 +216,7 @@ export default function WorldMap() {
               bottom: "40px",
               left: "40px",
               width: "320px",
-              background: "rgba(10, 37, 64, 0.8)",
+              background: "rgba(10, 37, 64, 0.82)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
               border: "1px solid rgba(255, 255, 255, 0.2)",

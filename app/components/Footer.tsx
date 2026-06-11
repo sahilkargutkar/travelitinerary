@@ -24,7 +24,7 @@ export default function Footer() {
           display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1.5fr", gap: "40px",
           marginBottom: "60px"
         }} className="footer-cols-grid">
-          
+
           {/* Brand & Mission Statement */}
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
@@ -35,22 +35,22 @@ export default function Footer() {
               }}>
                 <Globe size={20} />
               </div>
-              <span style={{ 
-                fontFamily: "var(--font-playfair), serif", 
-                fontWeight: "900", 
-                fontSize: "1.5rem", 
-                color: "#FAFAF7", 
-                letterSpacing: "-0.02em" 
+              <span style={{
+                fontFamily: "var(--font-playfair), serif",
+                fontWeight: "900",
+                fontSize: "1.5rem",
+                color: "#FAFAF7",
+                letterSpacing: "-0.02em"
               }}>
                 WanderLux
               </span>
             </div>
             <p style={{
-              fontFamily: "var(--font-montserrat), sans-serif", 
-              fontSize: "0.9rem", 
+              fontFamily: "var(--font-montserrat), sans-serif",
+              fontSize: "0.9rem",
               color: "rgba(250, 250, 247, 0.75)",
-              lineHeight: "1.6", 
-              marginBottom: "28px", 
+              lineHeight: "1.6",
+              marginBottom: "28px",
               maxWidth: "320px"
             }}>
               Crafting extraordinary, bespoke travel itineraries for the discerning explorer. Comparison-tested for absolute value and luxury.
@@ -64,24 +64,24 @@ export default function Footer() {
               ].map(({ Icon, label }, i) => (
                 <a key={i} href="#" aria-label={label} style={{
                   width: "38px", height: "38px", borderRadius: "50%",
-                  background: "rgba(255, 255, 255, 0.06)", 
+                  background: "rgba(255, 255, 255, 0.06)",
                   border: "1px solid rgba(255, 255, 255, 0.1)",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "rgba(250, 250, 247, 0.8)", 
+                  color: "rgba(250, 250, 247, 0.8)",
                   transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
                 }}
-                onMouseEnter={(e) => { 
-                  e.currentTarget.style.background = "var(--secondary)"; 
-                  e.currentTarget.style.color = "var(--primary)"; 
-                  e.currentTarget.style.borderColor = "var(--secondary)";
-                  e.currentTarget.style.transform = "translateY(-3px)";
-                }}
-                onMouseLeave={(e) => { 
-                  e.currentTarget.style.background = "rgba(255, 255, 255, 0.06)"; 
-                  e.currentTarget.style.color = "rgba(250, 250, 247, 0.8)"; 
-                  e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)"; 
-                  e.currentTarget.style.transform = "translateY(0)";
-                }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "var(--secondary)";
+                    e.currentTarget.style.color = "var(--primary)";
+                    e.currentTarget.style.borderColor = "var(--secondary)";
+                    e.currentTarget.style.transform = "translateY(-3px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.06)";
+                    e.currentTarget.style.color = "rgba(250, 250, 247, 0.8)";
+                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
                 >
                   <Icon size={16} />
                 </a>
@@ -110,8 +110,8 @@ export default function Footer() {
                     color: "rgba(250, 250, 247, 0.75)", textDecoration: "none",
                     transition: "all 0.2s ease",
                   }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = "var(--secondary)"; e.currentTarget.style.paddingLeft = "4px"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(250, 250, 247, 0.75)"; e.currentTarget.style.paddingLeft = "0px"; }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = "var(--secondary)"; e.currentTarget.style.paddingLeft = "4px"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(250, 250, 247, 0.75)"; e.currentTarget.style.paddingLeft = "0px"; }}
                   >
                     {link.name}
                   </Link>
@@ -141,8 +141,8 @@ export default function Footer() {
                     color: "rgba(250, 250, 247, 0.75)", textDecoration: "none",
                     transition: "all 0.2s ease",
                   }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = "var(--secondary)"; e.currentTarget.style.paddingLeft = "4px"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(250, 250, 247, 0.75)"; e.currentTarget.style.paddingLeft = "0px"; }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = "var(--secondary)"; e.currentTarget.style.paddingLeft = "4px"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(250, 250, 247, 0.75)"; e.currentTarget.style.paddingLeft = "0px"; }}
                   >
                     {link.label}
                   </Link>
@@ -161,7 +161,7 @@ export default function Footer() {
               <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                 <MapPin size={16} color="var(--secondary)" style={{ marginTop: "3px", flexShrink: 0 }} />
                 <span style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.85rem", color: "rgba(250, 250, 247, 0.75)", lineHeight: "1.5" }}>
-                  123 Luxury Lane, Cyber City, Gurugram, India 122002
+                  Mumbai | Pune | Delhi | Bangalore
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -173,7 +173,7 @@ export default function Footer() {
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <Mail size={16} color="var(--secondary)" style={{ flexShrink: 0 }} />
                 <span style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.85rem", color: "rgba(250, 250, 247, 0.75)" }}>
-                  concierge@wanderlux.com
+                  concierge@wandersouls.com
                 </span>
               </div>
             </div>
@@ -193,14 +193,14 @@ export default function Footer() {
                 <button aria-label="Subscribe" style={{
                   background: "var(--accent)", border: "none",
                   borderRadius: "50px", padding: "0 18px", cursor: "pointer",
-                  display: "flex", alignItems: "center", justifyContent: "center", 
+                  display: "flex", alignItems: "center", justifyContent: "center",
                   color: "#FFFFFF", fontFamily: "var(--font-montserrat), sans-serif",
                   fontSize: "0.8rem", fontWeight: "700", gap: "4px",
                   boxShadow: "0 4px 10px rgba(255, 122, 89, 0.2)",
                   transition: "all 0.2s ease"
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "#E56241"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "var(--accent)"; }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "#E56241"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "var(--accent)"; }}
                 >
                   Join <ArrowRight size={14} />
                 </button>
@@ -217,16 +217,16 @@ export default function Footer() {
           flexWrap: "wrap", gap: "16px",
         }}>
           <p style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.82rem", color: "rgba(250, 250, 247, 0.5)" }}>
-            © {new Date().getFullYear()} WanderLux Premium Travel. All rights reserved.
+            © {new Date().getFullYear()} WanderSouls Premium Travel. All rights reserved.
           </p>
           <div style={{ display: "flex", gap: "24px" }}>
             <span style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.82rem", color: "rgba(250, 250, 247, 0.5)" }}>
-              Designed by <strong>WanderLux Studio</strong>
+              Designed by <strong>WanderSouls Studio</strong>
             </span>
           </div>
         </div>
       </div>
-      
+
     </footer>
   );
 }

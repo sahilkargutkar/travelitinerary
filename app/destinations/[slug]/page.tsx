@@ -4,6 +4,7 @@ import ItineraryTimeline from "../../components/ItineraryTimeline";
 import PdfExportButton from "../../components/PdfExportButton";
 import PriceCompareTable from "../../components/PriceCompareTable";
 import RelatedDestinations from "../../components/RelatedDestinations";
+import DestinationGallery from "../../components/DestinationGallery";
 import Link from "next/link";
 import type { Metadata } from "next";
 import {
@@ -193,6 +194,7 @@ export default async function DestinationPage({ params }: Props) {
             {[
               { label: "Overview", id: "#overview" },
               { label: "Highlights", id: "#highlights" },
+              { label: "Gallery", id: "#gallery" },
               { label: "Itinerary", id: "#itinerary" },
               { label: "Prices", id: "#compare" },
             ].map((item) => (
@@ -314,6 +316,25 @@ export default async function DestinationPage({ params }: Props) {
                 ))}
               </div>
             </section>
+
+            {/* GALLERY */}
+            {dest.gallery && dest.gallery.length > 0 && (
+              <section id="gallery" style={{ marginBottom: "32px", scrollMarginTop: "100px" }}>
+                <div style={{
+                  display: "inline-flex", alignItems: "center", gap: "6px",
+                  background: "rgba(10,37,64,0.04)", color: "var(--primary)",
+                  padding: "4px 10px", borderRadius: "50px",
+                  fontFamily: "var(--font-montserrat)", fontSize: "0.68rem",
+                  fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.08em",
+                  marginBottom: "14px"
+                }}>Visual Journey</div>
+                <h2 style={{
+                  fontFamily: "var(--font-playfair)", fontWeight: "800", fontSize: "1.4rem",
+                  color: "var(--primary)", marginBottom: "18px",
+                }}>Destination Gallery</h2>
+                <DestinationGallery images={dest.gallery} destinationName={dest.name} />
+              </section>
+            )}
 
             {/* ITINERARY TIMELINE */}
             <section id="itinerary" style={{ marginBottom: "32px", scrollMarginTop: "100px" }}>

@@ -52,7 +52,7 @@ export default function FeaturedPackages() {
       background: "var(--bg)",
     }}>
       <div className="container">
-        
+
         {/* Header */}
         <div style={{
           textAlign: "center",
@@ -80,7 +80,7 @@ export default function FeaturedPackages() {
             margin: "0 auto",
             lineHeight: "1.7",
           }}>
-            Compare packages and see verified price transparency. WanderLux cuts middlemen markup to deliver superior itineraries for less.
+            Compare packages and see verified price transparency. WanderSouls cuts middlemen markup to deliver superior itineraries for less.
           </p>
         </div>
 
@@ -142,7 +142,7 @@ export default function FeaturedPackages() {
 
                 {/* Package Details & Comparison */}
                 <div style={{ padding: "36px", display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "32px" }} className="pkg-inner-grid">
-                  
+
                   {/* Left inner column: Inclusions list */}
                   <div>
                     <h4 style={{
@@ -153,7 +153,7 @@ export default function FeaturedPackages() {
                       <CheckCircle size={15} color="var(--secondary)" />
                       Inclusions & Highlights
                     </h4>
-                    
+
                     <ul style={{
                       listStyle: "none", padding: 0, margin: 0,
                       display: "flex", flexDirection: "column", gap: "10px"
@@ -197,7 +197,7 @@ export default function FeaturedPackages() {
                     paddingLeft: "24px",
                     borderLeft: "1px solid var(--border-subtle)"
                   }} className="pkg-price-col">
-                    
+
                     {/* Visual Comparison bars */}
                     <div>
                       <h4 style={{
@@ -207,7 +207,7 @@ export default function FeaturedPackages() {
                       }}>Price Transparency</h4>
 
                       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                        {/* WanderLux Bar */}
+                        {/* WanderSouls Bar */}
                         <div>
                           <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: "700", marginBottom: "4px" }}>
                             <span style={{ color: "var(--secondary)" }}>WanderLux</span>

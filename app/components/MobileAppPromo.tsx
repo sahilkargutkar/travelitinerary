@@ -18,7 +18,7 @@ export default function MobileAppPromo() {
           gap: "60px",
           alignItems: "center"
         }} className="app-promo-grid">
-          
+
           {/* Left Column: Info & CTAs */}
           <div>
             <div style={{
@@ -32,12 +32,12 @@ export default function MobileAppPromo() {
               <Smartphone size={13} />
               Companion App
             </div>
-            
+
             <h2 className="section-title" style={{ marginBottom: "24px" }}>
               Your Personal Concierge, <br />
               <span className="gradient-text">Right in Your Pocket</span>
             </h2>
-            
+
             <p style={{
               fontFamily: "var(--font-montserrat), sans-serif",
               fontSize: "1rem",
@@ -45,7 +45,7 @@ export default function MobileAppPromo() {
               lineHeight: "1.7",
               marginBottom: "32px"
             }}>
-              Download the WanderLux companion app to keep your luxury travel documents organized, receive real-time updates on transfers, and connect with your dedicated travel designer instantly.
+              Download the WanderSouls companion app to keep your luxury travel documents organized, receive real-time updates on transfers, and connect with your dedicated travel designer instantly.
             </p>
 
             {/* Features list */}
@@ -92,11 +92,11 @@ export default function MobileAppPromo() {
                 border: "1px solid rgba(255, 255, 255, 0.05)",
                 transition: "all 0.3s ease"
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
               >
                 <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-.96.04-2.13.64-2.82 1.45-.6.69-1.12 1.84-.98 2.94.1.08.2.1.29.1 1.05 0 2.15-.62 2.52-1.43z"/>
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-.96.04-2.13.64-2.82 1.45-.6.69-1.12 1.84-.98 2.94.1.08.2.1.29.1 1.05 0 2.15-.62 2.52-1.43z" />
                 </svg>
                 <div style={{ textAlign: "left" }}>
                   <span style={{ display: "block", fontSize: "0.62rem", fontFamily: "var(--font-montserrat)", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", fontWeight: "600" }}>Download on the</span>
@@ -113,11 +113,11 @@ export default function MobileAppPromo() {
                 border: "1px solid rgba(255, 255, 255, 0.05)",
                 transition: "all 0.3s ease"
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
               >
                 <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                  <path d="M3 5.27V18.73c0 .89 1.08 1.34 1.71.71l6.73-6.73-6.73-6.73C4.08 3.93 3 4.38 3 5.27z M17.47 11.29l-4.57-2.61L12 9.56l4.57 4.57 2.15-1.23c.53-.3.53-1.08 0-1.38l-1.25-.71z M12 14.44l-1.12-1.12-6.73 6.73c.63.63 1.71.18 1.71-.71v-.33l6.14-3.51L12 14.44z M12 9.56l-6.14-3.51V5.72c0-.89-1.08-1.34-1.71-.71l6.73 6.73L12 9.56z"/>
+                  <path d="M3 5.27V18.73c0 .89 1.08 1.34 1.71.71l6.73-6.73-6.73-6.73C4.08 3.93 3 4.38 3 5.27z M17.47 11.29l-4.57-2.61L12 9.56l4.57 4.57 2.15-1.23c.53-.3.53-1.08 0-1.38l-1.25-.71z M12 14.44l-1.12-1.12-6.73 6.73c.63.63 1.71.18 1.71-.71v-.33l6.14-3.51L12 14.44z M12 9.56l-6.14-3.51V5.72c0-.89-1.08-1.34-1.71-.71l6.73 6.73L12 9.56z" />
                 </svg>
                 <div style={{ textAlign: "left" }}>
                   <span style={{ display: "block", fontSize: "0.62rem", fontFamily: "var(--font-montserrat)", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", fontWeight: "600" }}>Get it on</span>
@@ -149,7 +149,7 @@ export default function MobileAppPromo() {
               flexDirection: "column",
               overflow: "hidden"
             }}>
-              
+
               {/* iPhone Dynamic Island */}
               <div style={{
                 position: "absolute", top: "18px", left: "50%",
@@ -231,7 +231,7 @@ export default function MobileAppPromo() {
                         <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: "700", color: "var(--primary)" }}>Munnar Tea Safari</span>
                         <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: "700", color: "var(--accent)" }}>Day 3 of 7</span>
                       </div>
-                      
+
                       <div style={{ width: "100%", height: "4px", background: "rgba(10,37,64,0.06)", borderRadius: "4px", marginBottom: "12px" }}>
                         <div style={{ width: "42%", height: "100%", background: "var(--secondary)", borderRadius: "4px" }} />
                       </div>

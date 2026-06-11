@@ -68,7 +68,7 @@ export default function AiPlanner() {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "bot",
-      text: "Welcome to WanderLux Concierge AI. Tell me about your dream destination, preferred duration, and style of travel, and I'll generate a bespoke luxury itinerary."
+      text: "Welcome to WanderSouls Concierge AI. Tell me about your dream destination, preferred duration, and style of travel, and I'll generate a bespoke luxury itinerary."
     }
   ]);
   const [inputValue, setInputValue] = useState("");
@@ -258,7 +258,7 @@ export default function AiPlanner() {
                   fontFamily: "var(--font-playfair), serif",
                   fontSize: "1rem", fontWeight: "800", color: "var(--primary)",
                   margin: "0",
-                }}>WanderLux Concierge</h3>
+                }}>WanderSouls Concierge</h3>
                 <span style={{
                   fontFamily: "var(--font-montserrat)", fontSize: "0.7rem",
                   color: "var(--secondary)", fontWeight: "600",

@@ -73,7 +73,7 @@ export default function ComparePage() {
             color: "var(--text-secondary)", maxWidth: "600px", margin: "0 auto", lineHeight: "1.7",
             fontWeight: "500"
           }}>
-            See exactly how WanderLux stacks up against other premium travel providers. We believe in transparent pricing, superior luxury, and unmatched value.
+            See exactly how WanderSouls stacks up against other premium travel providers. We believe in transparent pricing, superior luxury, and unmatched value.
           </p>
         </div>
       </section>
