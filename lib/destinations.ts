@@ -1163,8 +1163,10 @@ export const destinations: Destination[] = [
       },
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1617541086271-4d8e21a9d439?w=800&q=80",
       "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=800&q=80",
+      "https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=800&q=80",
+      "https://images.unsplash.com/photo-1508004526068-15266e7b774f?w=800&q=80",
+      "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80",
     ],
   },
 ];

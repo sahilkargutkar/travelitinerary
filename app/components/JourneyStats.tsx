@@ -44,10 +44,48 @@ const TESTIMONIALS = [
 
 /* ── SOCIAL GALLERY DATA ── */
 const SOCIAL_POSTS = [
-  { image: "/gallery/thailand/AyutthayaElephant.jpg", username: "@priya.travels" },
-  { image: "/gallery/singapore/mike-enerio-7ryPpZK1qV8-unsplash.jpg", username: "@rahulexplores" },
-  { image: "/gallery/bali/Bali-swing.jpg", username: "@ananya.wanderer" },
-  { image: "/gallery/thailand/WatArun.jpg", username: "@vikram.journey" },
+  {
+    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80",
+    likes: "1.2k",
+    comments: 84,
+    caption: "Chasing sunsets on the serene backwaters of Alleppey 🌴🛶 #kerala #travelindia",
+    link: "https://www.instagram.com/wandersoulsindia/"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+    likes: "942",
+    comments: 53,
+    caption: "Waking up to tropical views in Phuket. Paradise found! 🌊☀️ #thailand #islandlife",
+    link: "https://www.instagram.com/wandersoulsindia/"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&q=80",
+    likes: "1.5k",
+    comments: 112,
+    caption: "The crystal lagoons of El Nido are calling. Who would you take here? ⛵🐠 #philippines",
+    link: "https://www.instagram.com/wandersoulsindia/"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=600&q=80",
+    likes: "2.1k",
+    comments: 142,
+    caption: "Future meets nature at Gardens by the Bay! 🏢🌸 #singapore #lioncity",
+    link: "https://www.instagram.com/wandersoulsindia/"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&q=80",
+    likes: "1.8k",
+    comments: 98,
+    caption: "Unforgettable close encounter with the majestic wildlife of Kruger 🦁🐘 #safari #southafrica",
+    link: "https://www.instagram.com/wandersoulsindia/"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=600&q=80",
+    likes: "1.6k",
+    comments: 76,
+    caption: "Hanbok dress and historic strolls through Bukchon Hanok Village 👘🏯 #seoul #southkorea",
+    link: "https://www.instagram.com/wandersoulsindia/"
+  }
 ];
 
 /* ── ANIMATED COUNTER HOOK ── */
@@ -302,19 +340,18 @@ export default function JourneyStats() {
                 fontSize: "clamp(1.5rem, 3vw, 2rem)", color: "var(--primary)",
                 marginBottom: "8px", letterSpacing: "-0.01em",
               }}>
-                Share the joy of your journey
+                Immersive Explorer Diaries
               </h3>
               <p style={{
                 fontFamily: "var(--font-montserrat)", fontSize: "0.85rem",
                 color: "var(--text-muted)", fontWeight: 500,
               }}>
-                Show us your <span style={{ color: "var(--accent)", fontWeight: 700 }}>#BestTravelMoments</span>{" "}
-                by tagging us <span style={{ color: "var(--secondary)", fontWeight: 700 }}>@WanderSouls</span>{" "}
-                for a chance to be featured!
+                Tag us <span style={{ color: "var(--secondary)", fontWeight: 700 }}>@wandersoulsindia</span>{" "}
+                to share your luxury travels with our global community.
               </p>
             </div>
             <div style={{ display: "flex", gap: "12px" }}>
-              <a href="#" aria-label="Instagram" style={{
+              <a href="https://www.instagram.com/wandersoulsindia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{
                 width: "36px", height: "36px", borderRadius: "50%",
                 background: "var(--bg-elevated)", display: "flex",
                 alignItems: "center", justifyContent: "center",
@@ -325,72 +362,188 @@ export default function JourneyStats() {
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
               </a>
-              <a href="#" aria-label="YouTube" style={{
-                width: "36px", height: "36px", borderRadius: "50%",
-                background: "var(--bg-elevated)", display: "flex",
-                alignItems: "center", justifyContent: "center",
-                color: "var(--text-muted)", transition: "all 0.2s",
-              }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "var(--accent)"; e.currentTarget.style.color = "#fff"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-elevated)"; e.currentTarget.style.color = "var(--text-muted)"; }}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42A2.78 2.78 0 0020.6 4.5C18.88 4 12 4 12 4s-6.88 0-8.6.5A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.4 19.5C5.12 20 12 20 12 20s6.88 0 8.6-.5a2.78 2.78 0 001.94-1.92A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+            </div>
+          </div>
+
+          {/* Instagram Profile Header */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "24px",
+            background: "var(--bg-card)",
+            border: "1px solid var(--border-subtle)",
+            borderRadius: "24px",
+            padding: "24px 32px",
+            marginBottom: "32px",
+            boxShadow: "0 10px 30px -10px rgba(10, 37, 64, 0.04)"
+          }} className="instagram-profile-card">
+            <a href="https://www.instagram.com/wandersoulsindia/" target="_blank" rel="noopener noreferrer" style={{ display: "block", position: "relative" }}>
+              <img
+                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&q=80"
+                alt="WanderSouls Instagram"
+                style={{
+                  width: "72px",
+                  height: "72px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  border: "3px solid var(--accent)",
+                  padding: "3px"
+                }}
+              />
+              <div style={{
+                position: "absolute",
+                bottom: "0",
+                right: "0",
+                background: "radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)",
+                width: "24px",
+                height: "24px",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#fff",
+                fontSize: "0.7rem",
+                fontWeight: "bold",
+                border: "2px solid #fff"
+              }}>
+                📸
+              </div>
+            </a>
+            <div style={{ flex: 1 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+                <a href="https://www.instagram.com/wandersoulsindia/" target="_blank" rel="noopener noreferrer" style={{
+                  fontFamily: "var(--font-montserrat)",
+                  fontWeight: 700,
+                  fontSize: "1.1rem",
+                  color: "var(--primary)",
+                  textDecoration: "none",
+                }}>
+                  wandersoulsindia
+                </a>
+                <span style={{
+                  background: "rgba(0, 184, 169, 0.08)",
+                  color: "var(--secondary)",
+                  borderRadius: "50px",
+                  padding: "3px 12px",
+                  fontSize: "0.65rem",
+                  fontWeight: 700,
+                  fontFamily: "var(--font-montserrat)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em"
+                }}>Verified Partner</span>
+              </div>
+              <p style={{
+                fontFamily: "var(--font-montserrat)",
+                fontSize: "0.85rem",
+                color: "var(--text-secondary)",
+                margin: "6px 0 12px",
+                fontWeight: 500,
+                lineHeight: "1.45"
+              }}>
+                <strong>WanderSouls</strong> • Curating the world's most beautiful destinations with radical value comparison. Handcrafted day-by-day luxury itineraries. ✨
+              </p>
+              <div style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "var(--text-muted)", fontWeight: 600 }}>
+                  <strong style={{ color: "var(--primary)" }}>256</strong> posts
+                </span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "var(--text-muted)", fontWeight: 600 }}>
+                  <strong style={{ color: "var(--primary)" }}>12.4k</strong> followers
+                </span>
+                <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "var(--text-muted)", fontWeight: 600 }}>
+                  <strong style={{ color: "var(--primary)" }}>82</strong> following
+                </span>
+              </div>
+            </div>
+            <div className="profile-action-btn">
+              <a href="https://www.instagram.com/wandersoulsindia/" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{
+                padding: "10px 20px",
+                fontSize: "0.8rem",
+                borderRadius: "12px",
+                minHeight: "auto",
+                boxShadow: "0 4px 12px rgba(255, 122, 89, 0.15)",
+                textTransform: "none",
+                letterSpacing: "normal"
+              }}>
+                Follow Profile
               </a>
             </div>
           </div>
 
           {/* Image Grid */}
           <div className="social-gallery-grid" style={{
-            display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
+            display: "grid", gridTemplateColumns: "repeat(6, 1fr)",
             gap: "16px",
           }}>
             {SOCIAL_POSTS.map((post, i) => (
-              <div key={i} style={{
+              <a href={post.link} key={i} target="_blank" rel="noopener noreferrer" style={{
                 position: "relative", borderRadius: "16px",
                 overflow: "hidden", aspectRatio: "1",
-                cursor: "pointer", 
-              }}>
+                cursor: "pointer", display: "block"
+              }} className="social-gallery-item">
                 <img
                   src={post.image}
-                  alt={`Travel moment by ${post.username}`}
+                  alt={`Travel moment ${i + 1}`}
                   style={{
                     width: "100%", height: "100%", objectFit: "cover",
                     transition: "transform 0.4s ease",
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.08)"}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+                  className="social-post-img"
                 />
+                
                 {/* Gradient overlay */}
                 <div style={{
                   position: "absolute", inset: 0,
-                  background: "linear-gradient(0deg, rgba(10,37,64,0.7) 0%, transparent 50%)",
-                  pointerEvents: "none",
-                }} />
-                {/* Username */}
+                  background: "linear-gradient(to top, rgba(10,37,64,0.8) 0%, transparent 60%)",
+                  transition: "background 0.3s ease",
+                }} className="social-post-overlay" />
+
+                {/* Likes / Comments Stats overlay (visible on hover) */}
                 <div style={{
-                  position: "absolute", bottom: "14px", left: "14px",
-                  fontFamily: "var(--font-montserrat)", fontSize: "0.78rem",
-                  color: "#FAFAF7", fontWeight: 600, zIndex: 1,
-                }}>
-                  {post.username}
+                  position: "absolute", inset: 0,
+                  background: "rgba(10, 37, 64, 0.7)",
+                  display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
+                  opacity: 0, transition: "opacity 0.3s ease",
+                  padding: "16px", textAlign: "center", color: "#FAFAF7", zIndex: 2
+                }} className="social-post-hover-details">
+                  <div style={{ display: "flex", gap: "14px", fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "0.85rem", marginBottom: "8px" }}>
+                    <span>❤️ {post.likes}</span>
+                    <span>💬 {post.comments}</span>
+                  </div>
+                  <p style={{
+                    fontFamily: "var(--font-montserrat)", fontSize: "0.65rem", lineHeight: "1.35",
+                    margin: 0, fontWeight: 500, overflow: "hidden", display: "-webkit-box",
+                    WebkitLineClamp: 3, WebkitBoxOrient: "vertical"
+                  }}>{post.caption}</p>
                 </div>
-                {/* Heart icon */}
-                <div style={{
-                  position: "absolute", top: "14px", right: "14px",
-                  width: "32px", height: "32px", borderRadius: "50%",
-                  background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  zIndex: 1,
-                }}>
-                  <Heart size={15} color="#FAFAF7" strokeWidth={2} />
-                </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
       </div>
 
       <style>{`
+        .social-gallery-item:hover .social-post-hover-details {
+          opacity: 1 !important;
+        }
+        .social-gallery-item:hover .social-post-img {
+          transform: scale(1.06);
+        }
+        @media (max-width: 992px) {
+          .instagram-profile-card {
+            flex-direction: column;
+            text-align: center;
+            padding: 24px;
+            gap: 16px;
+          }
+          .instagram-profile-card > div {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+          }
+          .social-gallery-grid {
+            grid-template-columns: repeat(3, 1fr) !important;
+          }
+        }
         @media (max-width: 768px) {
           .testimonial-card-inner {
             grid-template-columns: 1fr !important;
@@ -407,7 +560,7 @@ export default function JourneyStats() {
         }
         @media (max-width: 480px) {
           .social-gallery-grid {
-            grid-template-columns: 1fr 1fr !important;
+            grid-template-columns: repeat(2, 1fr) !important;
             gap: 10px !important;
           }
           .journey-stats-row {
