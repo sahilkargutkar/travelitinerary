@@ -7,20 +7,12 @@ import { Menu, X, MapPin, BarChart2, Info, Phone, ArrowRight, ChevronDown } from
 const NAV_LINKS = [
   {
     label: "Destinations",
-    href: "/#destinations",
+    href: "/destinations",
     icon: MapPin,
-    sub: [
-      { label: "Kerala", href: "/destinations/kerala", flag: "🇮🇳", from: "₹24,999" },
-      { label: "Thailand", href: "/destinations/thailand", flag: "🇹🇭", from: "₹39,999" },
-      { label: "Philippines", href: "/destinations/philippines", flag: "🇵🇭", from: "₹44,999" },
-      { label: "Singapore", href: "/destinations/singapore", flag: "🇸🇬", from: "₹54,999" },
-      { label: "South Africa", href: "/destinations/south-africa", flag: "🇿🇦", from: "₹89,999" },
-      { label: "South Korea", href: "/destinations/south-korea", flag: "🇰🇷", from: "₹49,999" },
-    ],
   },
   { label: "Compare Prices", href: "/compare", icon: BarChart2 },
-  { label: "About", href: "/#about", icon: Info },
-  { label: "Contact", href: "/#contact", icon: Phone },
+  { label: "About", href: "/about", icon: Info },
+  { label: "Contact", href: "/contact", icon: Phone },
 ];
 
 export default function Navbar() {
@@ -138,7 +130,7 @@ export default function Navbar() {
                             e.currentTarget.style.borderColor = "transparent";
                           }}
                         >
-                          <span style={{ fontSize: "20px", flexShrink: 0 }}>{sub.flag}</span>
+
                           <div>
                             <div style={{
                               fontFamily: "var(--font-playfair), serif",
@@ -194,7 +186,7 @@ export default function Navbar() {
 
           {/* RIGHT CTA */}
           <div className="nav-desktop-cta" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            <a href="tel:+919876543210" style={{
+            <a href="tel:+918452087326" style={{
               fontFamily: "var(--font-montserrat), sans-serif",
               fontSize: "0.85rem",
               fontWeight: "600",
@@ -209,9 +201,9 @@ export default function Navbar() {
               onMouseLeave={(e) => { e.currentTarget.style.color = scrolled ? "var(--text-secondary)" : "rgba(255,255,255,0.85)"; }}
             >
               <Phone size={13} />
-              +91 98765 43210
+              +91 84520 87326
             </a>
-            <Link href="/#destinations" className="btn-primary" style={{
+            <Link href="/destinations" className="btn-primary" style={{
               padding: "10px 22px",
               fontSize: "0.82rem",
               borderRadius: "50px",
@@ -291,7 +283,7 @@ export default function Navbar() {
                           transition: "all 0.2s ease",
                         }}
                       >
-                        <span style={{ fontSize: "16px" }}>{sub.flag}</span>
+
                         <span style={{
                           fontFamily: "var(--font-playfair), serif",
                           fontSize: "0.95rem",
@@ -315,7 +307,7 @@ export default function Navbar() {
                 )}
               </div>
             ))}
-            <Link href="/#destinations" className="btn-primary" onClick={() => setMenuOpen(false)}
+            <Link href="/destinations" className="btn-primary" onClick={() => setMenuOpen(false)}
               style={{ justifyContent: "center", marginTop: "16px", fontSize: "0.95rem", padding: "14px" }}>
               Book Now <ArrowRight size={16} />
             </Link>

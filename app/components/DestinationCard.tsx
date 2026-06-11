@@ -152,7 +152,7 @@ export default function DestinationCard({ destination: dest, index = 0, featured
               border: "1px solid rgba(255, 255, 255, 0.3)",
               borderRadius: "50px", padding: "6px 14px",
             }}>
-              <span style={{ fontSize: "16px" }}>{dest.flag}</span>
+
               <span style={{
                 fontFamily: "var(--font-montserrat)", fontSize: "0.75rem",
                 fontWeight: "700", color: "#FFFFFF",
@@ -361,7 +361,7 @@ export default function DestinationCard({ destination: dest, index = 0, featured
             border: "1px solid rgba(255,255,255,0.4)", borderRadius: "50px", padding: "5px 12px",
             zIndex: 3,
           }}>
-            <span style={{ fontSize: "14px" }}>{dest.flag}</span>
+
             <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.7rem", fontWeight: "700", color: "var(--primary)" }}>
               {dest.country}
             </span>

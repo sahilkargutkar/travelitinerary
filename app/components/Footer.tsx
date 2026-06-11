@@ -128,7 +128,8 @@ export default function Footer() {
             }}>Company</h4>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "12px" }}>
               {[
-                { label: "About Us", href: "/#about" },
+                { label: "About Us", href: "/about" },
+                { label: "Contact Us", href: "/contact" },
                 { label: "Compare Prices", href: "/compare" },
                 { label: "AI Concierge Planner", href: "/#ai-planner" },
                 { label: "Editorial Articles", href: "/#blog" },
@@ -167,13 +168,13 @@ export default function Footer() {
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <Phone size={16} color="var(--secondary)" style={{ flexShrink: 0 }} />
                 <span style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.85rem", color: "rgba(250, 250, 247, 0.75)" }}>
-                  +91 98765 43210
+                  +91 84520 87326
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <Mail size={16} color="var(--secondary)" style={{ flexShrink: 0 }} />
                 <span style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.85rem", color: "rgba(250, 250, 247, 0.75)" }}>
-                  concierge@wandersouls.com
+                  info@wandersouls.in
                 </span>
               </div>
             </div>
@@ -217,7 +218,8 @@ export default function Footer() {
           flexWrap: "wrap", gap: "16px",
         }}>
           <p style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.82rem", color: "rgba(250, 250, 247, 0.5)" }}>
-            © {new Date().getFullYear()} WanderSouls Premium Travel. All rights reserved.
+            © {new Date().getFullYear()} WanderSouls Travel Pvt. Ltd. All rights reserved. <br/>
+            CIN: U7G110MH2025PTC461276
           </p>
           <div style={{ display: "flex", gap: "24px" }}>
             <span style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.82rem", color: "rgba(250, 250, 247, 0.5)" }}>

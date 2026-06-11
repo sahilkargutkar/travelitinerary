@@ -14,7 +14,7 @@ interface Message {
 
 const PRESET_PROMPTS = [
   {
-    text: "Plan a 7-day serene honeymoon in Kerala",
+    text: "A quiet week in Kerala for two",
     query: "kerala-honeymoon",
     response: {
       destination: "Munnar & Alleppey Backwaters, Kerala",
@@ -30,7 +30,7 @@ const PRESET_PROMPTS = [
     }
   },
   {
-    text: "Design a 5-day ultra-modern adventure in Singapore",
+    text: "Family trip to Singapore",
     query: "singapore-adventure",
     response: {
       destination: "Singapore City",
@@ -44,7 +44,7 @@ const PRESET_PROMPTS = [
     }
   },
   {
-    text: "Create a 10-day wild safari in Kruger, South Africa",
+    text: "10-day safari in Kruger",
     query: "safari-kruger",
     response: {
       destination: "Kruger National Park, South Africa",
@@ -68,7 +68,7 @@ export default function AiPlanner() {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "bot",
-      text: "Welcome to WanderSouls Concierge AI. Tell me about your dream destination, preferred duration, and style of travel, and I'll generate a bespoke luxury itinerary."
+      text: "I'm the WanderSouls planning assistant. Tell me where you want to go and who you're traveling with, and I'll sketch out an initial route for our specialists to refine."
     }
   ]);
   const [inputValue, setInputValue] = useState("");

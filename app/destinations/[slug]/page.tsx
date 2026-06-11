@@ -15,6 +15,7 @@ import {
 
 interface Props {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export async function generateStaticParams() {
@@ -31,8 +32,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function DestinationPage({ params }: Props) {
+export default async function DestinationPage({ params, searchParams }: Props) {
   const { slug } = await params;
+  const sp = await searchParams;
+  const dateStr = typeof sp?.date === 'string' ? sp.date : undefined;
+  const guestsStr = typeof sp?.guests === 'string' ? sp.guests : undefined;
+  
   const dest = getDestinationBySlug(slug);
   if (!dest) notFound();
 
@@ -74,7 +79,7 @@ export default async function DestinationPage({ params }: Props) {
             <div>
               {/* Country + Mood */}
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px", flexWrap: "wrap" }}>
-                <span style={{ fontSize: "22px" }}>{dest.flag}</span>
+
                 <span style={{
                   fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", fontWeight: "700",
                   letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--secondary)",
@@ -230,6 +235,30 @@ export default async function DestinationPage({ params }: Props) {
 
       {/* ── MAIN CONTENT ── */}
       <div className="container dest-content-container" style={{ padding: "32px 16px 60px" }}>
+        
+        {/* ── SEARCH QUERY BANNER ── */}
+        {(dateStr || guestsStr) && (
+          <div style={{
+            background: "rgba(0,184,169,0.1)",
+            border: "1px solid rgba(0,184,169,0.2)",
+            color: "var(--primary)",
+            padding: "16px 20px",
+            borderRadius: "12px",
+            marginBottom: "30px",
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.95rem",
+            fontWeight: "600",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px"
+          }}>
+            Travel Enquiry for {dest.name}:
+            {dateStr && <span style={{ color: "var(--accent)" }}>{dateStr}</span>}
+            {dateStr && guestsStr && <span style={{ color: "var(--text-muted)" }}>•</span>}
+            {guestsStr && <span style={{ color: "var(--accent)" }}>{guestsStr}</span>}
+          </div>
+        )}
+
         <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: "40px", alignItems: "flex-start" }} className="dest-main-grid">
 
           {/* ── LEFT COLUMN ── */}

@@ -19,7 +19,11 @@ export default function PdfExportButton({ destination }: Props) {
       const { generateItineraryPDF } = await import("../../lib/pdfGenerator");
       await generateItineraryPDF(destination);
       setDone(true);
-      setTimeout(() => setDone(false), 3000);
+      setTimeout(() => {
+        setDone(false);
+        const waUrl = `https://wa.me/918452087326?text=${encodeURIComponent(`Hi, I just downloaded the ${destination.name} itinerary — can I get a quote?`)}`;
+        window.open(waUrl, "_blank");
+      }, 1500);
     } catch (err) {
       console.error("PDF generation failed:", err);
       alert("Failed to generate PDF. Please try again.");

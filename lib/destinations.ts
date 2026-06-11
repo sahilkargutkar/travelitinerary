@@ -58,7 +58,7 @@ export const destinations: Destination[] = [
     flag: "🇮🇳",
     tagline: "God's Own Country",
     description:
-      "Glide through emerald backwaters, sip fresh coconut water on pristine beaches, and wander through misty tea plantations in India's most enchanting state.",
+      "Spend three days navigating the Kerala backwaters on a private houseboat, followed by guided walks through Munnar's high-altitude tea estates.",
     heroImage:
       "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=80",
     duration: "7 Days / 6 Nights",
@@ -237,7 +237,7 @@ export const destinations: Destination[] = [
     flag: "🇹🇭",
     tagline: "Land of Smiles",
     description:
-      "From Bangkok's electrifying street food scene to Chiang Mai's ancient temples and the crystal-clear waters of the Andaman Sea — Thailand is a sensory feast.",
+      "Navigate Bangkok's local food markets with our resident guides, then fly south for five days of private boat charters around the Phi Phi islands.",
     heroImage:
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80",
     duration: "8 Days / 7 Nights",
@@ -431,7 +431,7 @@ export const destinations: Destination[] = [
     flag: "🇵🇭",
     tagline: "More Than the Expected",
     description:
-      "Dive into crystal-clear waters, explore underground rivers, watch the chocolate hills at dawn, and lose yourself in the island-hopping paradise of 7,641 islands.",
+      "A seven-day expedition through Palawan. Expect private island-hopping out of El Nido, guided snorkeling, and quiet beach stays.",
     heroImage:
       "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=1600&q=80",
     duration: "8 Days / 7 Nights",
@@ -623,7 +623,7 @@ export const destinations: Destination[] = [
     flag: "🇸🇬",
     tagline: "The Lion City",
     description:
-      "A gleaming city of the future where futuristic gardens bloom beside colonial heritage, and Michelin-starred hawker stalls sit next to sky-high rooftop bars.",
+      "Four nights in the city center. We balance the main attractions with private food tours through the local hawker centers and early access to the Gardens by the Bay.",
     heroImage:
       "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1600&q=80",
     duration: "5 Days / 4 Nights",
@@ -766,9 +766,9 @@ export const destinations: Destination[] = [
       "/gallery/singapore/birdparkSG.jpg",
       "/gallery/singapore/universal.jpg",
       "/gallery/singapore/mike-enerio-7ryPpZK1qV8-unsplash.jpg",
-      "/gallery/singapore/WhatsApp Image 2024-03-24 at 19.08.41.jpeg",
-      "/gallery/singapore/WhatsApp Image 2024-03-24 at 19.08.41 (1).jpeg",
-      "/gallery/singapore/WhatsApp Image 2024-03-24 at 19.08.41 (2).jpeg",
+      "/gallery/singapore/whatsapp-img-1.jpeg",
+      "/gallery/singapore/whatsapp-img-2.jpeg",
+      "/gallery/singapore/whatsapp-img-3.jpeg",
     ],
   },
   {
@@ -778,7 +778,7 @@ export const destinations: Destination[] = [
     flag: "🇿🇦",
     tagline: "A World in One Country",
     description:
-      "From the Big 5 on safari in the Kruger to the rainbow nation's iconic Cape Town waterfront, wine routes, and the dramatic Cape of Good Hope — Africa's greatest adventure awaits.",
+      "A ten-day cross-country route. Start with private game drives in Kruger before flying down to Cape Town for coastal routes and wine tasting.",
     heroImage:
       "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1600&q=80",
     duration: "10 Days / 9 Nights",
@@ -993,9 +993,8 @@ export const destinations: Destination[] = [
     flag: "🇰🇷",
     tagline: "Where Ancient Meets Ultra-Modern",
     description:
-      "From Seoul's neon-lit streets and ancient palaces to Jeju's volcanic landscapes and Busan's colorful hillside villages — South Korea is a dynamic journey through time.",
-    heroImage:
-      "https://images.unsplash.com/photo-1617541086271-4d8e21a9d439?w=1600&q=80",
+      "Explore the DMZ, Seoul's historic palaces, and the coastal city of Busan, wrapping up with two days of hiking and dining on Jeju Island.",
+    heroImage: "/gallery/south-korea/sk_hero.png",
     duration: "7 Days / 6 Nights",
     groupSize: "2–18 People",
     difficulty: "Easy",
@@ -1163,10 +1162,10 @@ export const destinations: Destination[] = [
       },
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=800&q=80",
-      "https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=800&q=80",
-      "https://images.unsplash.com/photo-1508004526068-15266e7b774f?w=800&q=80",
-      "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&q=80",
+      "/gallery/south-korea/sk_palace.png",
+      "/gallery/south-korea/sk_busan.png",
+      "/gallery/south-korea/sk_jeju.png",
+      "/gallery/south-korea/sk_hanok.png",
     ],
   },
 ];

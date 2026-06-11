@@ -111,7 +111,7 @@ export default function ComparePage() {
                 }}
               >
                 <span style={{ fontSize: "16px", filter: activeSection === dest.slug ? "grayscale(0)" : "grayscale(100%)", transition: "filter 0.3s ease" }}>
-                  {dest.flag}
+
                 </span>
                 <span style={{
                   fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", fontWeight: "700",
@@ -142,7 +142,7 @@ export default function ComparePage() {
                   }} />
                   <div>
                     <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
-                      <span style={{ fontSize: "18px" }}>{dest.flag}</span>
+
                       <h2 style={{
                         fontFamily: "var(--font-playfair)", fontWeight: "800", fontSize: "1.8rem",
                         color: "var(--primary)", lineHeight: "1.1", letterSpacing: "-0.01em",

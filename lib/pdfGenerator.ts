@@ -1,330 +1,537 @@
 import type { Destination } from "./destinations";
 
+const COMPANY = {
+  cin: "U7G110MH2025PTC461276",
+  registeredOffice:
+    "Registered Office: 1204 Aim Platinum Cts 27, 1to5, 287 1to6, Road No.1, Jogeshwari East, Mumbai, Maharashtra – 400060, India",
+  contact:
+    "Email: info@wandersouls.in | Only WhatsApp: +91 84520 87326 | Website: www.wandersouls.in",
+};
+
+const COLORS = {
+  primary: [10, 37, 64] as [number, number, number],
+  secondary: [0, 184, 169] as [number, number, number],
+  accent: [255, 122, 89] as [number, number, number],
+  bg: [250, 250, 247] as [number, number, number],
+  bgElevated: [242, 242, 236] as [number, number, number],
+  white: [255, 255, 255] as [number, number, number],
+  text: [26, 26, 26] as [number, number, number],
+  textSecondary: [74, 74, 74] as [number, number, number],
+  textMuted: [126, 126, 126] as [number, number, number],
+};
+
+const DISCLAIMER_SECTIONS = [
+  {
+    title: "IMPORTANT INSTRUCTIONS & NOTES",
+    items: [
+      "All tours & transfers are subject to availability at the time of booking",
+      "Hotel check-in time: 14:00 hrs | Check-out time: 11:00–12:00 hrs",
+      "Early check-in / late check-out is subject to hotel availability",
+      "Passport must be valid for minimum 6 months from travel date",
+      "Itinerary sequence may change due to weather, traffic, or operational reasons",
+      "No refund for unused services or sightseeing",
+    ],
+  },
+  {
+    title: "HOTEL & ITINERARY DISCLAIMER",
+    items: [
+      "Hotels mentioned are 3.5-Star or similar category",
+      "Hotels are subject to availability at the time of confirmation",
+      "In case of non-availability, similar or equivalent hotels will be provided",
+      "Number of sightseeing days / order may increase or decrease due to local conditions",
+    ],
+  },
+  {
+    title: "FLIGHT & TRANSFER NOTES",
+    items: [
+      "Flights are subject to availability & fare change",
+      "Guests must reach the airport at least 3 hours before departure",
+    ],
+  },
+  {
+    title: "GENERAL INFORMATION",
+    items: [
+      "Carry original passport & valid visa during travel",
+      "Follow local laws & tour manager instructions at all times",
+      "Travel insurance is strongly recommended",
+    ],
+  },
+];
+
 export async function generateItineraryPDF(destination: Destination): Promise<void> {
   const { jsPDF } = await import("jspdf");
-  const { default: autoTable } = await import("jspdf-autotable");
-
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
+  const marginX = 14;
+  const contentWidth = pageWidth - marginX * 2;
 
-  // ---- COLOUR PALETTE ----
-  const ORANGE = [255, 107, 53] as [number, number, number];
-  const NAVY = [26, 26, 46] as [number, number, number];
-  const GOLD = [255, 215, 0] as [number, number, number];
-  const DARK = [13, 13, 26] as [number, number, number];
-  const WHITE = [255, 255, 255] as [number, number, number];
-  const LIGHT_GRAY = [245, 245, 250] as [number, number, number];
-  const TEXT_DARK = [30, 30, 60] as [number, number, number];
-  const TEXT_MED = [80, 80, 120] as [number, number, number];
+  const brandBarHeight = 14;
+  const legalHeaderHeight = 14;
+  const headerHeight = brandBarHeight + legalHeaderHeight;
+  const footerHeight = 12;
+  const footerY = pageHeight - 5;
+  const contentTop = headerHeight + 8;
+  const contentBottom = pageHeight - footerHeight - 4;
 
-  // ---- HEADER ----
-  doc.setFillColor(...DARK);
-  doc.rect(0, 0, pageWidth, 40, "F");
+  let y = contentTop;
 
-  // Logo text
-  doc.setTextColor(...ORANGE);
-  doc.setFontSize(22);
-  doc.setFont("helvetica", "bold");
-  doc.text("WANDER", 14, 18);
+  const drawBrandBar = () => {
+    doc.setFillColor(...COLORS.primary);
+    doc.rect(0, 0, pageWidth, brandBarHeight, "F");
 
-  doc.setTextColor(...GOLD);
-  doc.text("souls", 14 + doc.getTextWidth("WANDER") + 1, 18);
-
-  doc.setTextColor(...WHITE);
-  doc.setFontSize(8);
-  doc.setFont("helvetica", "normal");
-  doc.text("Premium Travel Experiences", 14, 25);
-
-  // Header right side
-  doc.setTextColor(...TEXT_MED);
-  doc.setFontSize(8);
-  const today = new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" });
-  doc.text(`Generated: ${today}`, pageWidth - 14, 18, { align: "right" });
-  doc.text("www.wanderlux.travel", pageWidth - 14, 25, { align: "right" });
-
-  // Decorative accent line
-  doc.setFillColor(...ORANGE);
-  doc.rect(0, 38, pageWidth, 2, "F");
-
-  // ---- DESTINATION HERO SECTION ----
-  doc.setFillColor(...NAVY);
-  doc.rect(0, 40, pageWidth, 35, "F");
-
-  doc.setTextColor(...GOLD);
-  doc.setFontSize(8);
-  doc.setFont("helvetica", "bold");
-  doc.text(destination.country.toUpperCase() + " " + destination.flag, 14, 52);
-
-  doc.setTextColor(...WHITE);
-  doc.setFontSize(26);
-  doc.setFont("helvetica", "bold");
-  doc.text(destination.name, 14, 63);
-
-  doc.setTextColor(200, 200, 220);
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "italic");
-  doc.text(`"${destination.tagline}"`, 14, 71);
-
-  // Quick stats pills
-  const stats = [
-    { label: "Duration", value: destination.duration },
-    { label: "Group", value: destination.groupSize },
-    { label: "Difficulty", value: destination.difficulty },
-    { label: "Best Time", value: destination.bestTime },
-  ];
-
-  let statX = 14;
-  stats.forEach((stat) => {
-    const statWidth = Math.max(36, doc.getTextWidth(stat.value) + 12);
-    doc.setFillColor(...ORANGE);
-    doc.roundedRect(statX, 55, statWidth, 10, 2, 2, "F");
-    doc.setTextColor(...WHITE);
-    doc.setFontSize(7);
     doc.setFont("helvetica", "bold");
-    doc.text(stat.value, statX + statWidth / 2, 61, { align: "center" });
-    statX += statWidth + 4;
-  });
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.accent);
+    doc.text("WANDER", marginX, 9);
+    const wanderWidth = doc.getTextWidth("WANDER");
+    doc.setTextColor(...COLORS.secondary);
+    doc.text("Souls", marginX + wanderWidth + 1, 9);
 
-  // ---- PRICE BOX ----
-  doc.setFillColor(...ORANGE);
-  doc.roundedRect(pageWidth - 55, 43, 41, 18, 3, 3, "F");
-  doc.setTextColor(...WHITE);
-  doc.setFontSize(8);
-  doc.setFont("helvetica", "normal");
-  doc.text("Starting from", pageWidth - 35, 49, { align: "center" });
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.text(`₹${destination.basePrice.toLocaleString("en-IN")}`, pageWidth - 35, 57, { align: "center" });
-  doc.setFontSize(7);
-  doc.setFont("helvetica", "normal");
-  doc.text("per person", pageWidth - 35, 63, { align: "center" });
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(6.5);
+    doc.setTextColor(200, 210, 220);
+    doc.text("Premium Travel Experiences", marginX, 12.5);
 
-  let y = 82;
+    doc.setTextColor(...COLORS.white);
+    doc.setFontSize(7);
+    doc.text(destination.country + " " + destination.flag, pageWidth - marginX, 8, { align: "right" });
+    doc.setTextColor(...COLORS.secondary);
+    doc.text("www.wandersouls.in", pageWidth - marginX, 12, { align: "right" });
 
-  // ---- DESCRIPTION ----
-  doc.setTextColor(...TEXT_DARK);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "normal");
-  const descLines = doc.splitTextToSize(destination.description, pageWidth - 28);
-  doc.text(descLines, 14, y);
-  y += descLines.length * 5 + 8;
+    doc.setFillColor(...COLORS.accent);
+    doc.rect(0, brandBarHeight, pageWidth, 1.2, "F");
+  };
 
-  // ---- HIGHLIGHTS ----
-  doc.setFillColor(...LIGHT_GRAY);
-  doc.roundedRect(14, y - 2, pageWidth - 28, 8 + Math.ceil(destination.highlights.length / 2) * 7, 3, 3, "F");
+  const drawLegalHeader = () => {
+    const legalY = brandBarHeight + 4;
+    doc.setTextColor(...COLORS.textMuted);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(5.8);
+    doc.text(`CIN: ${COMPANY.cin}`, marginX, legalY);
+    const officeLines = doc.splitTextToSize(COMPANY.registeredOffice, contentWidth);
+    doc.text(officeLines, marginX, legalY + 3);
+    doc.text(COMPANY.contact, marginX, legalY + 3 + officeLines.length * 2.6 + 1);
+    doc.setDrawColor(...COLORS.secondary);
+    doc.setLineWidth(0.15);
+    doc.line(marginX, headerHeight - 0.5, pageWidth - marginX, headerHeight - 0.5);
+  };
 
-  doc.setTextColor(...ORANGE);
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "bold");
-  doc.text("✦  TRIP HIGHLIGHTS", 20, y + 5);
-  y += 12;
+  const drawPageHeader = () => {
+    drawBrandBar();
+    drawLegalHeader();
+  };
 
-  const midpoint = Math.ceil(destination.highlights.length / 2);
-  destination.highlights.forEach((h, i) => {
-    const col = i < midpoint ? 0 : 1;
-    const row = i < midpoint ? i : i - midpoint;
-    const hx = 20 + col * (pageWidth / 2 - 10);
-    const hy = y + row * 7;
-    doc.setTextColor(...TEXT_DARK);
+  const drawPageFooter = (page: number, total: number) => {
+    doc.setFillColor(...COLORS.accent);
+    doc.rect(0, pageHeight - footerHeight, pageWidth, 0.8, "F");
+    doc.setFillColor(...COLORS.primary);
+    doc.rect(0, pageHeight - footerHeight + 0.8, pageWidth, footerHeight - 0.8, "F");
+
+    doc.setTextColor(180, 190, 200);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(6);
+    doc.text(
+      "© WanderSouls Travel Pvt. Ltd. | info@wandersouls.in | +91 84520 87326",
+      marginX,
+      pageHeight - 4.5
+    );
+    doc.setTextColor(...COLORS.secondary);
+    doc.text(`-- ${page} of ${total} --`, pageWidth / 2, pageHeight - 4.5, { align: "center" });
+    doc.setTextColor(...COLORS.white);
+    doc.text(`${destination.name} Itinerary`, pageWidth - marginX, pageHeight - 4.5, { align: "right" });
+  };
+
+  const ensureSpace = (needed: number) => {
+    if (y + needed <= contentBottom) return;
+    doc.addPage();
+    drawPageHeader();
+    y = contentTop;
+  };
+
+  const writeParagraph = (
+    text: string,
+    fontSize = 9,
+    lineHeight = 4.6,
+    color: [number, number, number] = COLORS.text
+  ) => {
+    doc.setTextColor(...color);
+    doc.setFontSize(fontSize);
+    doc.setFont("helvetica", "normal");
+    const lines = doc.splitTextToSize(text, contentWidth);
+    ensureSpace(lines.length * lineHeight);
+    doc.text(lines, marginX, y);
+    y += lines.length * lineHeight + 2;
+  };
+
+  const writeBullet = (text: string, indent = 0) => {
+    doc.setTextColor(...COLORS.text);
     doc.setFontSize(8.5);
     doc.setFont("helvetica", "normal");
-    doc.text(`• ${h}`, hx, hy);
-  });
-  y += midpoint * 7 + 8;
+    const lines = doc.splitTextToSize(text, contentWidth - 6 - indent);
+    ensureSpace(lines.length * 4.2);
+    doc.setTextColor(...COLORS.secondary);
+    doc.text("•", marginX + indent, y);
+    doc.setTextColor(...COLORS.text);
+    doc.text(lines, marginX + 4 + indent, y);
+    y += lines.length * 4.2 + 1;
+  };
 
-  // ---- ITINERARY ----
-  doc.setTextColor(...ORANGE);
-  doc.setFontSize(12);
-  doc.setFont("helvetica", "bold");
-  doc.text("DAY-BY-DAY ITINERARY", 14, y);
-  y += 4;
-
-  doc.setFillColor(...ORANGE);
-  doc.rect(14, y, 50, 0.7, "F");
-  y += 8;
-
-  destination.itinerary.forEach((day) => {
-    // Check page break
-    if (y > pageHeight - 50) {
-      doc.addPage();
-      // Mini header on subsequent pages
-      doc.setFillColor(...DARK);
-      doc.rect(0, 0, pageWidth, 12, "F");
-      doc.setTextColor(...ORANGE);
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "bold");
-      doc.text("WANDERLUX", 14, 8);
-      doc.setTextColor(...TEXT_MED);
-      doc.setFontSize(8);
-      doc.text(`${destination.name} Itinerary`, pageWidth - 14, 8, { align: "right" });
-      y = 20;
-    }
-
-    // Day header
-    doc.setFillColor(...NAVY);
-    doc.roundedRect(14, y - 1, pageWidth - 28, 10, 2, 2, "F");
-    doc.setTextColor(...GOLD);
-    doc.setFontSize(8);
+  const drawSectionTitle = (title: string, fontSize = 9.5) => {
+    ensureSpace(10);
+    doc.setTextColor(...COLORS.primary);
     doc.setFont("helvetica", "bold");
-    doc.text(`DAY ${day.day}`, 18, y + 5);
-    doc.setTextColor(...WHITE);
+    doc.setFontSize(fontSize);
+    doc.text(title, marginX, y);
+    y += 3;
+    doc.setFillColor(...COLORS.secondary);
+    doc.rect(marginX, y, 28, 0.6, "F");
+    doc.setFillColor(...COLORS.accent);
+    doc.rect(marginX + 28, y, 8, 0.6, "F");
+    y += 5;
+  };
+
+  const drawDayHeader = (heading: string, dayNum: number) => {
+    ensureSpace(14);
+    const barHeight = 9;
+    doc.setFillColor(...COLORS.primary);
+    doc.roundedRect(marginX, y - 1, contentWidth, barHeight, 1.5, 1.5, "F");
+
+    doc.setFillColor(...COLORS.accent);
+    doc.roundedRect(marginX + 2, y + 1, 14, 5.5, 1, 1, "F");
+    doc.setTextColor(...COLORS.white);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(7.5);
+    doc.text(`DAY ${dayNum}`, marginX + 9, y + 4.8, { align: "center" });
+
+    doc.setTextColor(...COLORS.white);
     doc.setFontSize(9);
-    doc.text(day.title.toUpperCase(), 38, y + 5);
-    doc.setTextColor(180, 180, 200);
-    doc.setFontSize(7);
-    doc.text(day.location, pageWidth - 18, y + 5, { align: "right" });
-    y += 12;
+    const headingLines = doc.splitTextToSize(heading, contentWidth - 22);
+    doc.text(headingLines, marginX + 19, y + 4.5);
+    y += barHeight + 3;
+  };
 
-    // Activities
-    day.activities.forEach((act) => {
-      if (y > pageHeight - 30) {
-        doc.addPage();
-        doc.setFillColor(...DARK);
-        doc.rect(0, 0, pageWidth, 12, "F");
-        doc.setTextColor(...ORANGE);
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "bold");
-        doc.text("WANDERLUX", 14, 8);
-        y = 20;
-      }
+  const drawMetaCard = (items: { label: string; value: string }[]) => {
+    const cardHeight = 22;
+    ensureSpace(cardHeight + 4);
+    doc.setFillColor(...COLORS.bgElevated);
+    doc.roundedRect(marginX, y, contentWidth, cardHeight, 2, 2, "F");
+    doc.setFillColor(...COLORS.secondary);
+    doc.rect(marginX, y, 2.5, cardHeight, "F");
 
-      doc.setTextColor(...ORANGE);
-      doc.setFontSize(7);
+    const colWidth = contentWidth / items.length;
+    items.forEach((item, i) => {
+      const cx = marginX + 8 + i * colWidth;
+      doc.setTextColor(...COLORS.accent);
       doc.setFont("helvetica", "bold");
-      doc.text(act.time, 18, y);
-
-      doc.setTextColor(...TEXT_DARK);
-      doc.setFont("helvetica", "bold");
-      doc.text(`${act.icon}  ${act.activity}`, 45, y);
-
-      doc.setTextColor(...TEXT_MED);
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(7);
-      const actDesc = doc.splitTextToSize(act.description, pageWidth - 90);
-      doc.text(actDesc, 45, y + 4);
-      y += 4 + actDesc.length * 4 + 2;
+      doc.setFontSize(6.5);
+      doc.text(item.label.toUpperCase(), cx, y + 6);
+      doc.setTextColor(...COLORS.primary);
+      doc.setFontSize(8);
+      const valueLines = doc.splitTextToSize(item.value, colWidth - 6);
+      doc.text(valueLines, cx, y + 11);
     });
+    y += cardHeight + 6;
+  };
 
-    // Accommodation & meals
-    if (day.accommodation) {
-      doc.setFillColor(240, 240, 250);
-      doc.rect(14, y, pageWidth - 28, 9, "F");
-      doc.setTextColor(...TEXT_MED);
-      doc.setFontSize(7);
-      doc.setFont("helvetica", "bold");
-      doc.text(`🏨 ${day.accommodation}`, 18, y + 4);
-      const mealsText = day.meals.join(" • ");
-      doc.text(`🍽️ ${mealsText}`, pageWidth - 18, y + 4, { align: "right" });
-      y += 12;
-    } else {
-      y += 4;
-    }
-  });
+  const drawHighlightStrip = (highlights: string[]) => {
+    const rows = Math.ceil(highlights.length / 2);
+    const stripHeight = 8 + rows * 5;
+    ensureSpace(stripHeight + 4);
 
-  // ---- NEW PAGE: INCLUSIONS / PRICE TABLE ----
-  doc.addPage();
+    doc.setFillColor(...COLORS.bg);
+    doc.roundedRect(marginX, y, contentWidth, stripHeight, 2, 2, "F");
+    doc.setDrawColor(...COLORS.secondary);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(marginX, y, contentWidth, stripHeight, 2, 2, "S");
 
-  // Mini header
-  doc.setFillColor(...DARK);
-  doc.rect(0, 0, pageWidth, 12, "F");
-  doc.setTextColor(...ORANGE);
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "bold");
-  doc.text("WANDERLUX", 14, 8);
-  doc.setTextColor(...TEXT_MED);
-  doc.setFontSize(8);
-  doc.text(`${destination.name} – Package Details`, pageWidth - 14, 8, { align: "right" });
+    doc.setTextColor(...COLORS.accent);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(7.5);
+    doc.text("✦  TRIP HIGHLIGHTS", marginX + 5, y + 5.5);
+    y += 9;
 
-  y = 22;
+    const midpoint = Math.ceil(highlights.length / 2);
+    highlights.forEach((h, i) => {
+      const col = i < midpoint ? 0 : 1;
+      const row = i < midpoint ? i : i - midpoint;
+      const hx = marginX + 6 + col * (contentWidth / 2 - 4);
+      const hy = y + row * 5;
+      doc.setTextColor(...COLORS.textSecondary);
+      doc.setFontSize(7.5);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(...COLORS.secondary);
+      doc.text("•", hx, hy);
+      doc.setTextColor(...COLORS.text);
+      doc.text(h, hx + 3, hy);
+    });
+    y += midpoint * 5 + 6;
+  };
 
-  // Inclusions / Exclusions side by side
-  doc.setTextColor(...ORANGE);
-  doc.setFontSize(11);
-  doc.setFont("helvetica", "bold");
-  doc.text("WHAT'S INCLUDED", 14, y);
-  doc.text("NOT INCLUDED", pageWidth / 2 + 5, y);
-  y += 6;
-
-  const maxRows = Math.max(destination.inclusions.length, destination.exclusions.length);
-  const rowH = 7;
-
-  for (let i = 0; i < maxRows; i++) {
-    if (i % 2 === 0) {
-      doc.setFillColor(...LIGHT_GRAY);
-      doc.rect(14, y - 1, (pageWidth - 28) / 2 - 2, rowH, "F");
-      doc.rect(pageWidth / 2 + 5, y - 1, (pageWidth - 28) / 2 - 2, rowH, "F");
-    }
-
-    doc.setFontSize(8);
+  const drawMealsBadge = (mealsText: string) => {
+    ensureSpace(8);
+    const badgeWidth = Math.max(42, doc.getTextWidth(`Meals: ${mealsText}`) + 10);
+    doc.setFillColor(242, 252, 251);
+    doc.roundedRect(marginX, y - 1, badgeWidth, 6.5, 1.5, 1.5, "F");
+    doc.setDrawColor(...COLORS.secondary);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(marginX, y - 1, badgeWidth, 6.5, 1.5, 1.5, "S");
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(7.5);
+    doc.setTextColor(...COLORS.secondary);
+    doc.text("Meals: ", marginX + 3, y + 3.5);
     doc.setFont("helvetica", "normal");
+    doc.setTextColor(...COLORS.text);
+    doc.text(mealsText, marginX + 3 + doc.getTextWidth("Meals: "), y + 3.5);
+    y += 9;
+  };
 
-    if (destination.inclusions[i]) {
-      doc.setTextColor(52, 211, 153); // green
-      doc.text("✓", 18, y + 3);
-      doc.setTextColor(...TEXT_DARK);
-      doc.text(destination.inclusions[i], 24, y + 3);
-    }
-    if (destination.exclusions[i]) {
-      doc.setTextColor(239, 68, 68); // red
-      doc.text("✗", pageWidth / 2 + 9, y + 3);
-      doc.setTextColor(...TEXT_DARK);
-      doc.text(destination.exclusions[i], pageWidth / 2 + 16, y + 3);
-    }
-    y += rowH;
-  }
+  // ---- COVER PAGE ----
+  drawPageHeader();
 
-  y += 12;
+  // Hero title block
+  ensureSpace(28);
+  doc.setFillColor(...COLORS.primary);
+  doc.roundedRect(marginX, y, contentWidth, 22, 2, 2, "F");
+  doc.setFillColor(...COLORS.accent);
+  doc.rect(marginX, y, 3, 22, "F");
 
-  // ---- PRICE COMPARISON TABLE ----
-  doc.setTextColor(...ORANGE);
-  doc.setFontSize(11);
+  doc.setTextColor(...COLORS.white);
   doc.setFont("helvetica", "bold");
-  doc.text("PRICE COMPARISON", 14, y);
-  y += 3;
+  doc.setFontSize(18);
+  doc.text(`${destination.name} Holiday`, marginX + 7, y + 10);
+  doc.setTextColor(...COLORS.secondary);
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(8.5);
+  doc.text(`"${destination.tagline}"`, marginX + 7, y + 16);
+  y += 26;
 
-  autoTable(doc, {
-    startY: y,
-    head: [["Provider", "Price (₹)", "Duration", "Rating", "What's Included"]],
-    body: destination.comparison.map((c) => [
-      c.provider + (c.badge ? `\n★ ${c.badge}` : ""),
-      `₹${c.price.toLocaleString("en-IN")}`,
-      c.duration,
-      `${c.rating}/5 (${c.reviewCount} reviews)`,
-      c.inclusions.slice(0, 3).join(", ") + (c.inclusions.length > 3 ? "..." : ""),
-    ]),
-    styles: { fontSize: 8, cellPadding: 4, textColor: TEXT_DARK },
-    headStyles: { fillColor: NAVY, textColor: WHITE, fontStyle: "bold" },
-    bodyStyles: { fillColor: WHITE },
-    alternateRowStyles: { fillColor: LIGHT_GRAY },
-    didDrawCell: (data) => {
-      // Highlight WanderSouls row
-      if (data.section === "body" && data.row.index === 0) {
-        doc.setFillColor(255, 107, 53, 0.08);
+  const intro = buildIntroParagraph(destination);
+  writeParagraph(intro, 9, 4.8, COLORS.textSecondary);
+
+  const { dateRange, nightsDays } = getTravelMeta(destination);
+  drawMetaCard([
+    { label: "Dates", value: dateRange },
+    { label: "Guests", value: destination.groupSize.replace(/People/i, "Travellers") },
+    { label: "Duration", value: nightsDays },
+  ]);
+
+  drawHighlightStrip(destination.highlights.slice(0, 6));
+  drawSectionTitle("DAY-BY-DAY ITINERARY", 11);
+
+  // ---- DAY-BY-DAY ITINERARY ----
+  const travelDates = buildTravelDates(destination);
+
+  destination.itinerary.forEach((day, index) => {
+    const dateLabel = travelDates[index] ?? "";
+    const isFirst = day.day === 1;
+    const isLast = day.day === destination.itinerary.length;
+
+    const dayHeading = isFirst
+      ? `${dateLabel}`
+      : `${dateLabel} — ${day.title}`;
+
+    drawDayHeader(dayHeading, day.day);
+
+    if (isFirst) {
+      const arrivalLead = day.activities[0]
+        ? `${day.title} ${day.activities[0].time} at ${day.location}`
+        : day.title;
+      writeParagraph(arrivalLead, 9, 4.6, COLORS.secondary);
+      day.activities.forEach((act) => {
+        const bulletText = act.description
+          ? `${act.activity} — ${act.description}`
+          : act.activity;
+        writeBullet(bulletText);
+      });
+      if (day.accommodation) {
+        writeBullet(`Check-in at ${day.accommodation}`);
       }
-    },
-    columnStyles: {
-      0: { fontStyle: "bold" },
-      1: { fontStyle: "bold", textColor: ORANGE },
-    },
-    margin: { left: 14, right: 14 },
+    } else {
+      if (!isLast && day.activities[0]?.description) {
+        writeParagraph(day.activities[0].description, 9, 4.6, COLORS.textSecondary);
+      }
+
+      if (!isLast) {
+        ensureSpace(6);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(8);
+        doc.setTextColor(...COLORS.accent);
+        doc.text("Transfer: ", marginX, y);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(...COLORS.text);
+        doc.text("SIC (Seat-in-Coach)", marginX + doc.getTextWidth("Transfer: "), y);
+        y += 5;
+      }
+
+      ensureSpace(6);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(8);
+      doc.setTextColor(...COLORS.primary);
+      doc.text("Experiences:", marginX, y);
+      y += 4;
+
+      day.activities.forEach((act) => {
+        ensureSpace(4.5);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(8.5);
+        doc.setTextColor(...COLORS.primary);
+        doc.text(act.activity, marginX + 2, y);
+        y += 4.5;
+
+        if (act.description) {
+          const detailLines = doc.splitTextToSize(act.description, contentWidth - 10);
+          detailLines.forEach((line: string) => writeBullet(line, 6));
+        }
+      });
+
+      if (day.accommodation) {
+        ensureSpace(5);
+        doc.setFont("helvetica", "italic");
+        doc.setFontSize(8);
+        doc.setTextColor(...COLORS.textMuted);
+        doc.text(`Return to ${day.accommodation} by evening`, marginX, y);
+        y += 5;
+      }
+    }
+
+    const mealsText =
+      day.meals.length > 0 ? day.meals.join(", ") : isFirst ? "No" : "Breakfast";
+    drawMealsBadge(mealsText);
+    y += 2;
   });
 
-  // ---- FOOTER ON ALL PAGES ----
-  const totalPages = (doc.internal as unknown as { getNumberOfPages(): number }).getNumberOfPages();
-  for (let p = 1; p <= totalPages; p++) {
-    doc.setPage(p);
-    doc.setFillColor(...DARK);
-    doc.rect(0, pageHeight - 12, pageWidth, 12, "F");
-    doc.setFillColor(...ORANGE);
-    doc.rect(0, pageHeight - 13, pageWidth, 1, "F");
+  // ---- DISCLAIMER PAGE ----
+  ensureSpace(20);
+  drawSectionTitle("IMPORTANT INSTRUCTIONS & NOTES", 11);
 
-    doc.setTextColor(...TEXT_MED);
-    doc.setFontSize(7);
-    doc.setFont("helvetica", "normal");
-    doc.text("© 2025 WanderSouls Travel Pvt. Ltd. | www.wanderlux.travel | +91 98765 43210", 14, pageHeight - 5);
-    doc.text(`Page ${p} of ${totalPages}`, pageWidth - 14, pageHeight - 5, { align: "right" });
+  DISCLAIMER_SECTIONS.forEach((section, sectionIndex) => {
+    if (sectionIndex > 0) {
+      ensureSpace(10);
+      doc.setTextColor(...COLORS.primary);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(9);
+      doc.text(section.title, marginX, y);
+      y += 3;
+      doc.setFillColor(...COLORS.bgElevated);
+      doc.rect(marginX, y, contentWidth, 0.4, "F");
+      y += 5;
+    }
+    section.items.forEach((item) => writeBullet(item));
+    y += 2;
+  });
+
+  // ---- PAGE FOOTERS ----
+  const totalPages = (doc.internal as unknown as { getNumberOfPages(): number }).getNumberOfPages();
+  for (let page = 1; page <= totalPages; page++) {
+    doc.setPage(page);
+    drawPageFooter(page, totalPages);
   }
 
-  doc.save(`WanderSouls_${destination.name}_Itinerary.pdf`);
+  savePdf(doc, createPdfFileName(destination));
+}
+
+function buildIntroParagraph(destination: Destination): string {
+  const highlightSample = destination.highlights.slice(0, 3).join(", ");
+  return (
+    `Experience an unforgettable ${destination.name} getaway filled with iconic attractions, ` +
+    `family-friendly adventures, and vibrant experiences. This carefully planned itinerary blends ` +
+    `${highlightSample.toLowerCase()}, and immersive cultural highlights, all complemented by ` +
+    `a comfortable stay and seamless transfers for a relaxed and memorable holiday.`
+  );
+}
+
+function parseDuration(duration: string): { nights: number; days: number } {
+  const nightsMatch = duration.match(/(\d+)\s*Nights?/i);
+  const daysMatch = duration.match(/(\d+)\s*Days?/i);
+  const nights = nightsMatch ? Number(nightsMatch[1]) : 0;
+  const days = daysMatch ? Number(daysMatch[1]) : nights > 0 ? nights + 1 : 0;
+  return { nights, days };
+}
+
+function getTravelMeta(destination: Destination): { dateRange: string; nightsDays: string } {
+  const { nights, days } = parseDuration(destination.duration);
+  const nightsDays =
+    nights && days ? `${nights} Nights / ${days} Days` : destination.duration;
+
+  const wanderPackage = destination.comparison.find((c) => c.provider === "WanderSouls");
+  const firstDeparture = wanderPackage?.departureDates?.[0];
+
+  if (!firstDeparture) {
+    return {
+      dateRange: "Contact WanderSouls for available departure dates",
+      nightsDays,
+    };
+  }
+
+  const startDate = parseDepartureDate(firstDeparture);
+  const endDate = new Date(startDate);
+  endDate.setDate(endDate.getDate() + Math.max(days - 1, nights));
+
+  return {
+    dateRange: `${formatPdfDate(startDate)} – ${formatPdfDate(endDate)}`,
+    nightsDays,
+  };
+}
+
+function buildTravelDates(destination: Destination): string[] {
+  const wanderPackage = destination.comparison.find((c) => c.provider === "WanderSouls");
+  const firstDeparture = wanderPackage?.departureDates?.[0];
+  const startDate = firstDeparture ? parseDepartureDate(firstDeparture) : new Date();
+
+  return destination.itinerary.map((_, index) => {
+    const date = new Date(startDate);
+    date.setDate(date.getDate() + index);
+    return formatPdfDate(date);
+  });
+}
+
+function parseDepartureDate(departure: string): Date {
+  const currentYear = new Date().getFullYear();
+  const parsed = new Date(`${departure} ${currentYear}`);
+  if (!Number.isNaN(parsed.getTime())) return parsed;
+
+  const fallback = new Date();
+  fallback.setDate(fallback.getDate() + 30);
+  return fallback;
+}
+
+function formatPdfDate(date: Date): string {
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function savePdf(doc: { output(type: string): Blob }, fileName: string) {
+  const blob = doc.output("blob");
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = fileName;
+  anchor.style.display = "none";
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  URL.revokeObjectURL(url);
+}
+
+function createPdfFileName(destination: Destination): string {
+  const safeName = destination.name.replace(/[^a-zA-Z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  const { nights, days } = parseDuration(destination.duration);
+
+  let durationSegment = "";
+  if (nights && days) {
+    durationSegment = `${nights}nights${days}days`;
+  } else if (nights) {
+    durationSegment = `${nights}nights`;
+  } else if (days) {
+    durationSegment = `${days}days`;
+  } else {
+    durationSegment = destination.duration.replace(/[^a-zA-Z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  }
+
+  return `${safeName}-${durationSegment}.pdf`;
 }

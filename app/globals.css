@@ -260,6 +260,22 @@ h1, h2, h3, h4, h5, h6 {
   animation: pulseRing 2s infinite;
 }
 
+/* ── STICKY MOBILE WHATSAPP BAR ── */
+.mobile-whatsapp-bar {
+  display: none; /* hidden by default on desktop */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+@media (max-width: 800px) {
+  .mobile-whatsapp-bar {
+    display: block;
+  }
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

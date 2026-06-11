@@ -16,15 +16,15 @@ import { ArrowRight, BarChart2, Star, CheckCircle, ShieldCheck, HeartHandshake, 
 const WHY_US = [
   {
     icon: Award,
-    title: "Expert-Curated Itineraries",
-    desc: "Every single day is planned by travel specialists who have personally visited each destination. No generic tours — just unforgettable, bespoke experiences.",
+    title: "Planned by Area Specialists",
+    desc: "Your days are mapped out by experts who have lived and traveled extensively in these regions. We focus on quiet competence and logistical perfection.",
     color: "var(--accent)",
     stat: "6 Destinations",
   },
   {
     icon: ShieldCheck,
-    title: "Radical Price Transparency",
-    desc: "We show you real-time comparisons against MakeMyTrip & Veena World so you always know you are getting the absolute best value for your luxury stay.",
+    title: "Verified Price Matching",
+    desc: "We compare our costs directly against industry standards like MakeMyTrip & Veena World. Our margins are flat, and our pricing is clear.",
     color: "var(--secondary)",
     stat: "Save up to 35%",
   },
@@ -113,13 +113,13 @@ export default function HomePage() {
             <div className="destinations-header">
               <div>
                 <h2 className="section-title" style={{ marginBottom: "12px" }}>
-                  Handpicked <span className="gradient-text">Destinations</span>
+                  Our <span className="gradient-text">Destinations</span>
                 </h2>
                 <p style={{
                   fontFamily: "var(--font-montserrat), sans-serif", fontSize: "1rem",
                   color: "var(--text-secondary)", maxWidth: "520px", lineHeight: "1.7",
                 }}>
-                  Explore our handpicked collection of six iconic global destinations, each mapped out in luxury day-by-day detail.
+                  Browse the six regions we specialize in. We focus our expertise narrowly to ensure a higher standard of travel.
                 </p>
               </div>
               <Link href="/compare" className="btn-secondary" style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
@@ -262,7 +262,7 @@ export default function HomePage() {
                 Testimonials
               </div>
               <h2 className="section-title">
-                Real Reviews from <span className="gradient-text">Discerning Explorers</span>
+                Stories from <span className="gradient-text">Recent Travelers</span>
               </h2>
             </div>
           </RevealOnScroll>
@@ -343,14 +343,14 @@ export default function HomePage() {
           <RevealOnScroll variant="fade-up">
             <div style={{ textAlign: "center", marginBottom: "64px" }}>
               <h2 className="section-title">
-                Travel Smarter with <span className="gradient-text">WanderSouls</span>
+                How We Plan <span className="gradient-text">Your Trip</span>
               </h2>
               <p style={{
                 fontFamily: "var(--font-montserrat), sans-serif", fontSize: "1.05rem",
                 color: "var(--text-secondary)", maxWidth: "600px", margin: "0 auto", lineHeight: "1.7",
                 fontWeight: "500"
               }}>
-                We have spent over a decade perfecting the science of planning. See what makes us a multi-award winning travel system.
+                A refined system built over a decade of industry experience, designed to eliminate stress and hidden costs.
               </p>
             </div>
           </RevealOnScroll>
@@ -425,7 +425,7 @@ export default function HomePage() {
                 color: "var(--text-secondary)", maxWidth: "600px", margin: "0 auto 40px", lineHeight: "1.7",
                 fontWeight: "500"
               }}>
-                Skip the endless browser tabs and let WanderSouls compile your perfect luxury itinerary. Unbeatable comparison values, guaranteed.
+                Skip the endless browser tabs. Let us handle the logistics, so you can focus on the travel.
               </p>
               <Link href="/compare" className="btn-primary" style={{ padding: "16px 36px", fontSize: "1rem" }}>
                 Compare & Get Started <ArrowRight size={18} />

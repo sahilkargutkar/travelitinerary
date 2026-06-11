@@ -181,7 +181,7 @@ export default function WorldMap() {
                     transition: "all 0.3s ease",
                   }}
                 >
-                  <span style={{ fontSize: "16px" }}>{spot.flag}</span>
+
                   {spot.name}
                 </button>
               );
@@ -307,7 +307,7 @@ export default function WorldMap() {
                     gap: "6px",
                     zIndex: 2
                   }}>
-                    <span style={{ fontSize: "18px" }}>{activeSpot.flag}</span>
+
                     <span style={{
                       fontFamily: "var(--font-montserrat)",
                       fontSize: "0.75rem",

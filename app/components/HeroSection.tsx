@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin, Calendar, Users, Compass, Star } from "lucide-react";
+import { MapPin, Calendar, Users, Compass, Star, ChevronDown, ArrowRight } from "lucide-react";
+import DateRangePicker from "./DateRangePicker";
 
 const DESTINATIONS_LIST = [
   { slug: "kerala", name: "Kerala, India", flag: "🇮🇳", image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1920&q=90" },
@@ -13,7 +14,7 @@ const DESTINATIONS_LIST = [
   { slug: "south-korea", name: "Seoul, South Korea", flag: "🇰🇷", image: "https://images.unsplash.com/photo-1617541086271-4d8e21a9d439?w=1920&q=90" }
 ];
 
-const CYCLING_WORDS = ["Around the World", "with Radical Value", "with Radical Transparency", "with Bespoke Luxury"];
+const CYCLING_WORDS = ["Around the World", "with Honest Pricing", "with Zero Hidden Fees", "with Private Guides"];
 
 export default function HeroSection() {
   const router = useRouter();
@@ -90,11 +91,14 @@ export default function HeroSection() {
   }, []);
 
   const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (selectedDate) params.append("date", selectedDate);
+    if (selectedGuests !== "2 Adults") params.append("guests", selectedGuests);
+
     if (selectedDest) {
-      router.push(`/destinations/${selectedDest}`);
+      router.push(`/destinations/${selectedDest}?${params.toString()}`);
     } else {
-      // Default fallback
-      router.push("/#destinations");
+      router.push(`/destinations?${params.toString()}`);
     }
   };
 
@@ -190,7 +194,7 @@ export default function HeroSection() {
           letterSpacing: "-0.02em",
           textShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
         }}>
-          Discover Extraordinary Journeys <br />
+          Travel Better <br />
           <span style={{
             background: "linear-gradient(135deg, var(--secondary) 0%, #FAFAF7 100%)",
             WebkitBackgroundClip: "text",
@@ -213,7 +217,7 @@ export default function HeroSection() {
           fontWeight: "500",
           textShadow: "0 2px 10px rgba(0, 0, 0, 0.15)",
         }}>
-          Bespoke, day-by-day luxury itineraries comparison-tested for absolute value. Crafted by travel specialists with over two decades of design excellence.
+          Private itineraries designed by experts who have lived there. We compare prices across the industry so you never overpay.
         </p>
 
         {/* ── FLOATING GLASSMORPHISM SEARCH MODULE ── */}
@@ -236,8 +240,8 @@ export default function HeroSection() {
         }}>
           
           {/* 1. Destination Dropdown */}
-          <div ref={destRef} style={{ position: "relative", cursor: "pointer" }} onClick={() => setDestDropdownOpen(!destDropdownOpen)}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px" }}>
+          <div ref={destRef} style={{ position: "relative" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px", cursor: "pointer" }} onClick={() => setDestDropdownOpen(!destDropdownOpen)}>
               <div style={{ color: "var(--secondary)" }}><MapPin size={20} /></div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <span style={{ display: "block", fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: "700", textTransform: "uppercase", color: "rgba(250, 250, 247, 0.65)", letterSpacing: "0.08em" }}>Where to?</span>
@@ -274,7 +278,7 @@ export default function HeroSection() {
                     onMouseEnter={(e) => { if (selectedDest !== dest.slug) e.currentTarget.style.background = "rgba(10, 37, 64, 0.03)"; }}
                     onMouseLeave={(e) => { if (selectedDest !== dest.slug) e.currentTarget.style.background = "transparent"; }}
                   >
-                    <span style={{ fontSize: "16px" }}>{dest.flag}</span>
+
                     <span>{dest.name}</span>
                   </button>
                 ))}
@@ -286,32 +290,17 @@ export default function HeroSection() {
           <div style={{ width: "1px", height: "40px", background: "rgba(255, 255, 255, 0.15)", display: "none" }} />
 
           {/* 2. Date Input Selector */}
-          <div style={{ cursor: "pointer", position: "relative" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px" }}>
-              <div style={{ color: "var(--secondary)" }}><Calendar size={20} /></div>
-              <div style={{ flex: 1, minWidth: 0, position: "relative" }}>
-                <span style={{ display: "block", fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: "700", textTransform: "uppercase", color: "rgba(250, 250, 247, 0.65)", letterSpacing: "0.08em" }}>When?</span>
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  style={{
-                    background: "transparent", border: "none", outline: "none",
-                    fontFamily: "var(--font-playfair)", fontSize: "0.95rem", fontWeight: "700",
-                    color: "#FAFAF7", width: "100%", cursor: "pointer",
-                    marginTop: "2px",
-                  }}
-                />
-              </div>
-            </div>
-          </div>
+          <DateRangePicker 
+            value={selectedDate} 
+            onChange={setSelectedDate} 
+          />
 
           {/* Vertical divider line */}
           <div style={{ width: "1px", height: "40px", background: "rgba(255, 255, 255, 0.15)", display: "none" }} />
 
           {/* 3. Guests Selector */}
-          <div ref={guestsRef} style={{ position: "relative", cursor: "pointer" }} onClick={() => setGuestsDropdownOpen(!guestsDropdownOpen)}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px" }}>
+          <div ref={guestsRef} style={{ position: "relative" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px", cursor: "pointer" }} onClick={() => setGuestsDropdownOpen(!guestsDropdownOpen)}>
               <div style={{ color: "var(--secondary)" }}><Users size={20} /></div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <span style={{ display: "block", fontFamily: "var(--font-montserrat)", fontSize: "0.68rem", fontWeight: "700", textTransform: "uppercase", color: "rgba(250, 250, 247, 0.65)", letterSpacing: "0.08em" }}>Travelers</span>

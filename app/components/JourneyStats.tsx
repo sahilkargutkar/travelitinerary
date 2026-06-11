@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, Heart, Users, MapPin, ThumbsUp } from "lucid
 /* ── STATS DATA ── */
 const STATS = [
   { icon: Users, value: 250, suffix: "", label: "Families using WanderSouls", color: "var(--secondary)" },
-  { icon: MapPin, value: 1500, suffix: "+", label: "Restaurants & activities reviewed", color: "var(--accent)" },
+  { icon: MapPin, value: 1500, suffix: "+", label: "Destinations Planned", color: "var(--accent)" },
   { icon: ThumbsUp, value: 98, suffix: "%", label: "Families recommend WanderSouls", color: "var(--secondary)" },
 ];
 
@@ -45,46 +45,46 @@ const TESTIMONIALS = [
 /* ── SOCIAL GALLERY DATA ── */
 const SOCIAL_POSTS = [
   {
-    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80",
+    image: "/gallery/instagram/post1.jpg",
     likes: "1.2k",
-    comments: 84,
-    caption: "Chasing sunsets on the serene backwaters of Alleppey 🌴🛶 #kerala #travelindia",
-    link: "https://www.instagram.com/wandersoulsindia/"
+    comments: 30,
+    caption: "50 travellers. 5 unforgettable months. ✈️💜 We’re beyond grateful to every traveller who chose to explore the world with us, trusted us with their dream journeys, and became a part of the WanderSouls family. From beautiful memories to lifelong friendships — this is only the beginning. 🌍✨ #WanderSouls #TravelMemories #DreamTravels #TravelCommunity",
+    link: "https://www.instagram.com/p/DYPSX4BNEV-/"
   },
   {
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+    image: "/gallery/instagram/post2.jpg",
     likes: "942",
-    comments: 53,
-    caption: "Waking up to tropical views in Phuket. Paradise found! 🌊☀️ #thailand #islandlife",
-    link: "https://www.instagram.com/wandersoulsindia/"
+    comments: 45,
+    caption: "Chasing tropical vibes and ocean waves 🌊🐚🐳",
+    link: "https://www.instagram.com/p/DTC75J6Da4R/"
   },
   {
-    image: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&q=80",
+    image: "/gallery/instagram/post3.jpg",
     likes: "1.5k",
-    comments: 112,
-    caption: "The crystal lagoons of El Nido are calling. Who would you take here? ⛵🐠 #philippines",
-    link: "https://www.instagram.com/wandersoulsindia/"
+    comments: 60,
+    caption: "Creating trips that turn into lifetime memories — shared by our happy clients ✨ At Wandersouls, we don’t just plan trips — we create memories our clients love sharing ❤️✨ #HappyClients #TravelMemories #ClientLove #Wandersouls #MemoriesMade",
+    link: "https://www.instagram.com/p/DSX14m5DYW9/"
   },
   {
-    image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=600&q=80",
-    likes: "2.1k",
-    comments: 142,
-    caption: "Future meets nature at Gardens by the Bay! 🏢🌸 #singapore #lioncity",
-    link: "https://www.instagram.com/wandersoulsindia/"
+    image: "/gallery/instagram/post4.jpg",
+    likes: "1.1k",
+    comments: 75,
+    caption: "Dreaming of Darjeeling? ☁️🏔️ We've got the perfect Darjeeling packages for you! DM us for itinerary details, prices, and bookings. ✨ #DarjeelingDiaries #TravelWithUs #DarjeelingPackage #ExploreIndia",
+    link: "https://www.instagram.com/p/DZCu1O8tJ0R/"
   },
   {
-    image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&q=80",
+    image: "/gallery/instagram/post5.jpg",
     likes: "1.8k",
-    comments: 98,
-    caption: "Unforgettable close encounter with the majestic wildlife of Kruger 🦁🐘 #safari #southafrica",
-    link: "https://www.instagram.com/wandersoulsindia/"
+    comments: 90,
+    caption: "Why chase foreign dreams when India already has places that feel unreal? 🇮🇳✨ Paradise exists right here at home. ❤️🌏 Travel more. Discover local. Fall in love with India all over again. ✈️🇮🇳 #IncredibleIndia #TravelIndia #DekhoApnaDesh #IndiaTourism #WanderIndia",
+    link: "https://www.instagram.com/p/DYtnpw6jUNe/"
   },
   {
-    image: "https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=600&q=80",
-    likes: "1.6k",
-    comments: 76,
-    caption: "Hanbok dress and historic strolls through Bukchon Hanok Village 👘🏯 #seoul #southkorea",
-    link: "https://www.instagram.com/wandersoulsindia/"
+    image: "/gallery/instagram/post6.jpg",
+    likes: "2.4k",
+    comments: 105,
+    caption: "Looks like AI, feels like a dream… but this is nature showing off its magic 🌿✨ Tawang Falls is truly one of those places that makes you pause and admire how unreal our world can be 🏔️🤍 Would you add this hidden paradise to your travel bucket list? ✈️👇 #TravelIndia #Wanderlust #TravelDiaries #ExploreMore #MountainEscape",
+    link: "https://www.instagram.com/p/DYfHf5rtgW5/"
   }
 ];
 
@@ -162,7 +162,7 @@ export default function JourneyStats() {
   useEffect(() => {
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIdx]);
 
   return (
@@ -360,7 +360,7 @@ export default function JourneyStats() {
                 onMouseEnter={(e) => { e.currentTarget.style.background = "var(--accent)"; e.currentTarget.style.color = "#fff"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-elevated)"; e.currentTarget.style.color = "var(--text-muted)"; }}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
               </a>
             </div>
           </div>
@@ -489,7 +489,7 @@ export default function JourneyStats() {
                   }}
                   className="social-post-img"
                 />
-                
+
                 {/* Gradient overlay */}
                 <div style={{
                   position: "absolute", inset: 0,
