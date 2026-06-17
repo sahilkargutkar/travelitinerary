@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Montserrat } from "next/font/google";
+import { Playfair_Display, Montserrat, Satisfy } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -15,21 +15,27 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
+const satisfy = Satisfy({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-satisfy",
+});
+
 export const metadata: Metadata = {
   title: {
     default: "WanderSouls – Premium Travel Itineraries",
     template: "%s | WanderSouls",
   },
   description:
-    "Discover curated, day-by-day travel itineraries for Kerala, Thailand, Philippines, Singapore, South Africa, South Korea and more. Compare packages vs Veena World & MakeMyTrip. Download PDF itineraries instantly.",
+    "Discover curated, day-by-day travel itineraries for Bali, Kerala, Malaysia, Meghalaya, Singapore, Thailand and more. Compare packages vs Veena World & MakeMyTrip. Download PDF itineraries instantly.",
   keywords: [
     "travel itinerary",
     "Kerala tour package",
     "Thailand itinerary",
-    "Philippines tour",
+    "Malaysia travel",
     "Singapore package",
-    "South Africa safari",
-    "South Korea travel",
+    "Meghalaya trek",
+    "Bali vacation",
     "travel comparison",
     "WanderSouls",
   ],
@@ -53,7 +59,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className={`${playfair.variable} ${montserrat.variable} antialiased`}>
+      <body className={`${playfair.variable} ${montserrat.variable} ${satisfy.variable} antialiased`}>
         <Navbar />
         <main>{children}</main>
         <JourneyStats />

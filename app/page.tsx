@@ -167,22 +167,22 @@ export default function HomePage() {
                 <DestinationCard destination={destinations[1]} index={1} />
               </div>
 
-              {/* Philippines — standard */}
+              {/* Malaysia — standard */}
               <div>
                 <DestinationCard destination={destinations[2]} index={2} />
               </div>
 
-              {/* Singapore */}
+              {/* Singapore — standard */}
               <div>
                 <DestinationCard destination={destinations[3]} index={3} />
               </div>
 
-              {/* South Africa */}
+              {/* Meghalaya — standard */}
               <div>
                 <DestinationCard destination={destinations[4]} index={4} />
               </div>
 
-              {/* South Korea */}
+              {/* Featured: Bali (large) */}
               <div style={{ gridColumn: "span 2" }} className="dest-grid-span2">
                 <DestinationCard destination={destinations[5]} index={5} featured />
               </div>

@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function AboutPage() {
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)", paddingTop: "80px" }}>
-      
+
       {/* ── HERO ── */}
       <section style={{
         padding: "80px 20px",
@@ -58,14 +58,14 @@ export default function AboutPage() {
               lineHeight: "1.8",
               marginBottom: "16px"
             }}>
-              WanderSouls Travel Pvt. Ltd. was founded on a simple premise: luxury is personal. For over two decades, our founders traveled the globe seeking out the most breathtaking, untouched, and exclusive corners of the world. 
+              WanderSouls Travel Pvt. Ltd. was founded on a simple premise: luxury is personal. For over two decades, our founders traveled the globe seeking out the most breathtaking, untouched, and exclusive corners of the world.
             </p>
             <p style={{
               fontFamily: "var(--font-montserrat), sans-serif",
               color: "var(--text-secondary)",
               lineHeight: "1.8"
             }}>
-              We saw a gap in the market for truly bespoke travel experiences that prioritize value and authenticity over cookie-cutter itineraries. Today, we are proud to be a trusted partner for luxury travelers seeking deep, meaningful connections with their destinations.
+              We saw a gap in the market for truly personal travel experiences that prioritize value and authenticity over cookie-cutter itineraries. Today, we are proud to be a trusted partner for luxury travelers seeking deep, meaningful connections with their destinations.
             </p>
           </div>
           <div style={{
@@ -152,7 +152,7 @@ export default function AboutPage() {
           color: "var(--primary)",
           marginBottom: "32px"
         }}>Corporate Information</h2>
-        
+
         <div style={{
           background: "#FFFFFF",
           padding: "40px",
@@ -174,14 +174,14 @@ export default function AboutPage() {
             <div style={{ gridColumn: "1 / -1" }}>
               <p style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.8rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>Registered Address</p>
               <p style={{ fontFamily: "var(--font-montserrat), sans-serif", fontWeight: "600", color: "var(--text-secondary)", lineHeight: "1.6" }}>
-                Level 4, Corporate Park, Bandra Kurla Complex (BKC)<br/>
-                Bandra East, Mumbai, Maharashtra 400051<br/>
+                Level 4, Corporate Park, Bandra Kurla Complex (BKC)<br />
+                Bandra East, Mumbai, Maharashtra 400051<br />
                 India
               </p>
             </div>
           </div>
         </div>
-        
+
         <div style={{ marginTop: "40px" }}>
           <Link href="/contact" className="btn-primary" style={{ padding: "16px 32px", borderRadius: "50px", textDecoration: "none", display: "inline-flex", fontWeight: "700" }}>
             Get in Touch

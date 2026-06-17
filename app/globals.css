@@ -93,7 +93,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* --- LUXURY BUTTONS --- */
 .btn-primary {
-  background: var(--accent);
+  background: #147971;
   color: #FFFFFF;
   border: none;
   padding: 14px 28px;
@@ -107,15 +107,15 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  box-shadow: 0 8px 24px rgba(255, 122, 89, 0.25);
+  box-shadow: 0 8px 24px rgba(20, 121, 113, 0.25);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .btn-primary:hover {
-  background: #E56241; 
+  background: #0f5c56; 
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(255, 122, 89, 0.35);
+  box-shadow: 0 12px 32px rgba(20, 121, 113, 0.35);
 }
 
 .btn-secondary {

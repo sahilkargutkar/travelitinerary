@@ -318,7 +318,7 @@ export default function FeaturedPackages() {
                           fontWeight: "700"
                         }}
                       >
-                        Bespoke Inquiry
+                        Inquiry
                         <ArrowRight size={14} />
                       </Link>
                     </div>

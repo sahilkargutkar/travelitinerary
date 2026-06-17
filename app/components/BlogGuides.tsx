@@ -1,47 +1,113 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, Clock, User } from "lucide-react";
 
-const ARTICLES = [
-  {
-    id: 1,
-    title: "The Art of Slow Travel: A Week Floating Through Kerala's Quiet Backwaters",
-    desc: "Unplug from the modern pace and discover the therapeutic magic of traditional kettuvallam houseboats, local spice trails, and Ayurvedic wellness rituals.",
-    image: "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=1000&q=80",
-    category: "Culture & Wellness",
-    readTime: "6 min read",
-    author: "Evelyn Thorne",
-    date: "May 28, 2026",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "Secret El Nido: Navigating Palawan's Hidden Marine Lagoons",
-    desc: "A senior explorer's guide to dodging the tourist crowds and discovering untouched turquoise sinkholes in the Philippines.",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-    category: "Adventure Guides",
-    readTime: "8 min read",
-    author: "Marcus Sterling",
-    date: "May 15, 2026",
-    featured: false,
-  },
-  {
-    id: 3,
-    title: "Seoul's Midnight Kitchens: Street Food in Gwangjang Market",
-    desc: "From hand-cut noodle stalls to sweet hotteok griddles, we catalog the absolute best local culinary spots open past midnight.",
-    image: "https://images.unsplash.com/photo-1538333581680-95618696f98a?w=800&q=80",
-    category: "Gastronomy",
-    readTime: "5 min read",
-    author: "Ji-Yeon Park",
-    date: "April 30, 2026",
-    featured: false,
-  },
-];
-
 export default function BlogGuides() {
-  const featured = ARTICLES.find(a => a.featured);
-  const regulars = ARTICLES.filter(a => !a.featured);
+  const [articles, setArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchBlogs() {
+      try {
+        const res = await fetch("/api/blogs");
+        if (res.ok) {
+          const data = await res.json();
+          setArticles(data);
+        }
+      } catch (err) {
+        console.error("Error fetching blogs:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchBlogs();
+  }, []);
+
+  const formatDate = (dateStr: string) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
+
+  if (loading) {
+    return (
+      <section id="blog" style={{
+        padding: "64px 0",
+        background: "var(--bg)",
+        borderTop: "1px solid var(--border-subtle)",
+      }}>
+        <div className="container">
+          <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            marginBottom: "60px",
+            flexWrap: "wrap",
+            gap: "24px",
+          }}>
+            <div>
+              <div style={{
+                display: "inline-flex", alignItems: "center", gap: "6px",
+                background: "rgba(10, 37, 64, 0.05)", color: "var(--primary)",
+                padding: "6px 14px", borderRadius: "50px",
+                fontFamily: "var(--font-montserrat)", fontSize: "0.75rem",
+                fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.08em",
+                marginBottom: "16px"
+              }}>
+                Magazine & Stories
+              </div>
+              <h2 className="section-title" style={{ marginBottom: "0" }}>
+                Travel Inspiration <br />& <span className="gradient-text">Insider Guides</span>
+              </h2>
+            </div>
+          </div>
+          <div className="blog-grid" style={{
+            display: "grid",
+            gridTemplateColumns: "1.2fr 1fr",
+            gap: "36px",
+          }}>
+            <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+              <div style={{ width: "100%", height: "360px", borderRadius: "24px", background: "rgba(10,37,64,0.05)", marginBottom: "24px" }} className="skeleton-pulse" />
+              <div style={{ width: "200px", height: "20px", background: "rgba(10,37,64,0.05)", borderRadius: "4px", marginBottom: "10px" }} className="skeleton-pulse" />
+              <div style={{ width: "80%", height: "30px", background: "rgba(10,37,64,0.05)", borderRadius: "4px", marginBottom: "14px" }} className="skeleton-pulse" />
+              <div style={{ width: "100%", height: "60px", background: "rgba(10,37,64,0.05)", borderRadius: "4px" }} className="skeleton-pulse" />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+              {[1, 2].map((i) => (
+                <div key={i} style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: "24px" }}>
+                  <div style={{ height: "140px", borderRadius: "16px", background: "rgba(10,37,64,0.05)" }} className="skeleton-pulse" />
+                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: "10px" }}>
+                    <div style={{ width: "100px", height: "14px", background: "rgba(10,37,64,0.05)", borderRadius: "4px" }} className="skeleton-pulse" />
+                    <div style={{ width: "80%", height: "24px", background: "rgba(10,37,64,0.05)", borderRadius: "4px" }} className="skeleton-pulse" />
+                    <div style={{ width: "120px", height: "14px", background: "rgba(10,37,64,0.05)", borderRadius: "4px" }} className="skeleton-pulse" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <style>{`
+          @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+          }
+          .skeleton-pulse {
+            animation: pulse 1.5s infinite ease-in-out;
+          }
+        `}</style>
+      </section>
+    );
+  }
+
+  const featured = articles.find(a => a.featured) || articles[0];
+  const regulars = featured ? articles.filter(a => a._id !== featured._id) : articles;
 
   return (
     <section id="blog" style={{
@@ -50,7 +116,7 @@ export default function BlogGuides() {
       borderTop: "1px solid var(--border-subtle)",
     }}>
       <div className="container">
-        
+
         {/* Section Header */}
         <div style={{
           display: "flex",
@@ -75,18 +141,18 @@ export default function BlogGuides() {
               Travel Inspiration <br />& <span className="gradient-text">Insider Guides</span>
             </h2>
           </div>
-          
-          <a href="#" style={{
+
+          <Link href="/blogs" style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.9rem", fontWeight: "700",
             color: "var(--accent)", textDecoration: "none", display: "flex",
             alignItems: "center", gap: "8px", transition: "color 0.2s ease"
           }}
-          onMouseEnter={(e) => e.currentTarget.style.color = "var(--primary)"}
-          onMouseLeave={(e) => e.currentTarget.style.color = "var(--accent)"}
+            onMouseEnter={(e) => e.currentTarget.style.color = "var(--primary)"}
+            onMouseLeave={(e) => e.currentTarget.style.color = "var(--accent)"}
           >
-            View Editorial Archive
+            View All Blogs
             <ArrowRight size={16} />
-          </a>
+          </Link>
         </div>
 
         {/* Editorial Layout */}
@@ -95,7 +161,7 @@ export default function BlogGuides() {
           gridTemplateColumns: "1.2fr 1fr",
           gap: "36px",
         }}>
-          
+
           {/* Left: Featured Large Article */}
           {featured && (
             <article style={{
@@ -125,7 +191,7 @@ export default function BlogGuides() {
                   }}
                   className="blog-img"
                 />
-                
+
                 {/* Category tag */}
                 <div style={{
                   position: "absolute", top: "18px", left: "18px",
@@ -158,12 +224,12 @@ export default function BlogGuides() {
                 }} className="blog-title">
                   {featured.title}
                 </h3>
-                
+
                 <p style={{
                   fontFamily: "var(--font-montserrat)", fontSize: "0.9rem",
                   color: "var(--text-secondary)", lineHeight: "1.65", marginBottom: "16px"
                 }}>{featured.desc}</p>
-                
+
                 <div style={{
                   display: "flex", alignItems: "center", gap: "6px",
                   fontFamily: "var(--font-montserrat)", fontSize: "0.85rem", fontWeight: "700",
@@ -178,7 +244,7 @@ export default function BlogGuides() {
           {/* Right: Regular Stacked Articles */}
           <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
             {regulars.map((art) => (
-              <article key={art.id} style={{
+              <article key={art._id} style={{
                 display: "grid",
                 gridTemplateColumns: "180px 1fr",
                 gap: "24px",
@@ -212,7 +278,7 @@ export default function BlogGuides() {
                     color: "var(--secondary)", textTransform: "uppercase", letterSpacing: "0.05em",
                     marginBottom: "6px"
                   }}>{art.category}</span>
-                  
+
                   <h3 style={{
                     fontFamily: "var(--font-playfair)", fontSize: "1.15rem", fontWeight: "800",
                     color: "var(--primary)", lineHeight: "1.3", marginBottom: "8px",
@@ -226,7 +292,7 @@ export default function BlogGuides() {
                       {art.readTime}
                     </span>
                     <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.72rem", color: "var(--text-muted)", fontWeight: "500" }}>
-                      {art.date}
+                      {formatDate(art.updatedAt)}
                     </span>
                   </div>
                 </div>

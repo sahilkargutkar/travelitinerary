@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Share2, MessageCircle, Camera, Globe, MapPin, Phone, Mail, ArrowRight } from "lucide-react";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
@@ -27,23 +28,8 @@ export default function Footer() {
 
           {/* Brand & Mission Statement */}
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
-              <div style={{
-                background: "rgba(255, 255, 255, 0.1)", width: "40px", height: "40px",
-                borderRadius: "12px", display: "flex", alignItems: "center", justifyContent: "center",
-                color: "var(--secondary)", border: "1px solid rgba(255, 255, 255, 0.15)"
-              }}>
-                <Globe size={20} />
-              </div>
-              <span style={{
-                fontFamily: "var(--font-playfair), serif",
-                fontWeight: "900",
-                fontSize: "1.5rem",
-                color: "#FAFAF7",
-                letterSpacing: "-0.02em"
-              }}>
-                WanderSouls
-              </span>
+            <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "24px" }}>
+              <Logo light={false} />
             </div>
             <p style={{
               fontFamily: "var(--font-montserrat), sans-serif",
@@ -53,7 +39,7 @@ export default function Footer() {
               marginBottom: "28px",
               maxWidth: "320px"
             }}>
-              Crafting extraordinary, bespoke travel itineraries for the discerning explorer. Comparison-tested for absolute value and luxury.
+              Crafting extraordinary, custom-made travel itineraries for the discerning explorer. Comparison-tested for absolute value and luxury.
             </p>
             <div style={{ display: "flex", gap: "10px" }}>
               {[
@@ -99,10 +85,10 @@ export default function Footer() {
               {[
                 { name: "Kerala, India", href: "/destinations/kerala" },
                 { name: "Phuket, Thailand", href: "/destinations/thailand" },
-                { name: "Palawan, Philippines", href: "/destinations/philippines" },
+                { name: "Kuala Lumpur, Malaysia", href: "/destinations/malaysia" },
                 { name: "Singapore City", href: "/destinations/singapore" },
-                { name: "Kruger Safari, SA", href: "/destinations/south-africa" },
-                { name: "Seoul, South Korea", href: "/destinations/south-korea" }
+                { name: "Shillong, Meghalaya", href: "/destinations/meghalaya" },
+                { name: "Bali, Indonesia", href: "/destinations/bali" }
               ].map((link) => (
                 <li key={link.name}>
                   <Link href={link.href} style={{
@@ -132,7 +118,7 @@ export default function Footer() {
                 { label: "Contact Us", href: "/contact" },
                 { label: "Compare Prices", href: "/compare" },
                 { label: "AI Concierge Planner", href: "/#ai-planner" },
-                { label: "Editorial Articles", href: "/#blog" },
+                { label: "Editorial Articles", href: "/blogs" },
                 { label: "Luxury Travel Insurance", href: "#" },
                 { label: "Terms & Conditions", href: "#" },
               ].map((link) => (
@@ -218,7 +204,7 @@ export default function Footer() {
           flexWrap: "wrap", gap: "16px",
         }}>
           <p style={{ fontFamily: "var(--font-montserrat), sans-serif", fontSize: "0.82rem", color: "rgba(250, 250, 247, 0.5)" }}>
-            © {new Date().getFullYear()} WanderSouls Travel Pvt. Ltd. All rights reserved. <br/>
+            © {new Date().getFullYear()} WanderSouls Travel Pvt. Ltd. All rights reserved. <br />
             CIN: U7G110MH2025PTC461276
           </p>
           <div style={{ display: "flex", gap: "24px" }}>

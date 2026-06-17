@@ -8,6 +8,18 @@ interface Props {
   destination: Destination;
 }
 
+/** Loads an image URL and returns a base64 data URL string. */
+async function imageToBase64(url: string): Promise<string> {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
 export default function PdfExportButton({ destination }: Props) {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
@@ -16,8 +28,16 @@ export default function PdfExportButton({ destination }: Props) {
     setLoading(true);
     setDone(false);
     try {
+      // Load logo as base64 — falls back gracefully if unavailable
+      let logoBase64: string | undefined;
+      try {
+        logoBase64 = await imageToBase64("/logo-banner.png");
+      } catch {
+        console.warn("Logo could not be loaded — using text fallback in PDF.");
+      }
+
       const { generateItineraryPDF } = await import("../../lib/pdfGenerator");
-      await generateItineraryPDF(destination);
+      await generateItineraryPDF(destination, logoBase64);
       setDone(true);
       setTimeout(() => {
         setDone(false);

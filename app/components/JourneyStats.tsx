@@ -1,45 +1,25 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ChevronLeft, ChevronRight, Heart, Users, MapPin, ThumbsUp } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, Users, MapPin, ThumbsUp, Play } from "lucide-react";
+import Logo from "@/public/logo.png";
 
 /* ── STATS DATA ── */
 const STATS = [
-  { icon: Users, value: 250, suffix: "", label: "Families using WanderSouls", color: "var(--secondary)" },
-  { icon: MapPin, value: 1500, suffix: "+", label: "Destinations Planned", color: "var(--accent)" },
-  { icon: ThumbsUp, value: 98, suffix: "%", label: "Families recommend WanderSouls", color: "var(--secondary)" },
+  { icon: Users, value: 50, suffix: "+", label: "Families using WanderSouls", color: "var(--secondary)" },
+  { icon: MapPin, value: 10, suffix: "+", label: "Destinations Planned", color: "var(--accent)" },
+  { icon: ThumbsUp, value: 100, suffix: "%", label: "Families recommend WanderSouls", color: "var(--secondary)" },
 ];
 
-/* ── TESTIMONIAL DATA ── */
-const TESTIMONIALS = [
-  {
-    quote: "WanderSouls is the best travel planning app I've ever used!",
-    name: "Priya",
-    joined: "Joined 2024",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop&q=80",
-    destination: "Kerala",
-  },
-  {
-    quote: "The houseboat in Alleppey was pure magic. Every detail was planned to perfection.",
-    name: "Rahul",
-    joined: "Joined 2023",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&q=80",
-    destination: "Thailand",
-  },
-  {
-    quote: "We saved ₹35,000 compared to MakeMyTrip. The transparency is unmatched.",
-    name: "Ananya",
-    joined: "Joined 2024",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&q=80",
-    destination: "Singapore",
-  },
-  {
-    quote: "South Korea itinerary was phenomenal. The DMZ tour gave us goosebumps!",
-    name: "Vikram",
-    joined: "Joined 2025",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&q=80",
-    destination: "South Korea",
-  },
+/* ── YOUTUBE SHORTS DATA ── */
+const YOUTUBE_SHORTS = [
+  { id: "DpFCLkthq28", family: "Sharma Family", destination: "Kerala Backwaters", title: "Alleppey Houseboat Magic" },
+  { id: "SoVhU4dk3-I", family: "Mehta Family", destination: "Phuket, Thailand", title: "Island Hopping Fun" },
+  { id: "rJBIM9rwKY0", family: "Desai Family", destination: "Kruger, South Africa", title: "Kruger Safari Encounters" },
+  { id: "Q-atW0q03fQ", family: "Nair Family", destination: "Singapore", title: "Marina Bay Light Show" },
+  { id: "wIUBmXwR-38", family: "Joshi Family", destination: "Seoul, South Korea", title: "Gyeongbokgung Temple Walk" },
+  { id: "Te7oCBDpUng", family: "Gupta Family", destination: "Palawan, Philippines", title: "El Nido Lagoons Explored" },
+  { id: "ffspmtENYTc", family: "Patel Family", destination: "Alleppey, Kerala", title: "Backwater Luxury Cruise" },
 ];
 
 /* ── SOCIAL GALLERY DATA ── */
@@ -152,18 +132,20 @@ function StatCard({ icon: Icon, value, suffix, label, color }: typeof STATS[0]) 
 
 /* ── MAIN COMPONENT ── */
 export default function JourneyStats() {
-  const [activeIdx, setActiveIdx] = useState(0);
-  const t = TESTIMONIALS[activeIdx];
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  const prev = () => setActiveIdx((i) => (i === 0 ? TESTIMONIALS.length - 1 : i - 1));
-  const next = () => setActiveIdx((i) => (i === TESTIMONIALS.length - 1 ? 0 : i + 1));
+  const scrollLeft = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: -320, behavior: "smooth" });
+    }
+  };
 
-  /* Auto-advance testimonial */
-  useEffect(() => {
-    const timer = setInterval(next, 5000);
-    return () => clearInterval(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIdx]);
+  const scrollRight = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: 320, behavior: "smooth" });
+    }
+  };
 
   return (
     <section style={{ background: "var(--bg)", padding: "100px 0 0" }}>
@@ -190,141 +172,160 @@ export default function JourneyStats() {
         </div>
 
         {/* ─── TESTIMONIAL CAROUSEL ─── */}
-        <div style={{ textAlign: "center", marginBottom: "80px" }}>
+        <div style={{ textAlign: "center", marginBottom: "80px", position: "relative" }}>
           <h3 style={{
             fontFamily: "var(--font-playfair)", fontWeight: 800,
-            fontSize: "clamp(1.5rem, 3vw, 2rem)", color: "var(--primary)",
-            marginBottom: "36px", letterSpacing: "-0.01em",
+            fontSize: "clamp(1.5rem, 3vw, 2.2rem)", color: "var(--primary)",
+            marginBottom: "12px", letterSpacing: "-0.01em",
           }}>
             Families like yours love <span className="gradient-text">WanderSouls</span>
           </h3>
-
-          {/* Card */}
-          <div style={{
-            maxWidth: "700px", margin: "0 auto",
-            background: "var(--primary)", borderRadius: "24px",
-            overflow: "hidden", position: "relative",
-            minHeight: "320px",
+          <p style={{
+            fontFamily: "var(--font-montserrat)", fontSize: "0.9rem",
+            color: "var(--text-secondary)", marginBottom: "40px", fontWeight: 500,
+            maxWidth: "600px", margin: "0 auto 40px"
           }}>
-            {/* Decorative blob */}
-            <div style={{
-              position: "absolute", bottom: "-40px", left: "40%",
-              width: "200px", height: "200px", borderRadius: "50%",
-              background: "var(--secondary)", opacity: 0.15,
-              filter: "blur(40px)", pointerEvents: "none",
-            }} />
+            Watch visual diaries and happy moments captured on the road by our traveling families.
+          </p>
 
-            <div className="testimonial-card-inner" style={{
-              display: "grid", gridTemplateColumns: "1fr 1fr",
-              minHeight: "320px",
-            }}>
-              {/* Left - Text */}
-              <div style={{
-                padding: "40px 32px", display: "flex", flexDirection: "column",
-                justifyContent: "space-between", position: "relative", zIndex: 1,
-              }}>
-                <div>
-                  <Heart size={32} color="var(--secondary)" strokeWidth={1.5} style={{ marginBottom: "20px" }} />
-                  <p style={{
-                    fontFamily: "var(--font-playfair)", fontSize: "1.25rem",
-                    color: "#FAFAF7", lineHeight: 1.5, fontWeight: 600,
-                    marginBottom: "12px",
-                  }}>
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  <span style={{
-                    fontFamily: "var(--font-montserrat)", fontSize: "0.78rem",
-                    color: "rgba(250,250,247,0.5)", fontWeight: 500,
-                  }}>
-                    {t.joined}
-                  </span>
-                </div>
+          {/* Carousel Wrapper */}
+          <div style={{ position: "relative", padding: "0 40px" }}>
+            {/* Scroll buttons */}
+            <button 
+              onClick={scrollLeft} 
+              aria-label="Scroll left" 
+              style={{
+                position: "absolute", left: "0", top: "50%", transform: "translateY(-50%)",
+                width: "44px", height: "44px", borderRadius: "50%",
+                background: "#FFFFFF", border: "1px solid var(--border-subtle)",
+                color: "var(--primary)", cursor: "pointer", display: "flex",
+                alignItems: "center", justifyContent: "center", zIndex: 10,
+                boxShadow: "0 4px 12px rgba(10,37,64,0.08)",
+                transition: "all 0.2s"
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--primary)"; e.currentTarget.style.color = "#FFFFFF"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "#FFFFFF"; e.currentTarget.style.color = "var(--primary)"; }}
+            >
+              <ChevronLeft size={20} />
+            </button>
 
-                {/* Controls */}
-                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "24px" }}>
-                  <span style={{
-                    display: "inline-flex", alignItems: "center", gap: "6px",
-                    background: "rgba(250,250,247,0.1)", color: "#FAFAF7",
-                    padding: "8px 16px", borderRadius: "50px",
-                    fontFamily: "var(--font-montserrat)", fontSize: "0.78rem",
-                    fontWeight: 600, backdropFilter: "blur(8px)",
-                  }}>
-                    <MapPin size={13} /> See Itinerary
-                  </span>
-                  <button onClick={prev} aria-label="Previous testimonial" style={{
-                    width: "36px", height: "36px", borderRadius: "50%",
-                    background: "rgba(250,250,247,0.1)", border: "none",
-                    color: "#FAFAF7", cursor: "pointer", display: "flex",
-                    alignItems: "center", justifyContent: "center",
-                    transition: "background 0.2s",
-                  }}
-                    onMouseEnter={(e) => e.currentTarget.style.background = "rgba(250,250,247,0.2)"}
-                    onMouseLeave={(e) => e.currentTarget.style.background = "rgba(250,250,247,0.1)"}
+            <button 
+              onClick={scrollRight} 
+              aria-label="Scroll right" 
+              style={{
+                position: "absolute", right: "0", top: "50%", transform: "translateY(-50%)",
+                width: "44px", height: "44px", borderRadius: "50%",
+                background: "#FFFFFF", border: "1px solid var(--border-subtle)",
+                color: "var(--primary)", cursor: "pointer", display: "flex",
+                alignItems: "center", justifyContent: "center", zIndex: 10,
+                boxShadow: "0 4px 12px rgba(10,37,64,0.08)",
+                transition: "all 0.2s"
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--primary)"; e.currentTarget.style.color = "#FFFFFF"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "#FFFFFF"; e.currentTarget.style.color = "var(--primary)"; }}
+            >
+              <ChevronRight size={20} />
+            </button>
+
+            {/* Video Cards Grid/Carousel */}
+            <div 
+              ref={carouselRef}
+              style={{
+                display: "flex", gap: "20px", overflowX: "auto",
+                scrollSnapType: "x mandatory", scrollbarWidth: "none",
+                paddingBottom: "10px", WebkitOverflowScrolling: "touch"
+              }}
+              className="shorts-carousel-container"
+            >
+              {YOUTUBE_SHORTS.map((short) => {
+                const isPlaying = activeVideoId === short.id;
+                return (
+                  <div 
+                    key={short.id} 
+                    style={{
+                      flex: "0 0 280px", width: "280px", height: "498px",
+                      borderRadius: "20px", overflow: "hidden", position: "relative",
+                      background: "var(--primary)", border: "1px solid var(--border-subtle)",
+                      boxShadow: "0 10px 30px rgba(10,37,64,0.04)",
+                      scrollSnapAlign: "start", transition: "all 0.3s ease"
+                    }}
+                    className="video-short-card"
                   >
-                    <ChevronLeft size={18} />
-                  </button>
-                  <button onClick={next} aria-label="Next testimonial" style={{
-                    width: "36px", height: "36px", borderRadius: "50%",
-                    background: "var(--secondary)", border: "none",
-                    color: "#FAFAF7", cursor: "pointer", display: "flex",
-                    alignItems: "center", justifyContent: "center",
-                    transition: "background 0.2s",
-                  }}
-                    onMouseEnter={(e) => e.currentTarget.style.background = "#00d4c3"}
-                    onMouseLeave={(e) => e.currentTarget.style.background = "var(--secondary)"}
-                  >
-                    <ChevronRight size={18} />
-                  </button>
-                </div>
-              </div>
+                    {isPlaying ? (
+                      <iframe
+                        src={`https://www.youtube.com/embed/${short.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+                        title={short.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        style={{ width: "100%", height: "100%", border: "none" }}
+                      />
+                    ) : (
+                      <div 
+                        onClick={() => setActiveVideoId(short.id)}
+                        style={{ width: "100%", height: "100%", position: "relative", cursor: "pointer" }}
+                        className="video-thumbnail-wrapper"
+                      >
+                        {/* YouTube cover image */}
+                        <img 
+                          src={`https://img.youtube.com/vi/${short.id}/hqdefault.jpg`}
+                          alt={short.title}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
+                          className="thumbnail-img"
+                        />
+                        {/* Dark overlay */}
+                        <div style={{
+                          position: "absolute", inset: 0,
+                          background: "linear-gradient(to top, rgba(10,37,64,0.85) 0%, rgba(10,37,64,0.2) 60%, rgba(10,37,64,0.4) 100%)",
+                          transition: "background 0.3s ease"
+                        }} />
 
-              {/* Right - Avatar + Name badge */}
-              <div style={{ position: "relative", overflow: "hidden" }}>
-                {/* Decorative arc */}
-                <div style={{
-                  position: "absolute", left: "-60px", top: "0", bottom: "0",
-                  width: "120px", background: "rgba(0,184,169,0.2)",
-                  borderRadius: "0 50% 50% 0", zIndex: 1,
-                }} />
-                <img
-                  src={t.avatar}
-                  alt={t.name}
-                  style={{
-                    width: "100%", height: "100%", objectFit: "cover",
-                    objectPosition: "center top",
-                  }}
-                />
-                {/* Name badge */}
-                <div style={{
-                  position: "absolute", top: "50%", left: "16px",
-                  transform: "translateY(-50%)",
-                  background: "var(--secondary)", color: "#fff",
-                  padding: "6px 16px", borderRadius: "50px",
-                  fontFamily: "var(--font-montserrat)", fontSize: "0.8rem",
-                  fontWeight: 700, zIndex: 2,
-                  boxShadow: "0 4px 16px rgba(0,184,169,0.4)",
-                }}>
-                  {t.name}
-                </div>
-              </div>
+                        {/* Central Play Button */}
+                        <div style={{
+                          position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
+                          width: "56px", height: "56px", borderRadius: "50%",
+                          background: "var(--secondary)", color: "#FFFFFF",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          boxShadow: "0 8px 20px rgba(0,184,169,0.4)",
+                          transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
+                        }} className="play-button-overlay">
+                          <Play size={22} fill="#FFFFFF" style={{ marginLeft: "4px" }} />
+                        </div>
+
+                        {/* Bottom Text Metadata */}
+                        <div style={{
+                          position: "absolute", bottom: "0", left: "0", right: "0",
+                          padding: "20px", textAlign: "left", zIndex: 2
+                        }}>
+                          <div style={{
+                            display: "inline-block", background: "rgba(0,184,169,0.15)",
+                            backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+                            color: "var(--secondary)", border: "1px solid rgba(0,184,169,0.3)",
+                            borderRadius: "50px", padding: "4px 12px",
+                            fontFamily: "var(--font-montserrat)", fontSize: "0.68rem",
+                            fontWeight: 700, textTransform: "uppercase", marginBottom: "10px"
+                          }}>
+                            {short.destination}
+                          </div>
+                          <h4 style={{
+                            fontFamily: "var(--font-playfair)", fontSize: "1.1rem",
+                            fontWeight: 800, color: "#FFFFFF", margin: "0 0 4px", lineHeight: "1.3"
+                          }}>
+                            {short.title}
+                          </h4>
+                          <span style={{
+                            fontFamily: "var(--font-montserrat)", fontSize: "0.78rem",
+                            color: "rgba(250,250,247,0.75)", fontWeight: 600
+                          }}>
+                            {short.family}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-          </div>
-
-          {/* Dots */}
-          <div style={{ display: "flex", gap: "8px", justifyContent: "center", marginTop: "20px" }}>
-            {TESTIMONIALS.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveIdx(i)}
-                aria-label={`View testimonial ${i + 1}`}
-                style={{
-                  width: i === activeIdx ? "24px" : "8px",
-                  height: "8px", borderRadius: "50px", border: "none",
-                  background: i === activeIdx ? "var(--secondary)" : "var(--border-strong)",
-                  cursor: "pointer", transition: "all 0.3s ease",
-                }}
-              />
-            ))}
           </div>
         </div>
 
@@ -379,16 +380,8 @@ export default function JourneyStats() {
           }} className="instagram-profile-card">
             <a href="https://www.instagram.com/wandersoulsindia/" target="_blank" rel="noopener noreferrer" style={{ display: "block", position: "relative" }}>
               <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&q=80"
+                src="https://instagram.fbom37-1.fna.fbcdn.net/v/t51.82787-19/569316083_17904756150271197_5446830320963300047_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=instagram.fbom37-1.fna.fbcdn.net&_nc_cat=109&_nc_oc=Q6cZ2gHXNXhrauntJYNmkGL9xel3NPyb6fdRAbp3W9aaw3XaNl29ts45Yfho7zy7LXLyDLs&_nc_ohc=U0FT3OlvPisQ7kNvwEnbkN_&_nc_gid=aN7XUBedw_j8GO7jlgINsw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af_UL_PzS1sJzhWcyCP2foD4OqhVUOsqrOs-h6obPYcxkw&oe=6A380043&_nc_sid=8b3546"
                 alt="WanderSouls Instagram"
-                style={{
-                  width: "72px",
-                  height: "72px",
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                  border: "3px solid var(--accent)",
-                  padding: "3px"
-                }}
               />
               <div style={{
                 position: "absolute",
@@ -522,6 +515,28 @@ export default function JourneyStats() {
       </div>
 
       <style>{`
+        .shorts-carousel-container::-webkit-scrollbar {
+          display: none;
+        }
+        .video-short-card {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .video-short-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 15px 35px rgba(10,37,64,0.1) !important;
+        }
+        .video-short-card:hover .thumbnail-img {
+          transform: scale(1.05);
+        }
+        .video-short-card:hover .play-button-overlay {
+          transform: translate(-50%, -50%) scale(1.1) !important;
+          background: #FFFFFF !important;
+          color: var(--secondary) !important;
+          box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4) !important;
+        }
+        .video-short-card:hover .play-button-overlay svg {
+          fill: var(--secondary) !important;
+        }
         .social-gallery-item:hover .social-post-hover-details {
           opacity: 1 !important;
         }

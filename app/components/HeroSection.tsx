@@ -6,12 +6,12 @@ import { MapPin, Calendar, Users, Compass, Star, ChevronDown, ArrowRight } from 
 import DateRangePicker from "./DateRangePicker";
 
 const DESTINATIONS_LIST = [
-  { slug: "kerala", name: "Kerala, India", flag: "🇮🇳", image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1920&q=90" },
-  { slug: "thailand", name: "Phuket, Thailand", flag: "🇹🇭", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90" },
-  { slug: "philippines", name: "Palawan, Philippines", flag: "🇵🇭", image: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=1920&q=90" },
-  { slug: "singapore", name: "Singapore City", flag: "🇸🇬", image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1920&q=90" },
-  { slug: "south-africa", name: "Kruger, South Africa", flag: "🇿🇦", image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1920&q=90" },
-  { slug: "south-korea", name: "Seoul, South Korea", flag: "🇰🇷", image: "https://images.unsplash.com/photo-1617541086271-4d8e21a9d439?w=1920&q=90" }
+  { slug: "kerala", name: "Kerala, India", flag: "🇮🇳", image: "/gallery/kerala/IMG_7864.jpg" },
+  { slug: "thailand", name: "Phuket, Thailand", flag: "🇹🇭", image: "/gallery/thailand/WatArun.jpg" },
+  { slug: "malaysia", name: "Kuala Lumpur, Malaysia", flag: "🇲🇾", image: "/gallery/malaysia/chinsweecave.jpg" },
+  { slug: "singapore", name: "Singapore City", flag: "🇸🇬", image: "/gallery/singapore/singapore.jpg" },
+  { slug: "meghalaya", name: "Shillong, Meghalaya", flag: "🇮🇳", image: "/gallery/meghalaya/FullSizeRender.jpg" },
+  { slug: "bali", name: "Bali, Indonesia", flag: "🇮🇩", image: "/gallery/bali/tanah-lot.jpg" }
 ];
 
 const CYCLING_WORDS = ["Around the World", "with Honest Pricing", "with Zero Hidden Fees", "with Private Guides"];
@@ -105,8 +105,8 @@ export default function HeroSection() {
   return (
     <section style={{
       position: "relative",
-      height: "100vh",
-      minHeight: "750px",
+      height: "75vh",
+      minHeight: "640px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -145,7 +145,8 @@ export default function HeroSection() {
         zIndex: 2,
         textAlign: "center",
         color: "#FFFFFF",
-        paddingTop: "80px",
+        paddingTop: "100px",
+        paddingBottom: "20px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -162,7 +163,7 @@ export default function HeroSection() {
           border: "1px solid rgba(255, 255, 255, 0.25)",
           borderRadius: "50px",
           padding: "8px 18px",
-          marginBottom: "24px",
+          marginBottom: "16px",
           boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
         }}>
           <div style={{ display: "flex", gap: "2px" }}>
@@ -185,12 +186,12 @@ export default function HeroSection() {
         {/* Headline */}
         <h1 className="animate-fade-up" style={{
           fontFamily: "var(--font-playfair), serif",
-          fontSize: "clamp(2.5rem, 6.5vw, 4.8rem)",
+          fontSize: "clamp(2.2rem, 5.5vw, 4rem)",
           fontWeight: "800",
           color: "#FAFAF7",
           lineHeight: "1.1",
           maxWidth: "1000px",
-          margin: "0 auto 20px",
+          margin: "0 auto 16px",
           letterSpacing: "-0.02em",
           textShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
         }}>
@@ -209,10 +210,10 @@ export default function HeroSection() {
         {/* Description */}
         <p className="animate-fade-up" style={{
           fontFamily: "var(--font-montserrat), sans-serif",
-          fontSize: "clamp(0.95rem, 2vw, 1.25rem)",
+          fontSize: "clamp(0.95rem, 2vw, 1.2rem)",
           color: "rgba(250, 250, 247, 0.85)",
           maxWidth: "680px",
-          margin: "0 auto 48px",
+          margin: "0 auto 28px",
           lineHeight: "1.6",
           fontWeight: "500",
           textShadow: "0 2px 10px rgba(0, 0, 0, 0.15)",
@@ -236,7 +237,7 @@ export default function HeroSection() {
           gap: "16px",
           alignItems: "center",
           textAlign: "left",
-          marginBottom: "60px",
+          marginBottom: "32px",
         }}>
           
           {/* 1. Destination Dropdown */}

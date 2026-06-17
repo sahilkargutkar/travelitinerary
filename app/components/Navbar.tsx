@@ -2,9 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X, MapPin, BarChart2, Info, Phone, ArrowRight, ChevronDown } from "lucide-react";
+import Logo from "./Logo";
 
-const NAV_LINKS = [
+interface NavLink {
+  label: string;
+  href: string;
+  icon: any;
+  sub?: { label: string; href: string; from: string }[];
+}
+
+const NAV_LINKS: NavLink[] = [
   {
     label: "Destinations",
     href: "/destinations",
@@ -16,9 +25,13 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [destDropOpen, setDestDropOpen] = useState(false);
+
+  const shouldBeSolid = scrolled || !isHome;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -31,35 +44,18 @@ export default function Navbar() {
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
         transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-        background: scrolled ? "rgba(250, 250, 247, 0.85)" : "transparent",
-        backdropFilter: scrolled ? "blur(20px)" : "none",
-        borderBottom: scrolled ? "1px solid rgba(10, 37, 64, 0.06)" : "1px solid transparent",
-        boxShadow: scrolled ? "0 4px 30px rgba(10, 37, 64, 0.03)" : "none",
-        padding: scrolled ? "14px 0" : "24px 0",
+        background: shouldBeSolid ? "rgba(250, 250, 247, 0.85)" : "transparent",
+        backdropFilter: shouldBeSolid ? "blur(20px)" : "none",
+        borderBottom: shouldBeSolid ? "1px solid rgba(10, 37, 64, 0.06)" : "1px solid transparent",
+        boxShadow: shouldBeSolid ? "0 4px 30px rgba(10, 37, 64, 0.03)" : "none",
+        padding: shouldBeSolid ? "14px 0" : "24px 0",
       }}>
         <div className="container" style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
         }}>
           {/* LOGO */}
-          <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "10px" }}>
-            <div style={{
-              width: "36px", height: "36px", borderRadius: "10px",
-              background: scrolled ? "var(--primary)" : "#FFFFFF",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontFamily: "var(--font-playfair), serif", fontWeight: "900",
-              fontSize: "1.1rem", color: scrolled ? "#FFFFFF" : "var(--primary)",
-              boxShadow: scrolled ? "0 4px 12px rgba(10, 37, 64, 0.15)" : "0 4px 12px rgba(255,255,255,0.1)",
-              transition: "all 0.3s ease",
-            }}>W</div>
-            <span style={{
-              fontFamily: "var(--font-playfair), serif",
-              fontSize: "1.45rem",
-              fontWeight: "900",
-              letterSpacing: "-0.02em"
-            }}>
-              <span style={{ color: scrolled ? "var(--primary)" : "#FFFFFF", transition: "color 0.3s ease" }}>Wander</span>
-              <span style={{ color: "var(--accent)" }}>souls</span>
-            </span>
+          <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+            <Logo scrolled={shouldBeSolid} />
           </Link>
 
           {/* DESKTOP NAV */}
@@ -72,7 +68,7 @@ export default function Navbar() {
                       display: "flex", alignItems: "center", gap: "6px",
                       padding: "8px 16px", background: "transparent", border: "none",
                       cursor: "pointer",
-                      color: scrolled ? "var(--text-primary)" : "rgba(255,255,255,0.9)",
+                      color: shouldBeSolid ? "var(--text-primary)" : "rgba(255,255,255,0.9)",
                       fontFamily: "var(--font-montserrat), sans-serif",
                       fontSize: "0.85rem",
                       fontWeight: "600",
@@ -161,7 +157,7 @@ export default function Navbar() {
                   style={{
                     display: "flex", alignItems: "center", gap: "6px",
                     padding: "8px 16px",
-                    color: scrolled ? "var(--text-primary)" : "rgba(255,255,255,0.9)",
+                    color: shouldBeSolid ? "var(--text-primary)" : "rgba(255,255,255,0.9)",
                     fontFamily: "var(--font-montserrat), sans-serif",
                     fontSize: "0.85rem",
                     fontWeight: "600",
@@ -171,10 +167,10 @@ export default function Navbar() {
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.color = "var(--secondary)";
-                    e.currentTarget.style.background = scrolled ? "rgba(10, 37, 64, 0.03)" : "rgba(255, 255, 255, 0.08)";
+                    e.currentTarget.style.background = shouldBeSolid ? "rgba(10, 37, 64, 0.03)" : "rgba(255, 255, 255, 0.08)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = scrolled ? "var(--text-primary)" : "rgba(255,255,255,0.9)";
+                    e.currentTarget.style.color = shouldBeSolid ? "var(--text-primary)" : "rgba(255,255,255,0.9)";
                     e.currentTarget.style.background = "transparent";
                   }}
                 >
@@ -190,7 +186,7 @@ export default function Navbar() {
               fontFamily: "var(--font-montserrat), sans-serif",
               fontSize: "0.85rem",
               fontWeight: "600",
-              color: scrolled ? "var(--text-secondary)" : "rgba(255,255,255,0.85)",
+              color: shouldBeSolid ? "var(--text-secondary)" : "rgba(255,255,255,0.85)",
               textDecoration: "none",
               transition: "color 0.2s ease",
               display: "flex",
@@ -198,7 +194,7 @@ export default function Navbar() {
               gap: "6px",
             }}
               onMouseEnter={(e) => { e.currentTarget.style.color = "var(--secondary)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = scrolled ? "var(--text-secondary)" : "rgba(255,255,255,0.85)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = shouldBeSolid ? "var(--text-secondary)" : "rgba(255,255,255,0.85)"; }}
             >
               <Phone size={13} />
               +91 84520 87326
@@ -207,7 +203,7 @@ export default function Navbar() {
               padding: "10px 22px",
               fontSize: "0.82rem",
               borderRadius: "50px",
-              boxShadow: scrolled ? "0 4px 14px rgba(255, 122, 89, 0.2)" : "0 4px 14px rgba(0,0,0,0.15)",
+              boxShadow: shouldBeSolid ? "0 4px 14px rgba(255, 122, 89, 0.2)" : "0 4px 14px rgba(0,0,0,0.15)",
             }}>
               Book Now <ArrowRight size={14} />
             </Link>
@@ -217,10 +213,10 @@ export default function Navbar() {
           <button
             style={{
               display: "none",
-              background: scrolled ? "rgba(10, 37, 64, 0.04)" : "rgba(255, 255, 255, 0.12)",
-              border: scrolled ? "1px solid rgba(10, 37, 64, 0.08)" : "1px solid rgba(255,255,255,0.15)",
+              background: shouldBeSolid ? "rgba(10, 37, 64, 0.04)" : "rgba(255, 255, 255, 0.12)",
+              border: shouldBeSolid ? "1px solid rgba(10, 37, 64, 0.08)" : "1px solid rgba(255,255,255,0.15)",
               borderRadius: "50px", padding: "8px", cursor: "pointer",
-              color: scrolled ? "var(--primary)" : "#FFFFFF",
+              color: shouldBeSolid ? "var(--primary)" : "#FFFFFF",
               transition: "all 0.3s ease",
             }}
             onClick={() => setMenuOpen(!menuOpen)}
