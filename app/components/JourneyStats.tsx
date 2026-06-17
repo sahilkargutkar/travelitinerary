@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ChevronLeft, ChevronRight, Heart, Users, MapPin, ThumbsUp, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, Users, MapPin, ThumbsUp } from "lucide-react";
 import Logo from "@/public/logo.png";
+import Image from "next/image";
 
 /* ── STATS DATA ── */
 const STATS = [
@@ -20,6 +21,45 @@ const YOUTUBE_SHORTS = [
   { id: "wIUBmXwR-38", family: "Joshi Family", destination: "Seoul, South Korea", title: "Gyeongbokgung Temple Walk" },
   { id: "Te7oCBDpUng", family: "Gupta Family", destination: "Palawan, Philippines", title: "El Nido Lagoons Explored" },
   { id: "ffspmtENYTc", family: "Patel Family", destination: "Alleppey, Kerala", title: "Backwater Luxury Cruise" },
+];
+
+/* ── TESTIMONIALS DATA ── */
+const TESTIMONIALS = [
+  {
+    name: "Priya & Rohan Sharma",
+    destination: "Kerala Backwaters",
+    quote: "WanderSouls made our anniversary trip absolutely seamless. The houseboat stay on Alleppey was magical — every detail was sorted for us!",
+    joined: "Travelled December 2024",
+    avatar: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80",
+  },
+  {
+    name: "Mehta Family",
+    destination: "Singapore & Malaysia",
+    quote: "Booked a 6-night package — the kids loved Universal Studios and the Petronas Towers. WanderSouls compared every option and saved us ₹18,000!",
+    joined: "Travelled January 2025",
+    avatar: "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=600&q=80",
+  },
+  {
+    name: "Anjali Desai",
+    destination: "Bali, Indonesia",
+    quote: "Solo trip sorted in 48 hours. The itinerary PDF was a lifesaver — I printed it out and followed it day by day. Everything went perfectly.",
+    joined: "Travelled March 2025",
+    avatar: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&q=80",
+  },
+  {
+    name: "Gupta Family",
+    destination: "Meghalaya",
+    quote: "Living root bridges, Dawki lake — it was otherworldly. WanderSouls found us a package ₹12,000 cheaper than MakeMyTrip. Highly recommended!",
+    joined: "Travelled February 2025",
+    avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80",
+  },
+  {
+    name: "Nair Family",
+    destination: "Thailand",
+    quote: "Phi Phi islands, elephant sanctuary, Bangkok temples — 7 nights and every day was perfect. The team answered every WhatsApp within minutes!",
+    joined: "Travelled April 2025",
+    avatar: "https://images.unsplash.com/photo-1542385151-efd9000785f0?w=600&q=80",
+  },
 ];
 
 /* ── SOCIAL GALLERY DATA ── */
@@ -130,29 +170,107 @@ function StatCard({ icon: Icon, value, suffix, label, color }: typeof STATS[0]) 
   );
 }
 
-/* ── MAIN COMPONENT ── */
+/* ── SHORTS CARD (click-to-play) ── */
+function ShortsCard({ short }: { short: typeof YOUTUBE_SHORTS[0] }) {
+  const [playing, setPlaying] = useState(false);
+  return (
+    <div
+      style={{
+        flex: "0 0 clamp(150px, 42vw, 200px)",
+        width: "clamp(150px, 42vw, 200px)",
+        height: "clamp(270px, 75vw, 355px)",
+        borderRadius: "16px", overflow: "hidden", position: "relative",
+        background: "var(--primary)", border: "1px solid var(--border-subtle)",
+        boxShadow: "0 8px 24px rgba(10,37,64,0.06)",
+        scrollSnapAlign: "start", cursor: "pointer",
+      }}
+      className="short-card"
+    >
+      {playing ? (
+        <iframe
+          src={`https://www.youtube.com/embed/${short.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+          title={short.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          style={{ width: "100%", height: "100%", border: "none" }}
+        />
+      ) : (
+        <div onClick={() => setPlaying(true)} style={{ width: "100%", height: "100%", position: "relative" }}>
+          <img
+            src={`https://img.youtube.com/vi/${short.id}/hqdefault.jpg`}
+            alt={short.title}
+            style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
+            className="short-thumb"
+          />
+          {/* Overlay */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "linear-gradient(to top, rgba(10,37,64,0.85) 0%, rgba(10,37,64,0.1) 60%)",
+          }} />
+          {/* Play button */}
+          <div style={{
+            position: "absolute", top: "50%", left: "50%",
+            transform: "translate(-50%,-50%)",
+            width: "46px", height: "46px", borderRadius: "50%",
+            background: "var(--secondary)", color: "#fff",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "0 6px 20px rgba(0,184,169,0.45)",
+            transition: "transform 0.3s ease",
+          }} className="play-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M8 5v14l11-7z" /></svg>
+          </div>
+          {/* Bottom meta */}
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 10px", zIndex: 2 }}>
+            <div style={{
+              display: "inline-block",
+              background: "rgba(0,184,169,0.18)", backdropFilter: "blur(6px)",
+              color: "var(--secondary)", border: "1px solid rgba(0,184,169,0.3)",
+              borderRadius: "50px", padding: "3px 8px",
+              fontFamily: "var(--font-montserrat)", fontSize: "0.58rem",
+              fontWeight: 700, textTransform: "uppercase", marginBottom: "6px",
+            }}>
+              {short.destination}
+            </div>
+            <div style={{
+              fontFamily: "var(--font-playfair)", fontSize: "0.88rem",
+              fontWeight: 800, color: "#fff", lineHeight: 1.3, marginBottom: "2px",
+            }}>
+              {short.title}
+            </div>
+            <div style={{
+              fontFamily: "var(--font-montserrat)", fontSize: "0.65rem",
+              color: "rgba(250,250,247,0.7)", fontWeight: 600,
+            }}>
+              {short.family}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 export default function JourneyStats() {
-  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const t = TESTIMONIALS[activeIdx];
 
-  const scrollLeft = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -320, behavior: "smooth" });
-    }
-  };
+  const prev = () => setActiveIdx((i) => (i === 0 ? TESTIMONIALS.length - 1 : i - 1));
+  const next = () => setActiveIdx((i) => (i === TESTIMONIALS.length - 1 ? 0 : i + 1));
 
-  const scrollRight = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 320, behavior: "smooth" });
-    }
-  };
+  /* Auto-advance testimonial */
+  useEffect(() => {
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIdx]);
 
   return (
-    <section style={{ background: "var(--bg)", padding: "100px 0 0" }}>
+    <section className="journey-stats-section" style={{ background: "var(--bg)", padding: "100px 0 0" }}>
       <div className="container">
 
         {/* ─── STATS SECTION ─── */}
-        <div style={{ textAlign: "center", marginBottom: "80px" }}>
+        <div className="journey-stats-margin-bottom" style={{ textAlign: "center", marginBottom: "80px" }}>
           <h2 style={{
             fontFamily: "var(--font-playfair)", fontWeight: 800,
             fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--primary)",
@@ -171,166 +289,88 @@ export default function JourneyStats() {
           </div>
         </div>
 
-        {/* ─── TESTIMONIAL CAROUSEL ─── */}
-        <div style={{ textAlign: "center", marginBottom: "80px", position: "relative" }}>
+        {/* ─── YOUTUBE SHORTS ─── */}
+        <div className="journey-stats-margin-bottom" style={{ marginBottom: "80px" }}>
           <h3 style={{
             fontFamily: "var(--font-playfair)", fontWeight: 800,
-            fontSize: "clamp(1.5rem, 3vw, 2.2rem)", color: "var(--primary)",
-            marginBottom: "12px", letterSpacing: "-0.01em",
+            fontSize: "clamp(1.5rem, 3vw, 2rem)", color: "var(--primary)",
+            marginBottom: "8px", letterSpacing: "-0.01em", textAlign: "center",
           }}>
             Families like yours love <span className="gradient-text">WanderSouls</span>
           </h3>
           <p style={{
             fontFamily: "var(--font-montserrat)", fontSize: "0.9rem",
-            color: "var(--text-secondary)", marginBottom: "40px", fontWeight: 500,
-            maxWidth: "600px", margin: "0 auto 40px"
+            color: "var(--text-secondary)", fontWeight: 500,
+            textAlign: "center", marginBottom: "40px",
           }}>
-            Watch visual diaries and happy moments captured on the road by our traveling families.
+            Watch real travel diaries by our happy families
           </p>
 
-          {/* Carousel Wrapper */}
-          <div style={{ position: "relative", padding: "0 40px" }}>
-            {/* Scroll buttons */}
-            <button 
-              onClick={scrollLeft} 
-              aria-label="Scroll left" 
+          {/* Carousel — buttons hidden on mobile via CSS */}
+          <div style={{ position: "relative" }} className="shorts-outer">
+            <button
+              onClick={() => {
+                const el = document.getElementById("shorts-scroll");
+                if (el) el.scrollBy({ left: -300, behavior: "smooth" });
+              }}
+              aria-label="Scroll left"
+              className="shorts-nav-btn"
               style={{
-                position: "absolute", left: "0", top: "50%", transform: "translateY(-50%)",
+                position: "absolute", left: "-20px", top: "50%", transform: "translateY(-50%)",
                 width: "44px", height: "44px", borderRadius: "50%",
                 background: "#FFFFFF", border: "1px solid var(--border-subtle)",
                 color: "var(--primary)", cursor: "pointer", display: "flex",
                 alignItems: "center", justifyContent: "center", zIndex: 10,
-                boxShadow: "0 4px 12px rgba(10,37,64,0.08)",
-                transition: "all 0.2s"
+                boxShadow: "0 4px 12px rgba(10,37,64,0.1)", transition: "all 0.2s",
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--primary)"; e.currentTarget.style.color = "#FFFFFF"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "#FFFFFF"; e.currentTarget.style.color = "var(--primary)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--primary)"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "var(--primary)"; }}
             >
               <ChevronLeft size={20} />
             </button>
 
-            <button 
-              onClick={scrollRight} 
-              aria-label="Scroll right" 
+            <button
+              onClick={() => {
+                const el = document.getElementById("shorts-scroll");
+                if (el) el.scrollBy({ left: 300, behavior: "smooth" });
+              }}
+              aria-label="Scroll right"
+              className="shorts-nav-btn"
               style={{
-                position: "absolute", right: "0", top: "50%", transform: "translateY(-50%)",
+                position: "absolute", right: "-20px", top: "50%", transform: "translateY(-50%)",
                 width: "44px", height: "44px", borderRadius: "50%",
                 background: "#FFFFFF", border: "1px solid var(--border-subtle)",
                 color: "var(--primary)", cursor: "pointer", display: "flex",
                 alignItems: "center", justifyContent: "center", zIndex: 10,
-                boxShadow: "0 4px 12px rgba(10,37,64,0.08)",
-                transition: "all 0.2s"
+                boxShadow: "0 4px 12px rgba(10,37,64,0.1)", transition: "all 0.2s",
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--primary)"; e.currentTarget.style.color = "#FFFFFF"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "#FFFFFF"; e.currentTarget.style.color = "var(--primary)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--primary)"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "var(--primary)"; }}
             >
               <ChevronRight size={20} />
             </button>
 
-            {/* Video Cards Grid/Carousel */}
-            <div 
-              ref={carouselRef}
+            <div
+              id="shorts-scroll"
               style={{
-                display: "flex", gap: "20px", overflowX: "auto",
+                display: "flex", gap: "14px", overflowX: "auto",
                 scrollSnapType: "x mandatory", scrollbarWidth: "none",
-                paddingBottom: "10px", WebkitOverflowScrolling: "touch"
+                paddingBottom: "8px",
+                /* first/last card padding so they don't sit flush on mobile */
+                paddingLeft: "4px", paddingRight: "4px",
               }}
-              className="shorts-carousel-container"
+              className="shorts-scroll-hide"
             >
-              {YOUTUBE_SHORTS.map((short) => {
-                const isPlaying = activeVideoId === short.id;
-                return (
-                  <div 
-                    key={short.id} 
-                    style={{
-                      flex: "0 0 280px", width: "280px", height: "498px",
-                      borderRadius: "20px", overflow: "hidden", position: "relative",
-                      background: "var(--primary)", border: "1px solid var(--border-subtle)",
-                      boxShadow: "0 10px 30px rgba(10,37,64,0.04)",
-                      scrollSnapAlign: "start", transition: "all 0.3s ease"
-                    }}
-                    className="video-short-card"
-                  >
-                    {isPlaying ? (
-                      <iframe
-                        src={`https://www.youtube.com/embed/${short.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
-                        title={short.title}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        style={{ width: "100%", height: "100%", border: "none" }}
-                      />
-                    ) : (
-                      <div 
-                        onClick={() => setActiveVideoId(short.id)}
-                        style={{ width: "100%", height: "100%", position: "relative", cursor: "pointer" }}
-                        className="video-thumbnail-wrapper"
-                      >
-                        {/* YouTube cover image */}
-                        <img 
-                          src={`https://img.youtube.com/vi/${short.id}/hqdefault.jpg`}
-                          alt={short.title}
-                          style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
-                          className="thumbnail-img"
-                        />
-                        {/* Dark overlay */}
-                        <div style={{
-                          position: "absolute", inset: 0,
-                          background: "linear-gradient(to top, rgba(10,37,64,0.85) 0%, rgba(10,37,64,0.2) 60%, rgba(10,37,64,0.4) 100%)",
-                          transition: "background 0.3s ease"
-                        }} />
-
-                        {/* Central Play Button */}
-                        <div style={{
-                          position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
-                          width: "56px", height: "56px", borderRadius: "50%",
-                          background: "var(--secondary)", color: "#FFFFFF",
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                          boxShadow: "0 8px 20px rgba(0,184,169,0.4)",
-                          transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
-                        }} className="play-button-overlay">
-                          <Play size={22} fill="#FFFFFF" style={{ marginLeft: "4px" }} />
-                        </div>
-
-                        {/* Bottom Text Metadata */}
-                        <div style={{
-                          position: "absolute", bottom: "0", left: "0", right: "0",
-                          padding: "20px", textAlign: "left", zIndex: 2
-                        }}>
-                          <div style={{
-                            display: "inline-block", background: "rgba(0,184,169,0.15)",
-                            backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
-                            color: "var(--secondary)", border: "1px solid rgba(0,184,169,0.3)",
-                            borderRadius: "50px", padding: "4px 12px",
-                            fontFamily: "var(--font-montserrat)", fontSize: "0.68rem",
-                            fontWeight: 700, textTransform: "uppercase", marginBottom: "10px"
-                          }}>
-                            {short.destination}
-                          </div>
-                          <h4 style={{
-                            fontFamily: "var(--font-playfair)", fontSize: "1.1rem",
-                            fontWeight: 800, color: "#FFFFFF", margin: "0 0 4px", lineHeight: "1.3"
-                          }}>
-                            {short.title}
-                          </h4>
-                          <span style={{
-                            fontFamily: "var(--font-montserrat)", fontSize: "0.78rem",
-                            color: "rgba(250,250,247,0.75)", fontWeight: 600
-                          }}>
-                            {short.family}
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+              {YOUTUBE_SHORTS.map((short) => (
+                <ShortsCard key={short.id} short={short} />
+              ))}
             </div>
           </div>
         </div>
 
+
         {/* ─── SOCIAL GALLERY ─── */}
-        <div style={{ marginBottom: "0", paddingBottom: "80px" }}>
+        <div className="journey-stats-social-gallery" style={{ marginBottom: "0", paddingBottom: "80px" }}>
           <div style={{
             display: "flex", justifyContent: "space-between",
             alignItems: "flex-end", marginBottom: "28px", flexWrap: "wrap", gap: "12px",
@@ -379,9 +419,11 @@ export default function JourneyStats() {
             boxShadow: "0 10px 30px -10px rgba(10, 37, 64, 0.04)"
           }} className="instagram-profile-card">
             <a href="https://www.instagram.com/wandersoulsindia/" target="_blank" rel="noopener noreferrer" style={{ display: "block", position: "relative" }}>
-              <img
-                src="https://instagram.fbom37-1.fna.fbcdn.net/v/t51.82787-19/569316083_17904756150271197_5446830320963300047_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=instagram.fbom37-1.fna.fbcdn.net&_nc_cat=109&_nc_oc=Q6cZ2gHXNXhrauntJYNmkGL9xel3NPyb6fdRAbp3W9aaw3XaNl29ts45Yfho7zy7LXLyDLs&_nc_ohc=U0FT3OlvPisQ7kNvwEnbkN_&_nc_gid=aN7XUBedw_j8GO7jlgINsw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af_UL_PzS1sJzhWcyCP2foD4OqhVUOsqrOs-h6obPYcxkw&oe=6A380043&_nc_sid=8b3546"
+              <Image
+                src="https://instagram.fbom37-1.fna.fbcdn.net/v/t51.82787-19/569316083_17904756150271197_5446830320963300047_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=instagram.fbom37-1.fna.fbcdn.net&_nc_cat=109&_nc_oc=Q6cZ2gHi1fpq4CooFp42dTEQO4lRPqKDzhtq8bfujGnHJ51Ud7wat9mPq19UA5xLvwwlcQM&_nc_ohc=U0FT3OlvPisQ7kNvwEnbkN_&_nc_gid=6omOXcRVG8U-r14VZcjsVQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af-yXBR6L8lBBPe2vMbUECi0yUgAtfWgAZTsNibnFfRe8A&oe=6A383883&_nc_sid=8b3546"
                 alt="WanderSouls Instagram"
+                width={150}
+                height={150}
               />
               <div style={{
                 position: "absolute",
@@ -413,7 +455,7 @@ export default function JourneyStats() {
                 }}>
                   wandersoulsindia
                 </a>
-                <span style={{
+                {/* <span style={{
                   background: "rgba(0, 184, 169, 0.08)",
                   color: "var(--secondary)",
                   borderRadius: "50px",
@@ -423,7 +465,7 @@ export default function JourneyStats() {
                   fontFamily: "var(--font-montserrat)",
                   textTransform: "uppercase",
                   letterSpacing: "0.05em"
-                }}>Verified Partner</span>
+                }}>Verified Partner</span> */}
               </div>
               <p style={{
                 fontFamily: "var(--font-montserrat)",
@@ -437,13 +479,13 @@ export default function JourneyStats() {
               </p>
               <div style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "var(--text-muted)", fontWeight: 600 }}>
-                  <strong style={{ color: "var(--primary)" }}>256</strong> posts
+                  <strong style={{ color: "var(--primary)" }}>72</strong> posts
                 </span>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "var(--text-muted)", fontWeight: 600 }}>
-                  <strong style={{ color: "var(--primary)" }}>12.4k</strong> followers
+                  <strong style={{ color: "var(--primary)" }}>251</strong> followers
                 </span>
                 <span style={{ fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", color: "var(--text-muted)", fontWeight: 600 }}>
-                  <strong style={{ color: "var(--primary)" }}>82</strong> following
+                  <strong style={{ color: "var(--primary)" }}>0</strong> following
                 </span>
               </div>
             </div>
@@ -515,28 +557,9 @@ export default function JourneyStats() {
       </div>
 
       <style>{`
-        .shorts-carousel-container::-webkit-scrollbar {
-          display: none;
-        }
-        .video-short-card {
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .video-short-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 15px 35px rgba(10,37,64,0.1) !important;
-        }
-        .video-short-card:hover .thumbnail-img {
-          transform: scale(1.05);
-        }
-        .video-short-card:hover .play-button-overlay {
-          transform: translate(-50%, -50%) scale(1.1) !important;
-          background: #FFFFFF !important;
-          color: var(--secondary) !important;
-          box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4) !important;
-        }
-        .video-short-card:hover .play-button-overlay svg {
-          fill: var(--secondary) !important;
-        }
+        .shorts-scroll-hide::-webkit-scrollbar { display: none; }
+        .short-card:hover .short-thumb { transform: scale(1.04); }
+        .short-card:hover .play-btn { transform: translate(-50%,-50%) scale(1.1) !important; }
         .social-gallery-item:hover .social-post-hover-details {
           opacity: 1 !important;
         }
@@ -572,6 +595,15 @@ export default function JourneyStats() {
           .journey-stats-row {
             gap: 32px !important;
           }
+          .journey-stats-section {
+            padding-top: 40px !important;
+          }
+          .journey-stats-margin-bottom {
+            margin-bottom: 40px !important;
+          }
+          .journey-stats-social-gallery {
+            padding-bottom: 40px !important;
+          }
         }
         @media (max-width: 480px) {
           .social-gallery-grid {
@@ -581,6 +613,16 @@ export default function JourneyStats() {
           .journey-stats-row {
             flex-direction: column !important;
             align-items: center !important;
+          }
+        }
+        /* Shorts carousel — mobile */
+        @media (max-width: 640px) {
+          .shorts-nav-btn { display: none !important; }
+          .shorts-outer { overflow: visible; }
+          #shorts-scroll {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            gap: 12px !important;
           }
         }
       `}</style>

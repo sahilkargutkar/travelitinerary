@@ -80,20 +80,19 @@ export default function HomePage() {
       <HeroSection />
 
       {/* ── TRUST BAR ── */}
-      <section style={{
+      <section className="trust-bar" style={{
         padding: "24px 0",
         background: "rgba(0, 184, 169, 0.05)",
         borderTop: "1px solid rgba(0, 184, 169, 0.12)",
         borderBottom: "1px solid var(--border-subtle)",
       }}>
         <div className="container">
-          <div style={{ display: "flex", gap: "32px", alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "12px 24px", alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
             {[
               "✓ No Hidden Fees",
               "✓ Free Instantly Generated PDF Itinerary",
               "✓ Verified Price Match Guarantee",
               "✓ Day-by-Day Luxury Planning",
-              "✓ 24/7 Dedicated Concierge Support",
             ].map((item) => (
               <span key={item} style={{
                 fontFamily: "var(--font-montserrat)", fontSize: "0.78rem", fontWeight: "700",
@@ -157,34 +156,28 @@ export default function HomePage() {
           {/* Featured + Grid Layout */}
           <RevealOnScroll variant="fade-up" delay={200}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "24px" }} className="dest-grid-layout">
-              {/* Featured: Kerala (large) */}
+              {/* Row 1: Kerala (Featured) + Thailand (Standard) */}
               <div style={{ gridColumn: "span 2" }} className="dest-grid-span2">
                 <DestinationCard destination={destinations[0]} index={0} featured />
               </div>
-
-              {/* Thailand — standard */}
               <div style={{ gridColumn: "span 1" }}>
                 <DestinationCard destination={destinations[1]} index={1} />
               </div>
 
-              {/* Malaysia — standard */}
-              <div>
+              {/* Row 2: Malaysia (Standard) + Singapore (Featured) */}
+              <div style={{ gridColumn: "span 1" }}>
                 <DestinationCard destination={destinations[2]} index={2} />
               </div>
-
-              {/* Singapore — standard */}
-              <div>
-                <DestinationCard destination={destinations[3]} index={3} />
+              <div style={{ gridColumn: "span 2" }} className="dest-grid-span2">
+                <DestinationCard destination={destinations[3]} index={3} featured />
               </div>
 
-              {/* Meghalaya — standard */}
-              <div>
-                <DestinationCard destination={destinations[4]} index={4} />
-              </div>
-
-              {/* Featured: Bali (large) */}
+              {/* Row 3: Bali (Featured) + Meghalaya (Standard) */}
               <div style={{ gridColumn: "span 2" }} className="dest-grid-span2">
                 <DestinationCard destination={destinations[5]} index={5} featured />
+              </div>
+              <div style={{ gridColumn: "span 1" }}>
+                <DestinationCard destination={destinations[4]} index={4} />
               </div>
             </div>
           </RevealOnScroll>
@@ -235,7 +228,7 @@ export default function HomePage() {
       <TravelCategories />
 
       {/* 4. AI TRAVEL PLANNER */}
-      <AiPlanner />
+      {/* <AiPlanner /> */}
 
       {/* 5. FEATURED PACKAGES */}
       <FeaturedPackages />
@@ -437,16 +430,18 @@ export default function HomePage() {
 
       <style>{`
         @media (max-width: 1024px) {
-          .dest-grid-layout { grid-template-columns: repeat(2, 1fr) !important; }
-          .dest-grid-span2 { grid-column: span 2 !important; }
+          .dest-grid-layout { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+          .dest-grid-span2 { grid-column: span 1 !important; }
         }
         @media (max-width: 800px) {
           .dest-grid-layout { grid-template-columns: 1fr !important; }
           .dest-grid-span2 { grid-column: span 1 !important; }
           .why-grid { grid-template-columns: 1fr !important; }
           .testimonials-grid { grid-template-columns: 1fr !important; }
-          .compare-cta-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .compare-cta-grid { grid-template-columns: 1fr !important; gap: 24px !important; padding: 24px !important; }
           .compare-cta-grid div:last-child { align-items: flex-start !important; }
+          .testimonials-grid > div { padding: 24px !important; }
+          .why-grid > div { padding: 24px !important; }
         }
         @media (max-width: 640px) {
           .dest-grid-layout { grid-template-columns: 1fr !important; }

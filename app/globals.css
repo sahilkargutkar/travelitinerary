@@ -440,10 +440,15 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Top-level sections: tighter padding on mobile */
 @media (max-width: 768px) {
-  main > section,
-  body > div > section {
-    padding-top: 64px !important;
-    padding-bottom: 64px !important;
+  main > section:not(.trust-bar):not(.hero-section):not(.journey-stats-section),
+  body > div > section:not(.trust-bar):not(.hero-section):not(.journey-stats-section),
+  body > section:not(.trust-bar):not(.hero-section):not(.journey-stats-section) {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+
+  .trust-bar {
+    padding: 12px 0 !important;
   }
 }
 

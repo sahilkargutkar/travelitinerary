@@ -164,6 +164,10 @@ export default function BlogGuides() {
 
           {/* Left: Featured Large Article */}
           {featured && (
+            <Link
+              href={`/blogs/${featured._id}`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
             <article style={{
               display: "flex",
               flexDirection: "column",
@@ -239,12 +243,18 @@ export default function BlogGuides() {
                 </div>
               </div>
             </article>
+            </Link>
           )}
 
           {/* Right: Regular Stacked Articles */}
           <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
             {regulars.map((art) => (
-              <article key={art._id} style={{
+              <Link
+                key={art._id}
+                href={`/blogs/${art._id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+              <article style={{
                 display: "grid",
                 gridTemplateColumns: "180px 1fr",
                 gap: "24px",
@@ -297,6 +307,7 @@ export default function BlogGuides() {
                   </div>
                 </div>
               </article>
+              </Link>
             ))}
           </div>
 

@@ -39,7 +39,7 @@ export default function HeroSection() {
   useEffect(() => {
     let timer: NodeJS.Timeout;
     const fullWord = CYCLING_WORDS[wordIndex];
-    
+
     const handleTyping = () => {
       if (!isDeleting) {
         setCurrentText(fullWord.substring(0, currentText.length + 1));
@@ -55,7 +55,7 @@ export default function HeroSection() {
           return;
         }
       }
-      
+
       const speed = isDeleting ? 25 : 55;
       timer = setTimeout(handleTyping, speed);
     };
@@ -151,36 +151,37 @@ export default function HeroSection() {
         flexDirection: "column",
         alignItems: "center",
       }}>
-        
-        {/* Trust Rating Indicator */}
-        <div className="animate-fade-up" style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "8px",
-          background: "rgba(255, 255, 255, 0.15)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          border: "1px solid rgba(255, 255, 255, 0.25)",
-          borderRadius: "50px",
-          padding: "8px 18px",
-          marginBottom: "16px",
-          boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
-        }}>
-          <div style={{ display: "flex", gap: "2px" }}>
-            {[1, 2, 3, 4, 5].map((s) => (
-              <Star key={s} size={13} fill="var(--accent)" color="var(--accent)" />
-            ))}
-          </div>
-          <span style={{
-            fontFamily: "var(--font-montserrat), sans-serif",
-            fontSize: "0.78rem",
-            fontWeight: "600",
-            letterSpacing: "0.05em",
-            textTransform: "uppercase",
-            color: "#FAFAF7",
+
+        <div className="hidden md:block ">
+          <div className="animate-fade-up" style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            background: "rgba(255, 255, 255, 0.15)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            border: "1px solid rgba(255, 255, 255, 0.25)",
+            borderRadius: "50px",
+            padding: "8px 18px",
+            marginBottom: "16px",
+            boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
           }}>
-            Rated 4.9/5 by 12,000+ Luxury Travelers
-          </span>
+            <div style={{ display: "flex", gap: "2px" }}>
+              {[1, 2, 3, 4, 5].map((s) => (
+                <Star key={s} size={13} fill="var(--accent)" color="var(--accent)" />
+              ))}
+            </div>
+            <span style={{
+              fontFamily: "var(--font-montserrat), sans-serif",
+              fontSize: "0.78rem",
+              fontWeight: "600",
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
+              color: "#FAFAF7",
+            }}>
+              Rated 4.9/5 by 12,000+ Luxury Travelers
+            </span>
+          </div>
         </div>
 
         {/* Headline */}
@@ -239,7 +240,7 @@ export default function HeroSection() {
           textAlign: "left",
           marginBottom: "32px",
         }}>
-          
+
           {/* 1. Destination Dropdown */}
           <div ref={destRef} style={{ position: "relative" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 12px", cursor: "pointer" }} onClick={() => setDestDropdownOpen(!destDropdownOpen)}>
@@ -251,7 +252,7 @@ export default function HeroSection() {
                 </span>
               </div>
             </div>
-            
+
             {destDropdownOpen && (
               <div style={{
                 position: "absolute", top: "calc(100% + 14px)", left: 0, right: 0,
@@ -291,9 +292,9 @@ export default function HeroSection() {
           <div style={{ width: "1px", height: "40px", background: "rgba(255, 255, 255, 0.15)", display: "none" }} />
 
           {/* 2. Date Input Selector */}
-          <DateRangePicker 
-            value={selectedDate} 
-            onChange={setSelectedDate} 
+          <DateRangePicker
+            value={selectedDate}
+            onChange={setSelectedDate}
           />
 
           {/* Vertical divider line */}
@@ -390,7 +391,7 @@ export default function HeroSection() {
           }}>
             Trusted Partner of Leading Luxury Publications & Guides
           </p>
-          <div style={{
+          {/* <div style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -407,7 +408,7 @@ export default function HeroSection() {
                 letterSpacing: "0.06em",
               }}>{brand}</span>
             ))}
-          </div>
+          </div> */}
         </div>
 
       </div>

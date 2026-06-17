@@ -223,7 +223,7 @@ export default function AiPlanner() {
 
           </div>
 
-          {/* Right chat widget column */}
+
           <div style={{
             background: "rgba(255, 255, 255, 0.65)",
             backdropFilter: "blur(20px)",
@@ -236,7 +236,7 @@ export default function AiPlanner() {
             boxShadow: "0 30px 70px rgba(10, 37, 64, 0.08)",
             overflow: "hidden",
           }}>
-            {/* Chat Header */}
+
             <div style={{
               padding: "18px 24px",
               borderBottom: "1px solid rgba(10, 37, 64, 0.06)",
@@ -270,7 +270,7 @@ export default function AiPlanner() {
               </div>
             </div>
 
-            {/* Messages Body */}
+
             <div style={{
               flex: 1,
               padding: "24px",
@@ -286,7 +286,7 @@ export default function AiPlanner() {
                   alignItems: m.sender === "user" ? "flex-end" : "flex-start",
                   width: "100%",
                 }}>
-                  {/* Avatar + Label */}
+
                   <div style={{
                     display: "flex",
                     alignItems: "center",
@@ -310,7 +310,7 @@ export default function AiPlanner() {
                     )}
                   </div>
 
-                  {/* Bubble */}
+
                   <div style={{
                     maxWidth: "85%",
                     padding: "14px 18px",
@@ -326,7 +326,6 @@ export default function AiPlanner() {
                     {m.text}
                   </div>
 
-                  {/* Render Itinerary Details Card if exists */}
                   {m.itinerary && (
                     <div style={{
                       marginTop: "12px",
@@ -381,7 +380,7 @@ export default function AiPlanner() {
                         ))}
                       </div>
 
-                      {/* Itinerary CTA */}
+
                       <div style={{
                         background: "var(--bg-elevated)",
                         padding: "12px 16px",
@@ -412,7 +411,7 @@ export default function AiPlanner() {
                 </div>
               ))}
 
-              {/* Typing State */}
+
               {isTyping && (
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
                   <div style={{

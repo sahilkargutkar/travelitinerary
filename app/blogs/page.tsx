@@ -212,8 +212,12 @@ export default function BlogsPage() {
           /* Clean Cards Grid */
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "30px" }}>
             {filteredArticles.map((art) => (
-              <article
+              <Link
                 key={art._id}
+                href={`/blogs/${art._id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+              <article
                 style={{
                   background: "#FFFFFF",
                   borderRadius: "20px",
@@ -305,6 +309,7 @@ export default function BlogsPage() {
                   </div>
                 </div>
               </article>
+              </Link>
             ))}
           </div>
         )}
